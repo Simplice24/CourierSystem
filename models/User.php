@@ -72,8 +72,8 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function attributeLabels()
     {
         return [
-            'user_id' => 'User ID',
-            'user_fullname' => 'User Fullname',
+            'user_id' => 'ID',
+            'user_fullname' => 'Full name',
             'email' => 'Email',
             'telephone' => 'Telephone',
             'password' => 'Password',
@@ -145,6 +145,11 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return $this->authKey === $authKey;
     }
+
+    public function setPassword($password)
+{
+    $this->password = Yii::$app->security->generatePasswordHash($password);
+}
 
     /**
      * Validates password
