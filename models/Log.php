@@ -35,12 +35,11 @@ class Log extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['log_id', 'field_name', 'old_value', 'new_value', 'created_at', 'created_by', 'updated_at', 'updated_by', 'item_id'], 'required'],
-            [['log_id', 'item_id'], 'integer'],
+            [['field_name', 'old_value', 'new_value', 'created_at', 'created_by', 'updated_at', 'updated_by', 'item_id'], 'required'],
+            [['item_id'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['field_name', 'old_value', 'new_value', 'created_by', 'updated_by'], 'string', 'max' => 60],
             [['item_id'], 'unique'],
-            [['log_id'], 'unique'],
             [['item_id'], 'exist', 'skipOnError' => true, 'targetClass' => Item::class, 'targetAttribute' => ['item_id' => 'item_id']],
         ];
     }
@@ -51,7 +50,7 @@ class Log extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'log_id' => 'Log ID',
+            // 'log_id' => 'Log ID',
             'field_name' => 'Field Name',
             'old_value' => 'Old Value',
             'new_value' => 'New Value',

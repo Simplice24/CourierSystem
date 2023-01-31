@@ -35,12 +35,10 @@ class Manifest extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['manifest_id', 'departure_date', 'departure_time', 'plate_number', 'driver', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'required'],
-            [['manifest_id'], 'integer'],
+            [['departure_date', 'departure_time', 'plate_number', 'driver', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'required'],
             [['departure_date', 'departure_time', 'created_at', 'updated_at'], 'safe'],
             [['plate_number'], 'string', 'max' => 15],
             [['driver', 'created_by', 'updated_by'], 'string', 'max' => 60],
-            [['manifest_id'], 'unique'],
         ];
     }
 
@@ -50,7 +48,7 @@ class Manifest extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'manifest_id' => 'Manifest ID',
+            // 'manifest_id' => 'Manifest ID',
             'departure_date' => 'Departure Date',
             'departure_time' => 'Departure Time',
             'plate_number' => 'Plate Number',

@@ -12,7 +12,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'subscription_id')->textInput() ?>
+    <!-- <?= $form->field($model, 'subscription_id')->textInput() ?> -->
 
     <?= $form->field($model, 'subscription_type')->textInput(['maxlength' => true]) ?>
 

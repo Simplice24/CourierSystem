@@ -54,13 +54,12 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            [['user_id', 'user_fullname', 'email', 'telephone', 'password', 'created_at', 'created_by', 'updated_at', 'updated_by', 'role', 'branch_id'], 'required'],
-            [['user_id', 'branch_id'], 'integer'],
+            [['user_fullname', 'email', 'telephone', 'password', 'created_at', 'created_by', 'updated_at', 'updated_by', 'role', 'branch_id'], 'required'],
+            [['branch_id'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['user_fullname', 'created_by', 'updated_by'], 'string', 'max' => 60],
             [['email', 'password'], 'string', 'max' => 40],
             [['telephone'], 'string', 'max' => 15],
-            [['user_id'], 'unique'],
             [['role'], 'string'],
             [['branch_id'], 'exist', 'skipOnError' => true, 'targetClass' => Branch::class, 'targetAttribute' => ['branch_id' => 'branch_id']],
         ];
@@ -72,7 +71,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function attributeLabels()
     {
         return [
-            'user_id' => 'ID',
+            // 'user_id' => 'ID',
             'user_fullname' => 'Full name',
             'email' => 'Email',
             'telephone' => 'Telephone',

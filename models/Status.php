@@ -30,11 +30,10 @@ class Status extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['status_id', 'status_value', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'required'],
-            [['status_id', 'status_value'], 'integer'],
+            [['status_value', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'required'],
+            [['status_value'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['created_by', 'updated_by'], 'string', 'max' => 60],
-            [['status_id'], 'unique'],
         ];
     }
 

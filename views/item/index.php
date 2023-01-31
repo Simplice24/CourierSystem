@@ -29,14 +29,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'item_id',
+            // 'item_id',
             'item_name',
-            'value',
+            // 'value',
             'sender_name',
             'sender_phone',
             //'sender_subscription',
-            //'receiver_name',
-            //'receiver_phone',
+            'receiver_name',
+            'receiver_phone',
             //'receiver_id',
             //'departure',
             //'depature_date',

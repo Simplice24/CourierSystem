@@ -37,14 +37,13 @@ class Customer extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['customer_id', 'fullname', 'subscription', 'idn', 'telephone', 'created_at', 'created_by', 'updated_at', 'updated_by', 'item_id'], 'required'],
-            [['customer_id', 'idn', 'item_id'], 'integer'],
+            [['fullname', 'subscription', 'idn', 'telephone', 'created_at', 'created_by', 'updated_at', 'updated_by', 'item_id'], 'required'],
+            [['idn', 'item_id'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['fullname', 'created_by', 'updated_by'], 'string', 'max' => 60],
             [['subscription'], 'string', 'max' => 10],
             [['telephone'], 'string', 'max' => 15],
             [['idn'], 'unique'],
-            [['customer_id'], 'unique'],
             [['item_id'], 'exist', 'skipOnError' => true, 'targetClass' => Item::class, 'targetAttribute' => ['item_id' => 'item_id']],
         ];
     }
@@ -55,8 +54,8 @@ class Customer extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'customer_id' => 'Customer ID',
-            'fullname' => 'Fullname',
+            // 'customer_id' => 'Customer ID',
+            'fullname' => 'Full name',
             'subscription' => 'Subscription',
             'idn' => 'Idn',
             'telephone' => 'Telephone',

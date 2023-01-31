@@ -34,11 +34,10 @@ class Subscription extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['subscription_id', 'subscription_type', 'created_at', 'created_by', 'updated_at', 'updated_by', 'customer_id'], 'required'],
-            [['subscription_id', 'customer_id'], 'integer'],
+            [['subscription_type', 'created_at', 'created_by', 'updated_at', 'updated_by', 'customer_id'], 'required'],
+            [['customer_id'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['subscription_type', 'created_by', 'updated_by'], 'string', 'max' => 60],
-            [['subscription_id'], 'unique'],
             [['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Customer::class, 'targetAttribute' => ['customer_id' => 'customer_id']],
         ];
     }
@@ -49,7 +48,7 @@ class Subscription extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'subscription_id' => 'Subscription ID',
+            // 'subscription_id' => 'Subscription ID',
             'subscription_type' => 'Subscription Type',
             'created_at' => 'Created At',
             'created_by' => 'Created By',

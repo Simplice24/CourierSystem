@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'log_id',
+            // 'log_id',
             'field_name',
             'old_value',
             'new_value',

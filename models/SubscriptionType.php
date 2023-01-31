@@ -34,11 +34,10 @@ class SubscriptionType extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'name', 'created_at', 'payment_way', 'created_by', 'updated_by', 'updated_at', 'subscription_id'], 'required'],
-            [['id', 'subscription_id'], 'integer'],
+            [['name', 'created_at', 'payment_way', 'created_by', 'updated_by', 'updated_at', 'subscription_id'], 'required'],
+            [['subscription_id'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['name', 'payment_way', 'created_by', 'updated_by'], 'string', 'max' => 60],
-            [['id'], 'unique'],
             [['subscription_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subscription::class, 'targetAttribute' => ['subscription_id' => 'subscription_id']],
         ];
     }
@@ -49,7 +48,7 @@ class SubscriptionType extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            // 'id' => 'ID',
             'name' => 'Name',
             'created_at' => 'Created At',
             'payment_way' => 'Payment Way',
