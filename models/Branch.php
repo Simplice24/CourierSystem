@@ -32,11 +32,11 @@ class Branch extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['branch_id', 'branch_name', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'required'],
-            [['branch_id'], 'integer'],
+            [['branch_name', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'required'],
+            // [['branch_id'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['branch_name', 'created_by', 'updated_by'], 'string', 'max' => 60],
-            [['branch_id'], 'unique'],
+            // [['branch_id'], 'unique'],
         ];
     }
 
@@ -46,7 +46,7 @@ class Branch extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'branch_id' => 'Branch ID',
+            // 'branch_id' => 'Branch ID',
             'branch_name' => 'Branch Name',
             'created_at' => 'Created At',
             'created_by' => 'Created By',
