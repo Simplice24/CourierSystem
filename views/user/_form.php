@@ -18,7 +18,7 @@ use app\models\Branch;
 
     <?= $form->field($model, 'user_fullname')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'role')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'role')->DropDownList(["ADMIN"=>"Admin","BRANCH-MANAGER"=>"Branch manager","BRANCH-AGENT"=>"Agent"],["prompt"=>"Select user's Role"]) ?>
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
@@ -30,11 +30,11 @@ use app\models\Branch;
         ArrayHelper::map(Branch::find()->all(),'branch_id','branch_name'),["prompt"=>"Select Branch"]
     ) ?>
 
-    <?= $form->field($model, 'created_at')->textInput() ?>
+    <!-- <?= $form->field($model, 'created_at')->textInput() ?> -->
 
     <?= $form->field($model, 'created_by')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'updated_at')->textInput() ?>
+    <!-- <?= $form->field($model, 'updated_at')->textInput() ?> -->
 
     <?= $form->field($model, 'updated_by')->textInput(['maxlength' => true]) ?>
 

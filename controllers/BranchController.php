@@ -70,7 +70,10 @@ class BranchController extends Controller
         $model = new Branch();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+            if ($model->load($this->request->post())) {
+                $model->created_at=date('Y-m-d');
+                $model->updated_at=date('Y-m-d');
+                $model->save();
                 return $this->redirect(['view', 'branch_id' => $model->branch_id]);
             }
         } else {
