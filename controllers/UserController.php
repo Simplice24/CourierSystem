@@ -68,10 +68,8 @@ class UserController extends Controller
      */
     public function actionCreate()
     {
-        $request = Yii::$app->request;
-        $password = $request->post('password');
         $model = new User();
-
+    
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->created_at=date('Y-m-d');
