@@ -70,7 +70,10 @@ class StatusController extends Controller
         $model = new Status();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+            if ($model->load($this->request->post())) {
+                $model->created_at=date('Y-m-d');
+                $model->updated_at=date('Y-m-d');
+                $model->save();
                 return $this->redirect(['view', 'status_id' => $model->status_id]);
             }
         } else {

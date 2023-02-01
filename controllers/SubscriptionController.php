@@ -70,7 +70,10 @@ class SubscriptionController extends Controller
         $model = new Subscription();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+            if ($model->load($this->request->post())) {
+                $model->created_at=date('Y-m-d');
+                $model->updated_at=date('Y-m-d');
+                $model->save();
                 return $this->redirect(['view', 'subscription_id' => $model->subscription_id]);
             }
         } else {
