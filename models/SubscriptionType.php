@@ -50,11 +50,11 @@ class SubscriptionType extends \yii\db\ActiveRecord
         return [
             // 'id' => 'ID',
             'name' => 'Name',
-            'created_at' => 'Created At',
+            // 'created_at' => 'Created At',
             'payment_way' => 'Payment Way',
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
-            'updated_at' => 'Updated At',
+            // 'updated_at' => 'Updated At',
             'subscription_id' => 'Subscription ID',
         ];
     }
