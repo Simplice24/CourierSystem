@@ -14,14 +14,14 @@ use app\models\Item;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <div class="col-md-6 grid-margin stretch-card">
+    <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
                     <form class="forms-sample">
                     <div class="row" style="height:90px;">
                         <div class="col-md-6">
                           <div class="form-group row">
-                        <div class="form-group">
+                           <div class="form-group">
                         <?= $form->field($model, 'fullname')->textInput(['maxlength' => true]) ?>
                         </div>
                     </div>
@@ -73,10 +73,16 @@ use app\models\Item;
                     </div>
                 </div>
 
+                <div class="row" style="height:90px;">
+                    <div class="col-md-6">
+                     <div class="form-group row">
                         <div class="form-group">
                         <?= $form->field($model, 'item_id')->DropDownList(
                             ArrayHelper::map(Item::find()->all(),'item_id','item_name'),['prompt'=>'Select Customer item']
                         ) ?>
+                        </div>
+                        </div>
+                        </div>
                         </div>
                        
                         <div class="form-group">
