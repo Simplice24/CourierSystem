@@ -57,7 +57,7 @@ class Customer extends \yii\db\ActiveRecord
             // 'customer_id' => 'Customer ID',
             'fullname' => 'Full name',
             'subscription' => 'Subscription',
-            'idn' => 'Idn',
+            'idn' => 'IDN',
             'telephone' => 'Telephone',
             'created_at' => 'Created At',
             'created_by' => 'Created By',
