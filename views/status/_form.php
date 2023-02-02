@@ -11,22 +11,29 @@ use yii\widgets\ActiveForm;
 <div class="status-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
-    <!-- <?= $form->field($model, 'status_id')->textInput() ?> -->
-
+    <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <form class="forms-sample">
+                    <div class="form-group">
     <?= $form->field($model, 'status_value')->textInput() ?>
+</div>
 
-    <!-- <?= $form->field($model, 'created_at')->textInput() ?> -->
-
+                    <div class="form-group">
     <?= $form->field($model, 'created_by')->textInput(['maxlength' => true]) ?>
+</div>
 
-    <!-- <?= $form->field($model, 'updated_at')->textInput() ?> -->
-
+                    <div class="form-group">
     <?= $form->field($model, 'updated_by')->textInput(['maxlength' => true]) ?>
+</div>
+                    <div class="form-group">
+        <?= Html::submitButton('Save', ['class' => 'btn btn-gradient-primary me-2']) ?>
+</div>
 
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
-    </div>
+    </form>
+                  </div>
+                </div>
+              </div>
 
     <?php ActiveForm::end(); ?>
 
