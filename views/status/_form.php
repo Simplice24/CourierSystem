@@ -18,18 +18,15 @@ use yii\widgets\ActiveForm;
                     <div class="form-group">
     <?= $form->field($model, 'status_value')->textInput() ?>
 </div>
-
                     <div class="form-group">
     <?= $form->field($model, 'created_by')->textInput(['maxlength' => true]) ?>
 </div>
-
                     <div class="form-group">
     <?= $form->field($model, 'updated_by')->textInput(['maxlength' => true]) ?>
 </div>
                     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-gradient-primary me-2']) ?>
 </div>
-
     </form>
                   </div>
                 </div>

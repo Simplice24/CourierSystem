@@ -30,6 +30,10 @@ use yii\widgets\ActiveForm;
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-gradient-primary me-2']) ?>
     </div>
+</form>
+</div>
+</div>
+</div>
 
     <?php ActiveForm::end(); ?>
 
