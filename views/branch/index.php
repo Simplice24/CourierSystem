@@ -136,9 +136,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="card">
                   <div class="card-body">
                     <div class="table-responsive">
+
+
                       <div class="branch-index">
 
-
+                      <h1><?= Html::encode($this->title) ?></h1>
     <p>
         <?= Html::a('Create Branch', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
@@ -166,6 +168,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 
+  </div>
 
                     </div>
                   </div>
