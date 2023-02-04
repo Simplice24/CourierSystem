@@ -137,8 +137,7 @@ $this->params['breadcrumbs'][] = $this->title;
                   <div class="card-body">
                     <div class="table-responsive">
                       <div class="branch-index">
-<!-- 
-    <h1><?= Html::encode($this->title) ?></h1> -->
+
 
     <p>
         <?= Html::a('Create Branch', ['create'], ['class' => 'btn btn-success']) ?>
@@ -168,7 +167,6 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); ?>
 
 
-</div>
                     </div>
                   </div>
                 </div>
@@ -176,12 +174,6 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
           </div>
     
-          <!-- <footer class="footer">
-            <div class="container-fluid d-flex justify-content-between">
-              <span class="text-muted d-block text-center text-sm-start d-sm-inline-block">Copyright © bootstrapdash.com 2021</span>
-              <span class="float-none float-sm-end mt-1 mt-sm-0 text-end"> Free <a href="https://www.bootstrapdash.com/bootstrap-admin-template/" target="_blank">Bootstrap admin template</a> from Bootstrapdash.com</span>
-            </div>
-          </footer> -->
   </body>
 
 
