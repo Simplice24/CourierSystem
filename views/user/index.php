@@ -187,7 +187,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'user_fullname',
         'email:email',
         'telephone',
-        'password',
+        // 'password',
         //'created_at',
         //'created_by',
         //'updated_at',
