@@ -51,6 +51,13 @@ use yii\widgets\ActiveForm;
             </li> -->
             <li class="nav-item">
               <a class="nav-link">
+              <?= Html::a('Users', ['/user'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
+              <!-- <span class="menu-title">Branches</span> -->
+                <i class="mdi mdi-contacts menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link">
               <?= Html::a('Branches', ['/branch'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
               <!-- <span class="menu-title">Branches</span> -->
                 <i class="mdi mdi-contacts menu-icon"></i>
