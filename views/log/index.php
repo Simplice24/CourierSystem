@@ -57,28 +57,28 @@ $this->params['breadcrumbs'][] = $this->title;
             </li> -->
             <li class="nav-item">
               <a class="nav-link">
-              <?= Html::a('Branches', ['/branch'], ['class'=>'menu-title']) ?>
+              <?= Html::a('Branches', ['/branch'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
               <!-- <span class="menu-title">Branches</span> -->
                 <i class="mdi mdi-contacts menu-icon"></i>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link">
-              <?= Html::a('Customers', ['/customer'], ['class'=>'menu-title']) ?>
+              <?= Html::a('Customers', ['/customer'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
                 <!-- <span class="menu-title">Customers</span> -->
                 <i class="mdi mdi-format-list-bulleted menu-icon"></i>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link">
-              <?= Html::a('Items', ['/item'], ['class'=>'menu-title']) ?>
+              <?= Html::a('Items', ['/item'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
                 <!-- <span class="menu-title">Items</span> -->
                 <i class="mdi mdi-chart-bar menu-icon"></i>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link">
-              <?= Html::a('Logs', ['/log'], ['class'=>'menu-title']) ?>
+              <?= Html::a('Logs', ['/log'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
                 <!-- <span class="menu-title">Logs</span> -->
                 <i class="mdi mdi-table-large menu-icon"></i>
               </a>
@@ -102,28 +102,28 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <li class="nav-item">
               <a class="nav-link">
-              <?= Html::a('Manifests', ['/manifest'], ['class'=>'menu-title']) ?>
+              <?= Html::a('Manifests', ['/manifest'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
                 <!-- <span class="menu-title">Manifests</span> -->
                 <i class="mdi mdi-contacts menu-icon"></i>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link">
-              <?= Html::a('Status', ['/status'], ['class'=>'menu-title']) ?>
+              <?= Html::a('Status', ['/status'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
                 <!-- <span class="menu-title">Status</span> -->
                 <i class="mdi mdi-format-list-bulleted menu-icon"></i>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link">
-              <?= Html::a('Subscriptions', ['/subscription'], ['class'=>'menu-title']) ?>
+              <?= Html::a('Subscriptions', ['/subscription'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
                 <!-- <span class="menu-title">Subscriptions</span> -->
                 <i class="mdi mdi-chart-bar menu-icon"></i>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link">
-              <?= Html::a('Types of subscription', ['/subscription-type'], ['class'=>'menu-title']) ?>
+              <?= Html::a('Types of subscription', ['/subscription-type'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
                 <!-- <span class="menu-title">Types of subscription</span> -->
                 <i class="mdi mdi-table-large menu-icon"></i>
               </a>
