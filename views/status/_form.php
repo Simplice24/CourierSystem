@@ -32,7 +32,7 @@ use yii\widgets\ActiveForm;
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="index.html">
+              <a class="nav-link" href="#">
                 <span class="menu-title">Dashboard</span>
                 <i class="mdi mdi-home menu-icon"></i>
               </a>
@@ -51,26 +51,30 @@ use yii\widgets\ActiveForm;
               </div>
             </li> -->
             <li class="nav-item">
-              <a class="nav-link" href="pages/icons/mdi.html">
-                <span class="menu-title">Branches</span>
+              <a class="nav-link">
+              <?= Html::a('Branches', ['/branch'], ['class'=>'menu-title']) ?>
+              <!-- <span class="menu-title">Branches</span> -->
                 <i class="mdi mdi-contacts menu-icon"></i>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pages/forms/basic_elements.html">
-                <span class="menu-title">Customers</span>
+              <a class="nav-link">
+              <?= Html::a('Customers', ['/customer'], ['class'=>'menu-title']) ?>
+                <!-- <span class="menu-title">Customers</span> -->
                 <i class="mdi mdi-format-list-bulleted menu-icon"></i>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pages/charts/chartjs.html">
-                <span class="menu-title">Items</span>
+              <a class="nav-link">
+              <?= Html::a('Items', ['/item'], ['class'=>'menu-title']) ?>
+                <!-- <span class="menu-title">Items</span> -->
                 <i class="mdi mdi-chart-bar menu-icon"></i>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pages/tables/basic-table.html">
-                <span class="menu-title">Logs</span>
+              <a class="nav-link">
+              <?= Html::a('Logs', ['/log'], ['class'=>'menu-title']) ?>
+                <!-- <span class="menu-title">Logs</span> -->
                 <i class="mdi mdi-table-large menu-icon"></i>
               </a>
             </li>
@@ -92,26 +96,30 @@ use yii\widgets\ActiveForm;
             </li> -->
 
             <li class="nav-item">
-              <a class="nav-link" href="pages/icons/mdi.html">
-                <span class="menu-title">Manifests</span>
+              <a class="nav-link">
+              <?= Html::a('Manifests', ['/manifest'], ['class'=>'menu-title']) ?>
+                <!-- <span class="menu-title">Manifests</span> -->
                 <i class="mdi mdi-contacts menu-icon"></i>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pages/forms/basic_elements.html">
-                <span class="menu-title">Status</span>
+              <a class="nav-link">
+              <?= Html::a('Status', ['/status'], ['class'=>'menu-title']) ?>
+                <!-- <span class="menu-title">Status</span> -->
                 <i class="mdi mdi-format-list-bulleted menu-icon"></i>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pages/charts/chartjs.html">
-                <span class="menu-title">Subscriptions</span>
+              <a class="nav-link">
+              <?= Html::a('Subscriptions', ['/subscription'], ['class'=>'menu-title']) ?>
+                <!-- <span class="menu-title">Subscriptions</span> -->
                 <i class="mdi mdi-chart-bar menu-icon"></i>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pages/tables/basic-table.html">
-                <span class="menu-title">Types of subscription</span>
+              <a class="nav-link">
+              <?= Html::a('Types of subscription', ['/subscription-type'], ['class'=>'menu-title']) ?>
+                <!-- <span class="menu-title">Types of subscription</span> -->
                 <i class="mdi mdi-table-large menu-icon"></i>
               </a>
             </li>
