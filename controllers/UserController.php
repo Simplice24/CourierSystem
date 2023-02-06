@@ -7,7 +7,7 @@ use app\models\UserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use Yii;
+use yii\db\Expression;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -50,14 +50,14 @@ class UserController extends Controller
 
     /**
      * Displays a single User model.
-     * @param int $user_id User ID
+     * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($user_id)
+    public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($user_id),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -69,13 +69,10 @@ class UserController extends Controller
     public function actionCreate()
     {
         $model = new User();
-    
+
         if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                $model->created_at=date('Y-m-d');
-                $model->updated_at=date('Y-m-d');
-                $model->save();
-                return $this->redirect(['view', 'user_id' => $model->user_id]);
+            if ($model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
             $model->loadDefaultValues();
@@ -89,16 +86,16 @@ class UserController extends Controller
     /**
      * Updates an existing User model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $user_id User ID
+     * @param int $id ID
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($user_id)
+    public function actionUpdate($id)
     {
-        $model = $this->findModel($user_id);
+        $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'user_id' => $model->user_id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -109,13 +106,13 @@ class UserController extends Controller
     /**
      * Deletes an existing User model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $user_id User ID
+     * @param int $id ID
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($user_id)
+    public function actionDelete($id)
     {
-        $this->findModel($user_id)->delete();
+        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
@@ -123,13 +120,13 @@ class UserController extends Controller
     /**
      * Finds the User model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $user_id User ID
+     * @param int $id ID
      * @return User the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($user_id)
+    protected function findModel($id)
     {
-        if (($model = User::findOne(['user_id' => $user_id])) !== null) {
+        if (($model = User::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

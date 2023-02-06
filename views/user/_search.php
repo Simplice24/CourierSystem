@@ -15,27 +15,33 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'user_id') ?>
+    <?= $form->field($model, 'id') ?>
 
     <?= $form->field($model, 'user_fullname') ?>
 
-    <?= $form->field($model, 'email') ?>
+    <?= $form->field($model, 'username') ?>
 
-    <?= $form->field($model, 'telephone') ?>
+    <?= $form->field($model, 'role') ?>
 
-    <?= $form->field($model, 'password') ?>
+    <?= $form->field($model, 'auth_key') ?>
+
+    <?php // echo $form->field($model, 'password_hash') ?>
+
+    <?php // echo $form->field($model, 'password_reset_token') ?>
+
+    <?php // echo $form->field($model, 'email') ?>
+
+    <?php // echo $form->field($model, 'telephone') ?>
+
+    <?php // echo $form->field($model, 'branche_id') ?>
+
+    <?php // echo $form->field($model, 'status') ?>
 
     <?php // echo $form->field($model, 'created_at') ?>
 
-    <?php // echo $form->field($model, 'created_by') ?>
-
     <?php // echo $form->field($model, 'updated_at') ?>
 
-    <?php // echo $form->field($model, 'updated_by') ?>
-
-    <?php // echo $form->field($model, 'role') ?>
-
-    <?php // echo $form->field($model, 'branch_id') ?>
+    <?php // echo $form->field($model, 'verification_token') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

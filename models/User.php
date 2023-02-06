@@ -7,22 +7,24 @@ use Yii;
 /**
  * This is the model class for table "user".
  *
- * @property int $user_id
+ * @property int $id
  * @property string $user_fullname
+ * @property string $username
+ * @property string $role
+ * @property string $auth_key
+ * @property string $password_hash
+ * @property string|null $password_reset_token
  * @property string $email
  * @property string $telephone
- * @property string $password
- * @property string $created_at
- * @property string $created_by
- * @property string $updated_at
- * @property string $updated_by
- * @property int $role
- * @property int $branch_id
+ * @property int $branche_id
+ * @property int $status
+ * @property int $created_at
+ * @property int $updated_at
+ * @property string|null $verification_token
  *
- * @property Branch $branch
+ * @property Branch $branche
  */
-class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
-// class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
+class User extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -32,36 +34,23 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return 'user';
     }
 
-    public $id;
-    public $username;
-    public $password;
-    public $authKey;
-    public $accessToken;
-
-    private static $users = [
-        '100' => [
-            'id' => '100',
-            'username' => 'Simplice',
-            'password' => 'CourierTesting',
-            'authKey' => 'test100key',
-            'accessToken' => '100-token',
-        ],
-    ];
-
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['user_fullname', 'email', 'telephone', 'password', 'created_at', 'created_by', 'updated_at', 'updated_by', 'role', 'branch_id'], 'required'],
-            [['branch_id'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
-            [['user_fullname', 'created_by', 'updated_by'], 'string', 'max' => 60],
-            [['email', 'password'], 'string', 'max' => 40],
+            [['user_fullname', 'username', 'role', 'auth_key', 'password_hash', 'email', 'telephone', 'branche_id', 'created_at', 'updated_at'], 'required'],
+            [['branche_id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['user_fullname'], 'string', 'max' => 224],
+            [['username', 'password_hash', 'password_reset_token', 'email', 'verification_token'], 'string', 'max' => 255],
+            [['role'], 'string', 'max' => 40],
+            [['auth_key'], 'string', 'max' => 32],
             [['telephone'], 'string', 'max' => 15],
-            [['role'], 'string'],
-            [['branch_id'], 'exist', 'skipOnError' => true, 'targetClass' => Branch::class, 'targetAttribute' => ['branch_id' => 'branch_id']],
+            [['username'], 'unique'],
+            [['email'], 'unique'],
+            [['password_reset_token'], 'unique'],
+            [['branche_id'], 'exist', 'skipOnError' => true, 'targetClass' => Branch::class, 'targetAttribute' => ['branche_id' => 'branch_id']],
         ];
     }
 
@@ -71,105 +60,30 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function attributeLabels()
     {
         return [
-            // 'user_id' => 'ID',
+            'id' => 'ID',
             'user_fullname' => 'Full name',
+            'username' => 'Username',
+            'role' => 'Role',
+            'auth_key' => 'Auth Key',
+            'password_hash' => 'Password',
+            'password_reset_token' => 'Password Reset Token',
             'email' => 'Email',
             'telephone' => 'Telephone',
-            'password' => 'Password',
+            'branche_id' => 'Branche ID',
+            'status' => 'Status',
             'created_at' => 'Created At',
-            'created_by' => 'Created By',
             'updated_at' => 'Updated At',
-            'updated_by' => 'Updated By',
-            'role' => 'Role',
-            'branch_id' => 'Branch ID',
+            'verification_token' => 'Verification Token',
         ];
     }
 
-    public static function findIdentity($id)
-    {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
-    }
-
     /**
-     * {@inheritdoc}
-     */
-    public static function findIdentityByAccessToken($token, $type = null)
-    {
-        foreach (self::$users as $user) {
-            if ($user['accessToken'] === $token) {
-                return new static($user);
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Finds user by username
-     *
-     * @param string $username
-     * @return static|null
-     */
-    public static function findByUsername($username)
-    {
-        foreach (self::$users as $user) {
-            if (strcasecmp($user['username'], $username) === 0) {
-                return new static($user);
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getAuthKey()
-    {
-        return $this->authKey;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function validateAuthKey($authKey)
-    {
-        return $this->authKey === $authKey;
-    }
-
-    public function setPassword($password)
-{
-    $this->password = Yii::$app->security->generatePasswordHash($password);
-}
-
-    /**
-     * Validates password
-     *
-     * @param string $password password to validate
-     * @return bool if password provided is valid for current user
-     */
-    public function validatePassword($password)
-    {
-        return $this->password === $password;
-    }
-
-
-
-    /**
-     * Gets query for [[Branch]].
+     * Gets query for [[Branche]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getBranch()
+    public function getBranche()
     {
-        return $this->hasOne(Branch::class, ['branch_id' => 'branch_id']);
+        return $this->hasOne(Branch::class, ['branch_id' => 'branche_id']);
     }
 }
