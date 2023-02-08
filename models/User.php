@@ -24,7 +24,7 @@ use Yii;
  *
  * @property Branch $branche
  */
-class User extends \yii\db\ActiveRecord
+class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
     /**
      * {@inheritdoc}
@@ -86,4 +86,57 @@ class User extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Branch::class, ['branch_id' => 'branche_id']);
     }
+
+     
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getAuthKey()
+    {
+        return $this->auth_key;
+    }
+
+    public function validateAuthKey($authKey)
+    {
+        return $this->auth_key === $authKey;
+    }
+
+    public static function findIdentity($id)
+    {
+        // return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+        return self::findOne($id);
+    }
+
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        foreach (self::$users as $user) {
+            if ($user['accessToken'] === $token) {
+                return new static($user);
+            }
+        }
+
+        return null;
+    }
+
+    public static function findByUsername($username)
+    {
+        // foreach (self::$users as $user) {
+        //     if (strcasecmp($user['username'], $username) === 0) {
+        //         return new static($user);
+        //     }
+        // }
+
+        // return null;
+
+        return self::findOne(['username'=>$username]);
+    }
+
+    public function validatePassword($password)
+    {
+        $hash = Yii::$app->getSecurity()->generatePasswordHash($password);
+        return Yii::$app->getSecurity()->validatePassword($password, $hash);
+    }
+
 }
