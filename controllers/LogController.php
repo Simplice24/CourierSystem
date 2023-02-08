@@ -7,6 +7,7 @@ use app\models\LogSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use Yii;
 
 /**
  * LogController implements the CRUD actions for Log model.
@@ -71,8 +72,8 @@ class LogController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-                $model->created_at=date('Y-m-d');
-                $model->updated_at=date('Y-m-d');
+                $model->created_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                $model->updated_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                 $model->save();
                 return $this->redirect(['view', 'log_id' => $model->log_id]);
             }

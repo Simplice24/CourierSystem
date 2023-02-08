@@ -7,6 +7,7 @@ use app\models\CustomerSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use Yii;
 
 /**
  * CustomerController implements the CRUD actions for Customer model.
@@ -71,8 +72,8 @@ class CustomerController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-                $model->created_at=date('Y-m-d');
-                $model->updated_at=date('Y-m-d');
+                $model->created_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                $model->updated_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                 $model->save();
                 return $this->redirect(['view', 'customer_id' => $model->customer_id]);
             }

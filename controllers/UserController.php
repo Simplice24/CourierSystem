@@ -76,6 +76,8 @@ class UserController extends Controller
                 $password_hash=Yii::$app->request->get('password_hash');
                 $model->auth_key =Yii::$app->security->generateRandomString();
                 $model->verification_token =Yii::$app->security->generateRandomString();
+                $model->created_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                $model->updated_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                 $model->password_hash=Yii::$app->getSecurity()->generatePasswordHash($password_hash);
                 $model->save();
                 return $this->redirect(['view', 'id' => $model->id]);
