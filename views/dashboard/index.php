@@ -43,13 +43,13 @@ $this->params['breadcrumbs'][] = $this->title;
             </li>
             <li class="nav-item">
               <a class="nav-link">
-              <?= Html::a('Users', ['/user'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
+              <?= Html::a('Branches', ['/branch'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
                 <i class="mdi mdi-contacts menu-icon"></i>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link">
-              <?= Html::a('Branches', ['/branch'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
+              <?= Html::a('Users', ['/user'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
                 <i class="mdi mdi-contacts menu-icon"></i>
               </a>
             </li>
