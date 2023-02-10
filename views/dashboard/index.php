@@ -122,7 +122,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
                     <h4 class="font-weight-normal mb-3">Branches <i class="mdi mdi-chart-line mdi-24px float-right"></i>
                     </h4>
-                    <h2 class="mb-5">30</h2>
+                    <h2 class="mb-5"><?= $branches ; ?></h2>
                     <h6 class="card-text">Increased by </h6>
                   </div>
                 </div>
@@ -133,7 +133,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
                     <h4 class="font-weight-normal mb-3">System users <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
                     </h4>
-                    <h2 class="mb-5">454</h2>
+                    <h2 class="mb-5"><?= $users ; ?></h2>
                     <h6 class="card-text">Decreased by </h6>
                   </div>
                 </div>
@@ -144,7 +144,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
                     <h4 class="font-weight-normal mb-3">Customers <i class="mdi mdi-diamond mdi-24px float-right"></i>
                     </h4>
-                    <h2 class="mb-5">9541</h2>
+                    <h2 class="mb-5"><?= $customers ; ?></h2>
                     <h6 class="card-text">Increased by </h6>
                   </div>
                 </div>
@@ -157,7 +157,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
                     <h4 class="font-weight-normal mb-3">Items <i class="mdi mdi-chart-line mdi-24px float-right"></i>
                     </h4>
-                    <h2 class="mb-5">1500</h2>
+                    <h2 class="mb-5"><?= $items ; ?></h2>
                     <h6 class="card-text">Increased by </h6>
                   </div>
                 </div>
@@ -168,7 +168,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
                     <h4 class="font-weight-normal mb-3">Logs <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
                     </h4>
-                    <h2 class="mb-5">4534</h2>
+                    <h2 class="mb-5"><?= $logs ; ?></h2>
                     <h6 class="card-text">Decreased by </h6>
                   </div>
                 </div>
@@ -179,7 +179,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
                     <h4 class="font-weight-normal mb-3">Manifests <i class="mdi mdi-diamond mdi-24px float-right"></i>
                     </h4>
-                    <h2 class="mb-5">9557</h2>
+                    <h2 class="mb-5"><?= $manifests ; ?></h2>
                     <h6 class="card-text">Increased by </h6>
                   </div>
                 </div>
@@ -192,7 +192,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
                     <h4 class="font-weight-normal mb-3">Status <i class="mdi mdi-chart-line mdi-24px float-right"></i>
                     </h4>
-                    <h2 class="mb-5"> 15</h2>
+                    <h2 class="mb-5"><?= $status ; ?></h2>
                     <h6 class="card-text">Increased by </h6>
                   </div>
                 </div>
@@ -203,7 +203,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
                     <h4 class="font-weight-normal mb-3"> Subscriptions <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
                     </h4>
-                    <h2 class="mb-5">4563</h2>
+                    <h2 class="mb-5"><?= $subscriptions ; ?></h2>
                     <h6 class="card-text">Decreased by </h6>
                   </div>
                 </div>
@@ -214,8 +214,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
                     <h4 class="font-weight-normal mb-3">Types of subscriptions <i class="mdi mdi-diamond mdi-24px float-right"></i>
                     </h4>
-                    <h2 class="mb-5">95,5741</h2>
-                    <h6 class="card-text">Increased by 5%</h6>
+                    <h2 class="mb-5"><?= $subscriptiontypes ; ?></h2>
+                    <h6 class="card-text">Increased by </h6>
                   </div>
                 </div>
               </div>
