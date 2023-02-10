@@ -33,10 +33,10 @@ class Branch extends \yii\db\ActiveRecord
     {
         return [
             [['branch_name', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'required'],
-            // [['branch_id'], 'integer'],
+            [['branch_id'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['branch_name', 'created_by', 'updated_by'], 'string', 'max' => 60],
-            // [['branch_id'], 'unique'],
+            [['branch_id'], 'unique'],
         ];
     }
 

@@ -74,6 +74,8 @@ class BranchController extends Controller
             if ($model->load($this->request->post())) {
                 $model->created_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                 $model->updated_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                $model->created_by=Yii::$app->user->identity->username;
+                $model->updated_by=Yii::$app->user->identity->username;
                 $model->save();
                 return $this->redirect(['view', 'branch_id' => $model->branch_id]);
             }

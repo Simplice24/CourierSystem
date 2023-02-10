@@ -39,11 +39,11 @@ class Customer extends \yii\db\ActiveRecord
         return [
             [['fullname', 'subscription', 'idn', 'telephone', 'created_at', 'created_by', 'updated_at', 'updated_by', 'item_id'], 'required'],
             [['idn', 'item_id'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['created_at', 'updated_at'], 'integer'],
             [['fullname', 'created_by', 'updated_by'], 'string', 'max' => 60],
             [['subscription'], 'string', 'max' => 10],
             [['telephone'], 'string', 'max' => 15],
-            [['idn'], 'unique'],
+            // [['idn'], 'unique'],
             [['item_id'], 'exist', 'skipOnError' => true, 'targetClass' => Item::class, 'targetAttribute' => ['item_id' => 'item_id']],
         ];
     }

@@ -169,12 +169,12 @@ use yii\widgets\ActiveForm;
                   <div class="form-group">
                     <?= $form->field($model, 'branch_name')->textInput(['maxlength' => true]) ?>
                   </div>
-                  <div class="form-group">
+                  <!-- <div class="form-group">
                     <?= $form->field($model, 'created_by')->textInput(['maxlength' => true]) ?>
-                  </div>
-                  <div class="form-group">
+                  </div> -->
+                  <!-- <div class="form-group">
                     <?= $form->field($model, 'updated_by')->textInput(['maxlength' => true]) ?>
-                  </div>
+                  </div> -->
                   <?= Html::submitButton('Save', ['class' => 'btn btn-gradient-primary me-2']) ?>
                 </form>
               </div>
