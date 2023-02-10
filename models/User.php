@@ -120,6 +120,11 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return null;
     }
 
+    public function setPassword($password)
+    {
+      $this->password_hash = \Yii::$app->security->generatePasswordHash($password);
+    }
+
     public static function findByUsername($username)
     {
         // foreach (self::$users as $user) {
@@ -135,7 +140,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
     public function validatePassword($password)
     {
-        return $this->password_hash === $password;
+        return \Yii::$app->security->validatePassword($password,$this->password_hash);
     }
 
 }
