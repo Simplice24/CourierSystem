@@ -208,7 +208,7 @@ use app\models\Item;
             </div>
             </div>
 
-            <div class="row" style="height:90px;">
+            <!-- <div class="row" style="height:90px;">
                 <div class="col-md-6">
                  <div class="form-group row">
                     <div class="form-group">
@@ -224,7 +224,7 @@ use app\models\Item;
                     </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <div class="row" style="height:90px;">
                 <div class="col-md-6">

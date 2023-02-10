@@ -178,15 +178,7 @@ use yii\helpers\ArrayHelper;
 <?= $form->field($model, 'payment_way')->textInput(['maxlength' => true]) ?>
 </div>
 <div class="form-group">
-<?= $form->field($model, 'created_by')->textInput(['maxlength' => true]) ?>
-</div>
-<div class="form-group">
-<?= $form->field($model, 'updated_by')->textInput(['maxlength' => true]) ?>
-</div>
-<div class="form-group">
-<?= $form->field($model, 'subscription_id')->DropDownList(
-    ArrayHelper::map(Subscription::find()->all(),'subscription_id','subscription_name'),['prompt'=>'Select subscription']
-) ?>
+<?= $form->field($model, 'subscription_id')->textInput(['maxlength' => true])?>
 </div>
 <div class="form-group">
     <?= Html::submitButton('Save', ['class' => 'btn btn-gradient-primary me-2']) ?>

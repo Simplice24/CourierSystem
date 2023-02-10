@@ -172,12 +172,6 @@ use yii\widgets\ActiveForm;
 <?= $form->field($model, 'subscription_type')->textInput(['maxlength' => true]) ?>
 </div>
 <div class="form-group">
-<?= $form->field($model, 'created_by')->textInput(['maxlength' => true]) ?>
-</div>
-<div class="form-group">
-<?= $form->field($model, 'updated_by')->textInput(['maxlength' => true]) ?>
-</div>
-<div class="form-group">
 <?= $form->field($model, 'customer_id')->textInput() ?>
 </div>
 <div class="form-group">

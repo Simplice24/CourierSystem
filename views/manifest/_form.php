@@ -205,25 +205,6 @@ use yii\widgets\ActiveForm;
             </div>
 </div>
 
-<div class="row" style="height:90px;">
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                    <div class="form-group">
-<?= $form->field($model, 'created_by')->textInput(['maxlength' => true]) ?>
-</div>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                      <div class="form-group row">
-                    <div class="form-group">
-
-<?= $form->field($model, 'updated_by')->textInput(['maxlength' => true]) ?>
-</div>
-                </div>
-            </div>
-</div>
-
 <div class="form-group">
     <?= Html::submitButton('Save', ['class' => 'btn btn-gradient-primary me-2']) ?>
 </div>
