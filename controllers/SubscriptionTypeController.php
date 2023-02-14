@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use Yii;
+use yii\web\ForbiddenHttpException;
 
 /**
  * SubscriptionTypeController implements the CRUD actions for SubscriptionType model.
@@ -69,23 +70,27 @@ class SubscriptionTypeController extends Controller
     public function actionCreate()
     {
         $model = new SubscriptionType();
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                $model->created_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
-                $model->updated_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
-                $model->created_by=Yii::$app->user->identity->username;
-                $model->updated_by=Yii::$app->user->identity->username;
-                $model->save();
-                return $this->redirect(['view', 'id' => $model->id]);
+        if(Yii::$app->user->can('Create_subscriptionTypes')){
+            if ($this->request->isPost) {
+                if ($model->load($this->request->post())) {
+                    $model->created_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                    $model->updated_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                    $model->created_by=Yii::$app->user->identity->username;
+                    $model->updated_by=Yii::$app->user->identity->username;
+                    $model->save();
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            } else {
+                $model->loadDefaultValues();
             }
-        } else {
-            $model->loadDefaultValues();
+    
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }else{
+            throw new ForbiddenHttpException;
         }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        
     }
 
     /**
