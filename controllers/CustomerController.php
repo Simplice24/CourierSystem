@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use Yii;
+use yii\web\ForbiddenHttpException;
 
 /**
  * CustomerController implements the CRUD actions for Customer model.
@@ -41,7 +42,6 @@ class CustomerController extends Controller
     {
         $searchModel = new CustomerSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
-
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -69,23 +69,29 @@ class CustomerController extends Controller
     public function actionCreate()
     {
         $model = new Customer();
+       
+        if(Yii::$app->user->can('Create_customer')){
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                $model->created_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
-                $model->updated_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
-                $model->created_by=Yii::$app->user->identity->username;
-                $model->updated_by=Yii::$app->user->identity->username;
-                $model->save();
-                return $this->redirect(['view', 'customer_id' => $model->customer_id]);
+            if ($this->request->isPost) {
+                if ($model->load($this->request->post())) {
+                    $model->created_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                    $model->updated_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                    $model->created_by=Yii::$app->user->identity->username;
+                    $model->updated_by=Yii::$app->user->identity->username;
+                    $model->save();
+                    return $this->redirect(['view', 'customer_id' => $model->customer_id]);
+                }
+            } else {
+                $model->loadDefaultValues();
             }
-        } else {
-            $model->loadDefaultValues();
+    
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }else{
+            throw new ForbiddenHttpException;
         }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+       
     }
 
     /**
