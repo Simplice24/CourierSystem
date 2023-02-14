@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use Yii;
+use yii\web\ForbiddenHttpException;
 
 /**
  * ManifestController implements the CRUD actions for Manifest model.
@@ -69,24 +70,29 @@ class ManifestController extends Controller
     public function actionCreate()
     {
         $model = new Manifest();
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                $model->created_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
-                $model->updated_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
-                $model->created_by=Yii::$app->user->identity->username;
-                $model->updated_by=Yii::$app->user->identity->username;
-                $model->save();
-                return $this->redirect(['view', 'manifest_id' => $model->manifest_id]);
+        if(Yii::$app->user->can('Create_log')){
+            if ($this->request->isPost) {
+                if ($model->load($this->request->post())) {
+                    $model->created_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                    $model->updated_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                    $model->created_by=Yii::$app->user->identity->username;
+                    $model->updated_by=Yii::$app->user->identity->username;
+                    $model->save();
+                    return $this->redirect(['view', 'manifest_id' => $model->manifest_id]);
+                }
+            } else {
+                $model->loadDefaultValues();
             }
-        } else {
-            $model->loadDefaultValues();
+    
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }else{
+            throw new ForbiddenHttpException;
         }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        
     }
+    
 
     /**
      * Updates an existing Manifest model.
