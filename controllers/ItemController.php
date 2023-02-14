@@ -103,7 +103,8 @@ class ItemController extends Controller
      */
     public function actionUpdate($item_id)
     {
-        $model = $this->findModel($item_id);
+        if(Yii::$app->user->can('Update_item')){
+            $model = $this->findModel($item_id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'item_id' => $model->item_id]);
@@ -112,6 +113,10 @@ class ItemController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
+        }else{
+            throw new ForbiddenHttpException;
+        }
+        
     }
 
     /**

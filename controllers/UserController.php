@@ -9,6 +9,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\db\Expression;
 use Yii;
+use yii\web\ForbiddenHttpException;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -70,25 +71,29 @@ class UserController extends Controller
     public function actionCreate()
     {
         $model = new User();
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                $password_hash=Yii::$app->request->get('password_hash');
-                $model->auth_key =Yii::$app->security->generateRandomString();
-                $model->verification_token =Yii::$app->security->generateRandomString();
-                $model->created_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
-                $model->updated_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
-                $model->setPassword($model->password_hash);
-                $model->save();
-                return $this->redirect(['view', 'id' => $model->id]);
+        if(Yii::$app->user->can('Create_user')){
+            if ($this->request->isPost) {
+                if ($model->load($this->request->post())) {
+                    $password_hash=Yii::$app->request->get('password_hash');
+                    $model->auth_key =Yii::$app->security->generateRandomString();
+                    $model->verification_token =Yii::$app->security->generateRandomString();
+                    $model->created_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                    $model->updated_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                    $model->setPassword($model->password_hash);
+                    $model->save();
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            } else {
+                $model->loadDefaultValues();
             }
-        } else {
-            $model->loadDefaultValues();
+    
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }else{
+            throw new ForbiddenHttpException;
         }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        
     }
 
     /**
@@ -100,7 +105,8 @@ class UserController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if(Yii::$app->user->can('Update_user')){
+            $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -109,6 +115,10 @@ class UserController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
+        }else{
+            throw new ForbiddenHttpException;
+        }
+        
     }
 
     /**

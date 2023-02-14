@@ -103,7 +103,8 @@ class LogController extends Controller
      */
     public function actionUpdate($log_id)
     {
-        $model = $this->findModel($log_id);
+        if(Yii::$app->user->can('Update_log')){
+            $model = $this->findModel($log_id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'log_id' => $model->log_id]);
@@ -112,6 +113,10 @@ class LogController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
+        }else{
+            throw new ForbiddenHttpException;
+        }
+        
     }
 
     /**

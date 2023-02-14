@@ -103,15 +103,20 @@ class CustomerController extends Controller
      */
     public function actionUpdate($customer_id)
     {
-        $model = $this->findModel($customer_id);
+        if(Yii::$app->user->can('Update_customer')){
+            $model = $this->findModel($customer_id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'customer_id' => $model->customer_id]);
+            if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'customer_id' => $model->customer_id]);
+            }
+    
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }else{
+            throw new ForbiddenHttpException;
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+       
     }
 
     /**

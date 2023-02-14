@@ -70,7 +70,7 @@ class ManifestController extends Controller
     public function actionCreate()
     {
         $model = new Manifest();
-        if(Yii::$app->user->can('Create_log')){
+        if(Yii::$app->user->can('Create_manifest')){
             if ($this->request->isPost) {
                 if ($model->load($this->request->post())) {
                     $model->created_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));

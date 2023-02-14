@@ -104,15 +104,20 @@ class StatusController extends Controller
      */
     public function actionUpdate($status_id)
     {
-        $model = $this->findModel($status_id);
+        if(Yii::$app->user->can('Update_status')){
+            $model = $this->findModel($status_id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'status_id' => $model->status_id]);
+            if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'status_id' => $model->status_id]);
+            }
+    
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }else{
+            throw new ForbiddenHttpException;
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+       
     }
 
     /**

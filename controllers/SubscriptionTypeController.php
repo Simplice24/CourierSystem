@@ -102,7 +102,8 @@ class SubscriptionTypeController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if(Yii::$app->user->can('Update_subscriptionTypes')){
+            $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -111,6 +112,10 @@ class SubscriptionTypeController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
+        }else{
+            throw new ForbiddenHttpException;
+        }
+        
     }
 
     /**

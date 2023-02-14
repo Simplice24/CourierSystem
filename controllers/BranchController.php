@@ -104,15 +104,20 @@ class BranchController extends Controller
      */
     public function actionUpdate($branch_id)
     {
-        $model = $this->findModel($branch_id);
+        if(Yii::$app->user->can('Update_branch')){
+            $model = $this->findModel($branch_id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'branch_id' => $model->branch_id]);
+            if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'branch_id' => $model->branch_id]);
+            }
+    
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }else{
+            throw new ForbiddenHttpException;
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+       
     }
 
     /**
