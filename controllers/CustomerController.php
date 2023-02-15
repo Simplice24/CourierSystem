@@ -56,7 +56,7 @@ class CustomerController extends Controller
      */
     public function actionView($customer_id)
     {
-        if(Yiii::$app->user->can('View_customer')){
+        if(Yii::$app->user->can('View_customer')){
             return $this->render('view', [
                 'model' => $this->findModel($customer_id),
             ]);
@@ -133,7 +133,7 @@ class CustomerController extends Controller
      */
     public function actionDelete($customer_id)
     {
-        if(Yiii::$app->user->can('Delete_customer')){
+        if(Yii::$app->user->can('Delete_customer')){
             $this->findModel($customer_id)->delete();
 
             return $this->redirect(['index']);

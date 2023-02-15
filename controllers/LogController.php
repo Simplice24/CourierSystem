@@ -57,9 +57,14 @@ class LogController extends Controller
      */
     public function actionView($log_id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($log_id),
-        ]);
+        if(Yii::$app->user->can('View_log')){
+            return $this->render('view', [
+                'model' => $this->findModel($log_id),
+            ]);
+        }else{
+            throw new ForbiddenHttpException;
+        }
+        
     }
 
     /**

@@ -57,7 +57,7 @@ class ItemController extends Controller
      */
     public function actionView($item_id)
     {
-        if(Yiii::$app->user->can('View_item')){
+        if(Yii::$app->user->can('View_item')){
             return $this->render('view', [
                 'model' => $this->findModel($item_id),
             ]);
