@@ -57,9 +57,13 @@ class BranchController extends Controller
      */
     public function actionView($branch_id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($branch_id),
-        ]);
+        if(Yii::$app->user->can('View_branch')){
+            return $this->render('view', [
+                'model' => $this->findModel($branch_id),
+            ]);
+        }else{
+            throw new ForbiddenHttpException;
+        } 
     }
 
     /**
@@ -129,9 +133,14 @@ class BranchController extends Controller
      */
     public function actionDelete($branch_id)
     {
-        $this->findModel($branch_id)->delete();
+        if(Yii::$app->user->can('Delete_branch')){
+            $this->findModel($branch_id)->delete();
 
         return $this->redirect(['index']);
+        }else{
+            throw new ForbiddenHttpException;
+        }
+        
     }
 
     /**
