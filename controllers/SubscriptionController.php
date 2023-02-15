@@ -57,9 +57,14 @@ class SubscriptionController extends Controller
      */
     public function actionView($subscription_id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($subscription_id),
-        ]);
+        if(Yii::$app->user->can('View_subscription')){
+            return $this->render('view', [
+                'model' => $this->findModel($subscription_id),
+            ]);
+        }else{
+            throw new ForbiddenHttpException;
+        }
+        
     }
 
     /**
@@ -128,10 +133,16 @@ class SubscriptionController extends Controller
      */
     public function actionDelete($subscription_id)
     {
-        $this->findModel($subscription_id)->delete();
+        if(Yii::$app->user->can('Delete_subscription')){
+            $this->findModel($subscription_id)->delete();
 
         return $this->redirect(['index']);
+    }else{
+        throw new ForbiddenHttpException;
     }
+
+        }
+        
 
     /**
      * Finds the Subscription model based on its primary key value.

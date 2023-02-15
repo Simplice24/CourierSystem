@@ -57,9 +57,14 @@ class SubscriptionTypeController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if(Yii::$app->user->can('View_subscriptionTypes')){
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }else{
+            throw new ForbiddenHttpException;
+        }
+        
     }
 
     /**
@@ -127,9 +132,14 @@ class SubscriptionTypeController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if(Yii::$app->user->can('Delete_subscriptionTypes')){
+            $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+        }else{
+            throw new ForbiddenHttpException;
+        }
+        
     }
 
     /**

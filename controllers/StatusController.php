@@ -57,9 +57,14 @@ class StatusController extends Controller
      */
     public function actionView($status_id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($status_id),
-        ]);
+        if(Yii::$app->user->can('View_status')){
+            return $this->render('view', [
+                'model' => $this->findModel($status_id),
+            ]);
+        }else{
+            throw new ForbiddenHttpException;
+        }
+        
     }
 
     /**
@@ -129,9 +134,14 @@ class StatusController extends Controller
      */
     public function actionDelete($status_id)
     {
-        $this->findModel($status_id)->delete();
+        if(Yii::$app->user->can('Delete_status')){
+            $this->findModel($status_id)->delete();
 
         return $this->redirect(['index']);
+        }else{
+            throw new ForbiddenHttpException;
+        }
+        
     }
 
     /**
