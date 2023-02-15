@@ -57,9 +57,14 @@ class ManifestController extends Controller
      */
     public function actionView($manifest_id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($manifest_id),
-        ]);
+        if(Yii::$app->user->can('View_manifest')){
+            return $this->render('view', [
+                'model' => $this->findModel($manifest_id),
+            ]);
+        }else{
+            throw new ForbiddenHttpException;
+        }
+        
     }
 
     /**
@@ -103,15 +108,20 @@ class ManifestController extends Controller
      */
     public function actionUpdate($manifest_id)
     {
-        $model = $this->findModel($manifest_id);
+        if(Yii::$app->user->can('Update_manifest')){
+            $model = $this->findModel($manifest_id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'manifest_id' => $model->manifest_id]);
+            if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'manifest_id' => $model->manifest_id]);
+            }
+    
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }else{
+            throw new ForbiddenHttpException;
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+       
     }
 
     /**
@@ -123,9 +133,14 @@ class ManifestController extends Controller
      */
     public function actionDelete($manifest_id)
     {
-        $this->findModel($manifest_id)->delete();
+        if(Yii::$app->user->can('Delete_manifest')){
+            $this->findModel($manifest_id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        }else{
+            throw new ForbiddenHttpException;
+        }
+       
     }
 
     /**

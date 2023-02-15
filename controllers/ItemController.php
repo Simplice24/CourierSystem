@@ -57,9 +57,14 @@ class ItemController extends Controller
      */
     public function actionView($item_id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($item_id),
-        ]);
+        if(Yiii::$app->user->can('View_item')){
+            return $this->render('view', [
+                'model' => $this->findModel($item_id),
+            ]);
+        }else{
+            throw new ForbiddenHttpException;
+        }
+        
     }
 
     /**
@@ -128,9 +133,14 @@ class ItemController extends Controller
      */
     public function actionDelete($item_id)
     {
-        $this->findModel($item_id)->delete();
+        if(Yii::$app->user->can('Delete_item')){
+            $this->findModel($item_id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        }else{
+            throw new ForbiddenHttpException;
+        }
+      
     }
 
     /**

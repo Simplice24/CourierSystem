@@ -56,9 +56,14 @@ class CustomerController extends Controller
      */
     public function actionView($customer_id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($customer_id),
-        ]);
+        if(Yiii::$app->user->can('View_customer')){
+            return $this->render('view', [
+                'model' => $this->findModel($customer_id),
+            ]);
+        }else{
+            throw new ForbiddenHttpException;
+        }
+       
     }
 
     /**
@@ -128,9 +133,14 @@ class CustomerController extends Controller
      */
     public function actionDelete($customer_id)
     {
-        $this->findModel($customer_id)->delete();
+        if(Yiii::$app->user->can('Delete_customer')){
+            $this->findModel($customer_id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        }else{
+            throw new ForbiddenHttpException;
+        }
+       
     }
 
     /**
