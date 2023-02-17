@@ -86,6 +86,7 @@ class UserController extends Controller
                     $model->updated_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                     $model->setPassword($model->password_hash);
                     $model->save();
+
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
             } else {

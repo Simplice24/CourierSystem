@@ -2,6 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use app\models\AuthItem;
+use yii\helpers\ArrayHelper;
+
 
 /** @var yii\web\View $this */
 /** @var app\models\User $model */
@@ -166,7 +169,8 @@ use yii\widgets\ActiveForm;
 
 <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
 
-<?= $form->field($model, 'role')->DropDownList(['ADMIN'=>'ADMIN','BRANCH_MANAGER'=>'BRANCH MANAGER','BRANCH_AGENT'=>'BRANCH AGENT'],['prompt'=>'Select user role']) ?>
+<?= $form->field($model, 'role')->DropDownList(
+  ArrayHelper::map(AuthItem::find()->all(),'name','name'),['prompt'=>'Select user role']); ?>
 
 <!-- <?= $form->field($model, 'auth_key')->textInput(['maxlength' => true]) ?> -->
 
