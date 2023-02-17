@@ -79,7 +79,7 @@ class UserController extends Controller
         if(Yii::$app->user->can('Create_user')){
             if ($this->request->isPost) {
                 if ($model->load($this->request->post())) {
-                    $password_hash=Yii::$app->request->get('password_hash');
+                    // $password_hash=Yii::$app->request->get('password_hash');
                     $model->auth_key =Yii::$app->security->generateRandomString();
                     $model->verification_token =Yii::$app->security->generateRandomString();
                     $model->created_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));

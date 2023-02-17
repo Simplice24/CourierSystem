@@ -23,8 +23,8 @@ use yii\widgets\ActiveForm;
                   <span class="login-status online"></span>
                 </div> -->
                 <div class="nav-profile-text d-flex flex-column">
-                  <span class="font-weight-bold mb-2"></span>
-                  <span class="text-secondary text-small">Role</span>
+                  <span class="font-weight-bold mb-2"><?= \Yii::$app->user->identity->username ;?></span>
+                  <span class="text-secondary text-small"><?= Yii::$app->getUser()->identity->role; ?></span>
                 </div>
                 <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
               </a>
@@ -166,7 +166,7 @@ use yii\widgets\ActiveForm;
 
 <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
 
-<?= $form->field($model, 'role')->textInput(['maxlength' => true]) ?>
+<?= $form->field($model, 'role')->DropDownList(['ADMIN'=>'ADMIN','BRANCH_MANAGER'=>'BRANCH MANAGER','BRANCH_AGENT'=>'BRANCH AGENT'],['prompt'=>'Select user role']) ?>
 
 <!-- <?= $form->field($model, 'auth_key')->textInput(['maxlength' => true]) ?> -->
 
