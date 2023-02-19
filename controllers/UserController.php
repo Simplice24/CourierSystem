@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\User;
+use app\models\AuthAssignment;
 use app\models\UserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -85,7 +86,12 @@ class UserController extends Controller
                     $model->created_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                     $model->updated_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                     $model->setPassword($model->password_hash);
-                    $model->save();
+                    if($model->save()){
+                        $auth=new AuthAssignment;
+                        $auth->user_id= $model->id;
+                        $auth->item_name=$model->role;
+                        $auth->save();
+                    }
 
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
