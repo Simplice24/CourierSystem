@@ -169,8 +169,7 @@ use yii\helpers\ArrayHelper;
 
 <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
 
-<?= $form->field($model, 'role')->DropDownList(
-  ArrayHelper::map(AuthItem::find()->all(),'name','name'),['prompt'=>'Select user role']); ?>
+<?= $form->field($model, 'role')->DropDownList(['ADMIN'=>'ADMIN','Branch_manager'=>'BRANCH MANAGER','Branch_agent'=>'BRANCH AGENT'],['prompt'=>'Select user role'])?>
 
 <!-- <?= $form->field($model, 'auth_key')->textInput(['maxlength' => true]) ?> -->
 
