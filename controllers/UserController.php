@@ -85,12 +85,7 @@ class UserController extends Controller
                     $model->created_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                     $model->updated_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                     $model->setPassword($model->password_hash);
-                    // $AssignedRoles=Yii::$app->request->get('role');
                     $model->save();
-
-                    // $auth = Yii::$app->authManager;
-                    // $authorRole = $auth->getRole(Yii::$app->request->get('role'));
-                    // $auth->assign($authorRole, $model->getId());
 
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
