@@ -173,6 +173,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <p>
     <?= Html::a('Create Item', ['create'], ['class' => 'btn btn-success']) ?>
+    <!-- <?= Html::a('Generate Report', ['create'], ['class' => 'btn btn-success']) ?> -->
 </p>
 
 <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -187,10 +188,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'item_name',
         // 'value',
         'sender_name',
-        'sender_phone',
+        // 'sender_phone',
         //'sender_subscription',
         'receiver_name',
-        'receiver_phone',
+        // 'receiver_phone',
         //'receiver_id',
         //'departure',
         //'depature_date',
@@ -209,6 +210,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ],
 ]); ?>
+
 
 
 </div>
