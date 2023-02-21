@@ -41,7 +41,7 @@ class Log extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'log_id' => 'Log ID',
+            // 'log_id' => 'Log ID',
             'done_by' => 'Done By',
             'comment' => 'Comment',
             'done_at' => 'Done At',
