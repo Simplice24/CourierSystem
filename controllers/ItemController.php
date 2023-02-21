@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Item;
+use app\models\Log;
 use app\models\ItemSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -83,7 +84,13 @@ class ItemController extends Controller
                     $model->updated_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                     $model->created_by=Yii::$app->user->identity->username;
                     $model->updated_by=Yii::$app->user->identity->username;
-                    $model->save();
+                    if($model->save()){
+                        $log = new Log();
+                        $log->done_by=Yii::$app->user->identity->username;
+                        $log->comment="Item received by branch agent";
+                        $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                        $log->save();
+                    }
                     return $this->redirect(['view', 'item_id' => $model->item_id]);
                 }
             } else {
@@ -111,7 +118,14 @@ class ItemController extends Controller
         if(Yii::$app->user->can('Update_item')){
             $model = $this->findModel($item_id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            if($model->save()){
+                $log = new Log();
+                $log->done_by=Yii::$app->user->identity->username;
+                $log->comment="Item details updated";
+                $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                $log->save();
+            }
             return $this->redirect(['view', 'item_id' => $model->item_id]);
         }
 
@@ -135,7 +149,12 @@ class ItemController extends Controller
     {
         if(Yii::$app->user->can('Delete_item')){
             $this->findModel($item_id)->delete();
-
+                $log = new Log();
+                $log->done_by=Yii::$app->user->identity->username;
+                $log->comment="Item deleted";
+                $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                $log->save();
+            
             return $this->redirect(['index']);
         }else{
             throw new ForbiddenHttpException;

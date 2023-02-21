@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Subscription;
+use app\models\Log;
 use app\models\SubscriptionSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -82,7 +83,13 @@ class SubscriptionController extends Controller
                     $model->updated_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                     $model->created_by=Yii::$app->user->identity->username;
                     $model->updated_by=Yii::$app->user->identity->username;
-                    $model->save();
+                    if($model->save()){
+                        $log = new Log();
+                        $log->done_by=Yii::$app->user->identity->username;
+                        $log->comment="Subscription created";
+                        $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                        $log->save();
+                    }
                     return $this->redirect(['view', 'subscription_id' => $model->subscription_id]);
                 }
             } else {
@@ -111,7 +118,14 @@ class SubscriptionController extends Controller
         if(Yii::$app->user->can('Update_subscription')){
             $model = $this->findModel($subscription_id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            if($model->save()){
+                $log = new Log();
+                $log->done_by=Yii::$app->user->identity->username;
+                $log->comment="Subscription details updated";
+                $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                $log->save();
+            }
             return $this->redirect(['view', 'subscription_id' => $model->subscription_id]);
         }
 
@@ -135,6 +149,12 @@ class SubscriptionController extends Controller
     {
         if(Yii::$app->user->can('Delete_subscription')){
             $this->findModel($subscription_id)->delete();
+                $log = new Log();
+                $log->done_by=Yii::$app->user->identity->username;
+                $log->comment="Updated customer details";
+                $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                $log->save();
+            
 
         return $this->redirect(['index']);
     }else{

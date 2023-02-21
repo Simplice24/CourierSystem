@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Branch;
+use app\models\Log;
 use app\models\BranchSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -83,7 +84,13 @@ class BranchController extends Controller
                     $model->updated_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                     $model->created_by=Yii::$app->user->identity->username;
                     $model->updated_by=Yii::$app->user->identity->username;
-                    $model->save();
+                    if($model->save()){
+                        $log = new Log();
+                        $log->done_by=Yii::$app->user->identity->username;
+                        $log->comment="Branch created";
+                        $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                        $log->save();
+                    }
                     return $this->redirect(['view', 'branch_id' => $model->branch_id]);
                 }
             } else {
@@ -111,7 +118,14 @@ class BranchController extends Controller
         if(Yii::$app->user->can('Update_branch')){
             $model = $this->findModel($branch_id);
 
-            if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            if ($this->request->isPost && $model->load($this->request->post())) {
+                if($model->save()){
+                    $log = new Log();
+                    $log->done_by=Yii::$app->user->identity->username;
+                    $log->comment="Branch details updated";
+                    $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                    $log->save();
+                }
                 
                 return $this->redirect(['view', 'branch_id' => $model->branch_id]);
             }
@@ -136,6 +150,12 @@ class BranchController extends Controller
     {
         if(Yii::$app->user->can('Delete_branch')){
             $this->findModel($branch_id)->delete();
+                $log = new Log();
+                $log->done_by=Yii::$app->user->identity->username;
+                $log->comment="Branch deleted";
+                $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                $log->save();
+            }
 
         return $this->redirect(['index']);
         }else{

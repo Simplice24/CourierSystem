@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Status;
+use app\models\Log;
 use app\models\StatusSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -83,7 +84,14 @@ class StatusController extends Controller
                     $model->updated_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                     $model->created_by=Yii::$app->user->identity->username;
                     $model->updated_by=Yii::$app->user->identity->username;
-                    $model->save();
+                    if($model->save()){
+                        $log = new Log();
+    
+                        $log->done_by=Yii::$app->user->identity->username;
+                        $log->comment="Status created";
+                        $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                        $log->save();
+                    }
                     return $this->redirect(['view', 'status_id' => $model->status_id]);
                 }
             } else {
@@ -112,7 +120,14 @@ class StatusController extends Controller
         if(Yii::$app->user->can('Update_status')){
             $model = $this->findModel($status_id);
 
-            if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            if ($this->request->isPost && $model->load($this->request->post())) {
+                if($model->save()){
+                    $log = new Log();
+                    $log->done_by=Yii::$app->user->identity->username;
+                    $log->comment="Status details updated";
+                    $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                    $log->save();
+                }
                 return $this->redirect(['view', 'status_id' => $model->status_id]);
             }
     
@@ -136,6 +151,13 @@ class StatusController extends Controller
     {
         if(Yii::$app->user->can('Delete_status')){
             $this->findModel($status_id)->delete();
+                $log = new Log();
+
+                $log->done_by=Yii::$app->user->identity->username;
+                $log->comment="Updated customer details";
+                $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                $log->save();
+
 
         return $this->redirect(['index']);
         }else{

@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Manifest;
+use app\models\Log;
 use app\models\ManifestSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -82,7 +83,13 @@ class ManifestController extends Controller
                     $model->updated_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                     $model->created_by=Yii::$app->user->identity->username;
                     $model->updated_by=Yii::$app->user->identity->username;
-                    $model->save();
+                    if($model->save()){
+                        $log = new Log();
+                        $log->done_by=Yii::$app->user->identity->username;
+                        $log->comment="Manifest created";
+                        $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                        $log->save();
+                    }
                     return $this->redirect(['view', 'manifest_id' => $model->manifest_id]);
                 }
             } else {
@@ -111,7 +118,14 @@ class ManifestController extends Controller
         if(Yii::$app->user->can('Update_manifest')){
             $model = $this->findModel($manifest_id);
 
-            if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            if ($this->request->isPost && $model->load($this->request->post())) {
+                if($model->save()){
+                    $log = new Log();
+                    $log->done_by=Yii::$app->user->identity->username;
+                    $log->comment="Manifest updated";
+                    $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                    $log->save();
+                }
                 return $this->redirect(['view', 'manifest_id' => $model->manifest_id]);
             }
     
@@ -135,6 +149,12 @@ class ManifestController extends Controller
     {
         if(Yii::$app->user->can('Delete_manifest')){
             $this->findModel($manifest_id)->delete();
+                $log = new Log();
+
+                $log->done_by=Yii::$app->user->identity->username;
+                $log->comment="Manifest deleted";
+                $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                $log->save();
 
             return $this->redirect(['index']);
         }else{

@@ -113,7 +113,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </li>
             <li class="nav-item">
               <a class="nav-link">
-              <?= Html::a('Types of subscription', ['/subscription-type'], ['class'=>'menu-title''style'=>'text-decoration:none; font-weight:bold;']) ?>
+              <?= Html::a('Types of subscription', ['/subscription-type'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
                 <!-- <span class="menu-title">Types of subscription</span> -->
                 <i class="mdi mdi-table-large menu-icon"></i>
               </a>

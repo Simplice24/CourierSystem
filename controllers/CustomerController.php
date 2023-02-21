@@ -87,7 +87,7 @@ class CustomerController extends Controller
                     if($model->save()){
                         $log = new Log();
                         $log->done_by=Yii::$app->user->identity->username;
-                        $log->comment="Created a customer";
+                        $log->comment="Customer created";
                         $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                         $log->save();
                     }
@@ -123,7 +123,7 @@ class CustomerController extends Controller
                     $log = new Log();
 
                     $log->done_by=Yii::$app->user->identity->username;
-                    $log->comment="Updated customer details";
+                    $log->comment="Customer details updated";
                     $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                     $log->save();
                 }
@@ -152,7 +152,7 @@ class CustomerController extends Controller
             $this->findModel($customer_id)->delete();
                 $log = new Log();
                 $log->done_by=Yii::$app->user->identity->username;
-                $log->comment="Deleted a customer";
+                $log->comment="Customer deleted";
                 $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                 $log->save();
 
