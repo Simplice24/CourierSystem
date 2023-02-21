@@ -84,7 +84,13 @@ class CustomerController extends Controller
                     $model->updated_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                     $model->created_by=Yii::$app->user->identity->username;
                     $model->updated_by=Yii::$app->user->identity->username;
-                    $model->save();
+                    if($model->save()){
+                        $log = new Log();
+                        $log->done_by=Yii::$app->user->identity->username;
+                        $log->comment="Created a customer";
+                        $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                        $log->save();
+                    }
                     return $this->redirect(['view', 'customer_id' => $model->customer_id]);
                 }
             } else {
@@ -144,6 +150,11 @@ class CustomerController extends Controller
     {
         if(Yii::$app->user->can('Delete_customer')){
             $this->findModel($customer_id)->delete();
+                $log = new Log();
+                $log->done_by=Yii::$app->user->identity->username;
+                $log->comment="Deleted a customer";
+                $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                $log->save();
 
             return $this->redirect(['index']);
         }else{

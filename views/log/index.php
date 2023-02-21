@@ -183,7 +183,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'log_id',
+            // 'log_id',
             'done_by',
             'comment',
             'done_at',
