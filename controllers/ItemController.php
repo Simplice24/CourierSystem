@@ -122,7 +122,7 @@ class ItemController extends Controller
             if($model->save()){
                 $log = new Log();
                 $log->done_by=Yii::$app->user->identity->username;
-                $log->comment="Item details updated";
+                $log->comment="Updated item details ";
                 $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                 $log->save();
             }
@@ -151,7 +151,7 @@ class ItemController extends Controller
             $this->findModel($item_id)->delete();
                 $log = new Log();
                 $log->done_by=Yii::$app->user->identity->username;
-                $log->comment="Item deleted";
+                $log->comment="Deleted item";
                 $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                 $log->save();
             

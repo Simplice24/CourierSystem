@@ -86,7 +86,7 @@ class ManifestController extends Controller
                     if($model->save()){
                         $log = new Log();
                         $log->done_by=Yii::$app->user->identity->username;
-                        $log->comment="Manifest created";
+                        $log->comment="Created new manifest";
                         $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                         $log->save();
                     }
@@ -122,7 +122,7 @@ class ManifestController extends Controller
                 if($model->save()){
                     $log = new Log();
                     $log->done_by=Yii::$app->user->identity->username;
-                    $log->comment="Manifest updated";
+                    $log->comment="Updated manifest details";
                     $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                     $log->save();
                 }
@@ -152,7 +152,7 @@ class ManifestController extends Controller
                 $log = new Log();
 
                 $log->done_by=Yii::$app->user->identity->username;
-                $log->comment="Manifest deleted";
+                $log->comment="Deleted a manifest";
                 $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                 $log->save();
 

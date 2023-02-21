@@ -87,7 +87,7 @@ class BranchController extends Controller
                     if($model->save()){
                         $log = new Log();
                         $log->done_by=Yii::$app->user->identity->username;
-                        $log->comment="Branch created";
+                        $log->comment="Created new branch";
                         $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                         $log->save();
                     }
@@ -122,7 +122,7 @@ class BranchController extends Controller
                 if($model->save()){
                     $log = new Log();
                     $log->done_by=Yii::$app->user->identity->username;
-                    $log->comment="Branch details updated";
+                    $log->comment="Updated branch details";
                     $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                     $log->save();
                 }
@@ -152,7 +152,7 @@ class BranchController extends Controller
             $this->findModel($branch_id)->delete();
                 $log = new Log();
                 $log->done_by=Yii::$app->user->identity->username;
-                $log->comment="Branch deleted";
+                $log->comment="Deleted a branch";
                 $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                 $log->save();
             }
