@@ -17,8 +17,8 @@ class LogSearch extends Log
     public function rules()
     {
         return [
-            [['log_id', 'item_id'], 'integer'],
-            [['field_name', 'old_value', 'new_value', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'safe'],
+            [['log_id', 'done_at'], 'integer'],
+            [['done_by', 'comment'], 'safe'],
         ];
     }
 
@@ -59,16 +59,11 @@ class LogSearch extends Log
         // grid filtering conditions
         $query->andFilterWhere([
             'log_id' => $this->log_id,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-            'item_id' => $this->item_id,
+            'done_at' => $this->done_at,
         ]);
 
-        $query->andFilterWhere(['like', 'field_name', $this->field_name])
-            ->andFilterWhere(['like', 'old_value', $this->old_value])
-            ->andFilterWhere(['like', 'new_value', $this->new_value])
-            ->andFilterWhere(['like', 'created_by', $this->created_by])
-            ->andFilterWhere(['like', 'updated_by', $this->updated_by]);
+        $query->andFilterWhere(['like', 'done_by', $this->done_by])
+            ->andFilterWhere(['like', 'comment', $this->comment]);
 
         return $dataProvider;
     }

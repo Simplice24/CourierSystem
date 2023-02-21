@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Customer;
+use app\models\Log;
 use app\models\CustomerSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -111,7 +112,15 @@ class CustomerController extends Controller
         if(Yii::$app->user->can('Update_customer')){
             $model = $this->findModel($customer_id);
 
-            if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            if ($this->request->isPost && $model->load($this->request->post())) {
+                if($model->save()){
+                    $log = new Log();
+
+                    $log->done_by=Yii::$app->user->identity->username;
+                    $log->comment="Updated customer details";
+                    $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                    $log->save();
+                }
                 return $this->redirect(['view', 'customer_id' => $model->customer_id]);
             }
     

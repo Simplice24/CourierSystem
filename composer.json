@@ -17,7 +17,9 @@
         "php": ">=7.4.0",
         "yiisoft/yii2": "~2.0.45",
         "yiisoft/yii2-bootstrap5": "~2.0.2",
-        "yiisoft/yii2-symfonymailer": "~2.0.3"
+        "yiisoft/yii2-symfonymailer": "~2.0.3",
+        "istvan-ujjmeszaros/bootstrap-duallistbox": "~4.0.0",
+        "softark/yii2-dual-listbox": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

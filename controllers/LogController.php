@@ -7,8 +7,6 @@ use app\models\LogSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use Yii;
-use yii\web\ForbiddenHttpException;
 
 /**
  * LogController implements the CRUD actions for Log model.
@@ -57,14 +55,9 @@ class LogController extends Controller
      */
     public function actionView($log_id)
     {
-        if(Yii::$app->user->can('View_log')){
-            return $this->render('view', [
-                'model' => $this->findModel($log_id),
-            ]);
-        }else{
-            throw new ForbiddenHttpException;
-        }
-        
+        return $this->render('view', [
+            'model' => $this->findModel($log_id),
+        ]);
     }
 
     /**
@@ -75,28 +68,18 @@ class LogController extends Controller
     public function actionCreate()
     {
         $model = new Log();
-        if(Yii::$app->user->can('Create_log')){
 
-            if ($this->request->isPost) {
-                if ($model->load($this->request->post())) {
-                    $model->created_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
-                    $model->updated_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
-                    $model->created_by=Yii::$app->user->identity->username;
-                    $model->updated_by=Yii::$app->user->identity->username;
-                    $model->save();
-                    return $this->redirect(['view', 'log_id' => $model->log_id]);
-                }
-            } else {
-                $model->loadDefaultValues();
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'log_id' => $model->log_id]);
             }
-    
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }else{
-            throw new ForbiddenHttpException;
+        } else {
+            $model->loadDefaultValues();
         }
-        
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -108,8 +91,7 @@ class LogController extends Controller
      */
     public function actionUpdate($log_id)
     {
-        if(Yii::$app->user->can('Update_log')){
-            $model = $this->findModel($log_id);
+        $model = $this->findModel($log_id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'log_id' => $model->log_id]);
@@ -118,10 +100,6 @@ class LogController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
-        }else{
-            throw new ForbiddenHttpException;
-        }
-        
     }
 
     /**

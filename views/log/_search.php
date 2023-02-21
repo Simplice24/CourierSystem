@@ -17,21 +17,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'log_id') ?>
 
-    <?= $form->field($model, 'field_name') ?>
+    <?= $form->field($model, 'done_by') ?>
 
-    <?= $form->field($model, 'old_value') ?>
+    <?= $form->field($model, 'comment') ?>
 
-    <?= $form->field($model, 'new_value') ?>
-
-    <?= $form->field($model, 'created_at') ?>
-
-    <?php // echo $form->field($model, 'created_by') ?>
-
-    <?php // echo $form->field($model, 'updated_at') ?>
-
-    <?php // echo $form->field($model, 'updated_by') ?>
-
-    <?php // echo $form->field($model, 'item_id') ?>
+    <?= $form->field($model, 'done_at') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

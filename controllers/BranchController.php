@@ -112,6 +112,7 @@ class BranchController extends Controller
             $model = $this->findModel($branch_id);
 
             if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+                
                 return $this->redirect(['view', 'branch_id' => $model->branch_id]);
             }
     
