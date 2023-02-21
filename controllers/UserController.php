@@ -91,6 +91,11 @@ class UserController extends Controller
                         $auth->user_id= $model->id;
                         $auth->item_name=$model->role;
                         $auth->save();
+                            $log = new Log();
+                            $log->done_by=Yii::$app->user->identity->username;
+                            $log->comment="Created a new system user";
+                            $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                            $log->save();
                     }
 
                     return $this->redirect(['view', 'id' => $model->id]);
@@ -119,7 +124,14 @@ class UserController extends Controller
     {
         if(Yii::$app->user->can('Update_user')){
             $model = $this->findModel($id);
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            if($model->save()){
+                $log = new Log();
+                $log->done_by=Yii::$app->user->identity->username;
+                $log->comment="Updated user details";
+                $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                $log->save();
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -143,6 +155,11 @@ class UserController extends Controller
     {
         if(Yii::$app->user->can('Delete_user')){
             $this->findModel($id)->delete();
+                $log = new Log();
+                $log->done_by=Yii::$app->user->identity->username;
+                $log->comment="Deleted a system user";
+                $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                $log->save();
 
         return $this->redirect(['index']);
         }else{

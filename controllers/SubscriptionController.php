@@ -86,7 +86,7 @@ class SubscriptionController extends Controller
                     if($model->save()){
                         $log = new Log();
                         $log->done_by=Yii::$app->user->identity->username;
-                        $log->comment="Subscription created";
+                        $log->comment="Created new subscription ";
                         $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                         $log->save();
                     }
@@ -122,7 +122,7 @@ class SubscriptionController extends Controller
             if($model->save()){
                 $log = new Log();
                 $log->done_by=Yii::$app->user->identity->username;
-                $log->comment="Subscription details updated";
+                $log->comment="Updated subscription details ";
                 $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                 $log->save();
             }
@@ -151,7 +151,7 @@ class SubscriptionController extends Controller
             $this->findModel($subscription_id)->delete();
                 $log = new Log();
                 $log->done_by=Yii::$app->user->identity->username;
-                $log->comment="Updated customer details";
+                $log->comment="Deleted subscription";
                 $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                 $log->save();
             

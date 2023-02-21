@@ -88,7 +88,7 @@ class StatusController extends Controller
                         $log = new Log();
     
                         $log->done_by=Yii::$app->user->identity->username;
-                        $log->comment="Status created";
+                        $log->comment="Created new status";
                         $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                         $log->save();
                     }
@@ -124,7 +124,7 @@ class StatusController extends Controller
                 if($model->save()){
                     $log = new Log();
                     $log->done_by=Yii::$app->user->identity->username;
-                    $log->comment="Status details updated";
+                    $log->comment="Updated status details";
                     $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                     $log->save();
                 }
@@ -154,7 +154,7 @@ class StatusController extends Controller
                 $log = new Log();
 
                 $log->done_by=Yii::$app->user->identity->username;
-                $log->comment="Updated customer details";
+                $log->comment="Deleted a status";
                 $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                 $log->save();
 

@@ -82,7 +82,13 @@ class SubscriptionTypeController extends Controller
                     $model->updated_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                     $model->created_by=Yii::$app->user->identity->username;
                     $model->updated_by=Yii::$app->user->identity->username;
-                    $model->save();
+                    if($model->save()){
+                        $log = new Log();
+                        $log->done_by=Yii::$app->user->identity->username;
+                        $log->comment="Created a new subscription type";
+                        $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                        $log->save();
+                    }
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
             } else {
@@ -110,7 +116,14 @@ class SubscriptionTypeController extends Controller
         if(Yii::$app->user->can('Update_subscriptionTypes')){
             $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            if($model->save()){
+                $log = new Log();
+                $log->done_by=Yii::$app->user->identity->username;
+                $log->comment="Updated details of a subscription type";
+                $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                $log->save();
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -134,6 +147,12 @@ class SubscriptionTypeController extends Controller
     {
         if(Yii::$app->user->can('Delete_subscriptionTypes')){
             $this->findModel($id)->delete();
+                $log = new Log();
+                $log->done_by=Yii::$app->user->identity->username;
+                $log->comment="Deleted subscription type";
+                $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                $log->save();
+            
 
         return $this->redirect(['index']);
         }else{
