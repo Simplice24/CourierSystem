@@ -155,12 +155,24 @@ class BranchController extends Controller
                 $log->comment="Deleted a branch";
                 $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                 $log->save();
+
+                return $this->redirect(['index']);
+            }else{
+                throw new ForbiddenHttpException;
             }
 
-        return $this->redirect(['index']);
-        }else{
-            throw new ForbiddenHttpException;
+        
         }
+
+        protected function findModel($branch_id)
+    {
+        if (($model = Branch::findOne(['branch_id' => $branch_id])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
         
     }
 
@@ -171,12 +183,4 @@ class BranchController extends Controller
      * @return Branch the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($branch_id)
-    {
-        if (($model = Branch::findOne(['branch_id' => $branch_id])) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
-}
+    
