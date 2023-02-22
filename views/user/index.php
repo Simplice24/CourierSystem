@@ -10,6 +10,11 @@ use yii\grid\GridView;
 /** @var app\models\UserSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
+if(Yii::$app->user->isGuest){
+  return Yii::$app->getResponse()->redirect(['site/login']);
+}
+
+
 $this->title = 'Users';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
