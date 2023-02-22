@@ -6,6 +6,11 @@ use yii\widgets\ActiveForm;
 /** @var yii\web\View $this */
 /** @var app\models\CustomerSearch $model */
 /** @var yii\widgets\ActiveForm $form */
+
+if(Yii::$app->user->isGuest){
+    return Yii::$app->getResponse()->redirect(['site/login']);
+}
+
 ?>
 
 <div class="customer-search">

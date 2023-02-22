@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use Yii;
+use \yii\helpers\Url;
 use yii\web\ForbiddenHttpException;
 
 /**
@@ -44,6 +45,9 @@ class BranchController extends Controller
         $searchModel = new BranchSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
+        if(Yii::$app->user->isGuest){
+            return Yii::$app->getResponse()->redirect(['site/login']);
+        }
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -58,7 +62,10 @@ class BranchController extends Controller
      */
     public function actionView($branch_id)
     {
-        if(Yii::$app->user->can('View_branch')){
+        if(Yii::$app->user->isGuest){
+            return Yii::$app->getResponse()->redirect(['site/login']);
+        }
+        else if(Yii::$app->user->can('View_branch')){
             return $this->render('view', [
                 'model' => $this->findModel($branch_id),
             ]);
@@ -75,8 +82,10 @@ class BranchController extends Controller
     public function actionCreate()
     {
         $model = new Branch();
-         
-        if( Yii::$app->user->can('Create_branch')){
+        if(Yii::$app->user->isGuest){
+            return Yii::$app->getResponse()->redirect(['site/login']);
+        }
+        else if( Yii::$app->user->can('Create_branch')){
           
             if ($this->request->isPost) {
                 if ($model->load($this->request->post())) {
@@ -115,7 +124,10 @@ class BranchController extends Controller
      */
     public function actionUpdate($branch_id)
     {
-        if(Yii::$app->user->can('Update_branch')){
+        if(Yii::$app->user->isGuest){
+            return Yii::$app->getResponse()->redirect(['site/login']);
+        }
+        else if(Yii::$app->user->can('Update_branch')){
             $model = $this->findModel($branch_id);
 
             if ($this->request->isPost && $model->load($this->request->post())) {
@@ -148,7 +160,10 @@ class BranchController extends Controller
      */
     public function actionDelete($branch_id)
     {
-        if(Yii::$app->user->can('Delete_branch')){
+        if(Yii::$app->user->isGuest){
+            return Yii::$app->getResponse()->redirect(['site/login']);
+        }
+        else if(Yii::$app->user->can('Delete_branch')){
             $this->findModel($branch_id)->delete();
                 $log = new Log();
                 $log->done_by=Yii::$app->user->identity->username;
@@ -166,7 +181,10 @@ class BranchController extends Controller
 
         protected function findModel($branch_id)
     {
-        if (($model = Branch::findOne(['branch_id' => $branch_id])) !== null) {
+        if(Yii::$app->user->isGuest){
+            return Yii::$app->getResponse()->redirect(['site/login']);
+        }
+        else if (($model = Branch::findOne(['branch_id' => $branch_id])) !== null) {
             return $model;
         }
 

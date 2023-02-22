@@ -8,6 +8,11 @@ use app\models\Item;
 /** @var yii\web\View $this */
 /** @var app\models\Customer $model */
 /** @var yii\widgets\ActiveForm $form */
+
+if(Yii::$app->user->isGuest){
+  return Yii::$app->getResponse()->redirect(['site/login']);
+}
+
 ?>
 
 <body>

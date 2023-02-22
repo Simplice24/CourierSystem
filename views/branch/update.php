@@ -5,6 +5,10 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var app\models\Branch $model */
 
+if(Yii::$app->user->isGuest){
+    return Yii::$app->getResponse()->redirect(['site/login']);
+}
+
 // $this->title = 'Update Branch: ' . $model->branch_id;
 $this->params['breadcrumbs'][] = ['label' => 'Branches', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->branch_id, 'url' => ['view', 'branch_id' => $model->branch_id]];

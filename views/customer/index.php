@@ -6,9 +6,14 @@ use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 
+
 /** @var yii\web\View $this */
 /** @var app\models\CustomerSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
+
+if(Yii::$app->user->isGuest){
+    return Yii::$app->getResponse()->redirect(['site/login']);
+}
 
 $this->title = 'Customers';
 $this->params['breadcrumbs'][] = $this->title;
