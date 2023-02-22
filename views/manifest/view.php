@@ -6,6 +6,10 @@ use yii\widgets\DetailView;
 /** @var yii\web\View $this */
 /** @var app\models\Manifest $model */
 
+if(Yii::$app->user->isGuest){
+  return Yii::$app->getResponse()->redirect(['site/login']);
+}
+
 $this->title = $model->manifest_id;
 $this->params['breadcrumbs'][] = ['label' => 'Manifests', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
