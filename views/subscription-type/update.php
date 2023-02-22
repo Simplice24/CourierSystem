@@ -5,6 +5,10 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var app\models\SubscriptionType $model */
 
+if(Yii::$app->user->isGuest){
+    return Yii::$app->getResponse()->redirect(['site/login']);
+}
+
 // $this->title = 'Update Subscription Type: ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Subscription Types', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
