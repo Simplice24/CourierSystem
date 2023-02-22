@@ -6,6 +6,11 @@ use yii\widgets\ActiveForm;
 /** @var yii\web\View $this */
 /** @var app\models\Log $model */
 /** @var yii\widgets\ActiveForm $form */
+
+if(Yii::$app->user->isGuest){
+  return Yii::$app->getResponse()->redirect(['site/login']);
+}
+
 ?>
 
 
