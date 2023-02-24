@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 use yii\web\ForbiddenHttpException;
 use Yii;
 
+
 /**
  * LogController implements the CRUD actions for Log model.
  */
@@ -98,14 +99,18 @@ class LogController extends Controller
     public function actionUpdate($log_id)
     {
         $model = $this->findModel($log_id);
-
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'log_id' => $model->log_id]);
+        if(Yii::$app->user->can('Update_log')){
+            if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'log_id' => $model->log_id]);
+            }
+    
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }else{
+            throw new ForbiddenHttpException;
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        
     }
 
     /**
@@ -117,9 +122,14 @@ class LogController extends Controller
      */
     public function actionDelete($log_id)
     {
-        $this->findModel($log_id)->delete();
+        if(Yii::$app->user->can('Delete_log')){
+            $this->findModel($log_id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        }else{
+            throw new ForbiddenHttpException;
+        }
+        
     }
 
     /**
