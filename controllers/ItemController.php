@@ -9,7 +9,6 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use Yii;
-use Mpdf\Mpdf;
 use yii\web\ForbiddenHttpException;
 
 /**
@@ -48,7 +47,8 @@ class ItemController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-    }
+
+}
 
     /**
      * Displays a single Item model.
@@ -162,19 +162,6 @@ class ItemController extends Controller
       
     }
 
-    public function actionPdf(){
-
-        $searchModel = new ItemSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $html=$this->renderPartial('pdf_view',['dataProvider'=>$dataProvider]);
-        $mpdf=new \Mpdf\Mpdf();
-        $mpdf->showImageErrors  = true;
-        $mpdf->SetDisplayMode('fullpage','two');
-        $mpdf->list_indemt_first_level = 0;
-        $mpdf->writeHTML($html);
-        $mpdf->Output();
-        exit;
-    }
 
     /**
      * Finds the Item model based on its primary key value.
