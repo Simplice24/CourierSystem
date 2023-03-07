@@ -173,7 +173,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
                       <h1><?= Html::encode($this->title) ?></h1>
     <p>
+      <?php if(\Yii::$app->user->can('Create_branch')){?>
         <?= Html::a('Create Branch', ['create'], ['class' => 'btn btn-success']) ?>
+        <?php } ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
