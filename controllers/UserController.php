@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\User;
+use app\models\Log;
 use app\models\AuthAssignment;
 use app\models\UserSearch;
 use yii\web\Controller;

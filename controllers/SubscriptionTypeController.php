@@ -1,7 +1,7 @@
 <?php
 
 namespace app\controllers;
-
+use app\models\Log;
 use app\models\SubscriptionType;
 use app\models\SubscriptionTypeSearch;
 use yii\web\Controller;
