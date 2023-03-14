@@ -152,6 +152,7 @@ $this->params['breadcrumbs'][] = $this->title;
       <?php if(\Yii::$app->user->can('Create_log')) { ?>
         <?= Html::a('Create Log', ['create'], ['class' => 'btn btn-success']) ?>
         <?php } ?>
+        <?= Html::a('Export PDF', ['pdf'], ['class' => 'btn btn-info']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>

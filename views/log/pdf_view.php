@@ -31,28 +31,17 @@ $this->params['breadcrumbs'][]= $this->title;
   color: white;
 }
 </style>
-
 <table id="customers">
   <tr>
-  <th >Item ID</th>
-  <th >Item Name</th>
-  <th >Sender</th>
-  <th >Receiver</th>
-  <th >Receiver phone</th>
-  <th >Receiver ID</th>
-  <th >Departure</th>
-  <th >Destination</th>
+  <th >Log Id</th>
+  <th >Done By</th>
+  <th >Comment</th>
   </tr>
   <?php foreach($dataProvider->getModels() as $model) {?>
     <tr>
-        <td><?= $model->item_id?></td>
-        <td><?= $model->item_name?></td>
-        <td><?= $model->sender_name?></td>
-        <td><?= $model->receiver_name?></td>
-        <td><?= $model->receiver_phone?></td>
-        <td><?= $model->receiver_id?></td>
-        <td><?= $model->departure?></td>
-        <td><?= $model->destination?></td>
+        <td><?= $model->log_id?></td>
+        <td><?= $model->done_by?></td>
+        <td><?= $model->comment?></td>
 </tr>
 
 <?php } ?>

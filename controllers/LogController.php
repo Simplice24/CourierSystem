@@ -9,6 +9,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\ForbiddenHttpException;
 use Yii;
+use Mpdf;
 
 
 /**
@@ -48,6 +49,17 @@ class LogController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+    public function actionPdf(){
+        $searchModel = new LogSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+        $html = $this->renderPartial('pdf_view',['dataProvider'=>$dataProvider]);
+        $mpdf = new Mpdf\Mpdf;
+        $mpdf ->showImageErrors = true;
+        $mpdf ->SetDisplayMode('fullpage','two');
+        $mpdf ->writeHTML($html);
+        $mpdf->output();
+        exit;
     }
 
     /**

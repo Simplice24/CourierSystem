@@ -31,10 +31,33 @@ $this->params['breadcrumbs'][]= $this->title;
   color: white;
 }
 </style>
+<!-- <table class="table" id="customers">
+    <thead>
+<tr>
+  <th scope="col">Item Name</th>
+  <th scope="col">Sender</th>
+  <th scope="col">Receiver</th>
+  <th scope="col">Receiver phone</th>
+  <th scope="col">Receiver ID</th>
+  <th scope="col">Departure</th>
+  <th scope="col">Destination</th>
+</tr> 
+</thead>
+<?php foreach($dataProvider->getModels() as $model) {?>
+    <tr>
+        <th><?= $model->item_name?></th>
+        <th><?= $model->sender_name?></th>
+        <th><?= $model->receiver_name?></th>
+        <th><?= $model->receiver_phone?></th>
+        <th><?= $model->receiver_id?></th>
+        <th><?= $model->departure?></th>
+        <th><?= $model->destination?></th>
+</tr>
 
+<?php } ?>
+</table> -->
 <table id="customers">
   <tr>
-  <th >Item ID</th>
   <th >Item Name</th>
   <th >Sender</th>
   <th >Receiver</th>
@@ -45,7 +68,6 @@ $this->params['breadcrumbs'][]= $this->title;
   </tr>
   <?php foreach($dataProvider->getModels() as $model) {?>
     <tr>
-        <td><?= $model->item_id?></td>
         <td><?= $model->item_name?></td>
         <td><?= $model->sender_name?></td>
         <td><?= $model->receiver_name?></td>

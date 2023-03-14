@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use Yii;
+use Mpdf;
 use yii\web\ForbiddenHttpException;
 
 /**
@@ -47,6 +48,17 @@ class SubscriptionTypeController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+    public function actionPdf(){
+        $searchModel = new SubscriptionTypeSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+        $html = $this->renderPartial('pdf_view',['dataProvider'=>$dataProvider]);
+        $mpdf = new Mpdf\Mpdf;
+        $mpdf ->showImageErrors = true;
+        $mpdf ->SetDisplayMode('fullpage','two');
+        $mpdf ->writeHTML($html);
+        $mpdf->output();
+        exit;
     }
 
     /**

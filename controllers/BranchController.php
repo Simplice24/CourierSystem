@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use Yii;
+use Mpdf;
 use \yii\helpers\Url;
 use yii\web\ForbiddenHttpException;
 
@@ -52,6 +53,17 @@ class BranchController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+    public function actionPdf(){
+        $searchModel = new BranchSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+        $html = $this->renderPartial('pdf_view',['dataProvider'=>$dataProvider]);
+        $mpdf = new Mpdf\Mpdf;
+        $mpdf ->showImageErrors = true;
+        $mpdf ->SetDisplayMode('fullpage','two');
+        $mpdf ->writeHTML($html);
+        $mpdf->output();
+        exit;
     }
 
     /**

@@ -151,6 +151,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <p>
 <?php if(\Yii::$app->user->can('Create_manifest')) { ?>
     <?= Html::a('Create Manifest', ['create'], ['class' => 'btn btn-success']) ?>
+    <?= Html::a('Export PDF', ['pdf'], ['class' => 'btn btn-info']) ?>
     <?php } ?>
 </p>
 

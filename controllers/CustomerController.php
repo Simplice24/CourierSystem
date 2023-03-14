@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use Yii;
+use Mpdf;
 use yii\web\ForbiddenHttpException;
 
 /**
@@ -65,6 +66,17 @@ class CustomerController extends Controller
             throw new ForbiddenHttpException;
         }
        
+    }
+    public function actionPdf(){
+        $searchModel = new CustomerSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+        $html = $this->renderPartial('pdf_view',['dataProvider'=>$dataProvider]);
+        $mpdf = new Mpdf\Mpdf;
+        $mpdf ->showImageErrors = true;
+        $mpdf ->SetDisplayMode('fullpage','two');
+        $mpdf ->writeHTML($html);
+        $mpdf->output();
+        exit;
     }
 
     /**

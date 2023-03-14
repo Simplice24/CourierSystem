@@ -151,6 +151,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <p>
 <?php if(\Yii::$app->user->can('Create_subscriptionTypes')) { ?>
     <?= Html::a('Create Subscription Type', ['create'], ['class' => 'btn btn-success']) ?>
+    <?= Html::a('Export PDF', ['pdf'], ['class' => 'btn btn-info']) ?>
     <?php } ?>
 </p>
 
