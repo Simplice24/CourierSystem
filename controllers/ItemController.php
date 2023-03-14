@@ -8,6 +8,7 @@ use app\models\ItemSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use Mpdf;
 use Yii;
 use yii\web\ForbiddenHttpException;
 
@@ -160,6 +161,18 @@ class ItemController extends Controller
             throw new ForbiddenHttpException;
         }
       
+    }
+
+    public function actionPdf(){
+        $searchModel = new ItemSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+        $html = $this->renderPartial('pdf_view',['dataProvider'=>$dataProvider]);
+        $mpdf = new Mpdf\Mpdf;
+        $mpdf ->showImageErrors = true;
+        $mpdf ->SetDisplayMode('fullpage','two');
+        $mpdf ->writeHTML($html);
+        $mpdf->output();
+        exit;
     }
 
 

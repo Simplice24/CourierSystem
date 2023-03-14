@@ -47,11 +47,12 @@ class Item extends \yii\db\ActiveRecord
     {
         return [
             [['item_name', 'value', 'sender_name', 'sender_phone', 'sender_subscription', 'receiver_name', 'receiver_phone', 'receiver_id', 'departure', 'depature_date', 'departure_time', 'destination', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'required'],
-            [['value', 'receiver_id', 'manifest_id'], 'integer'],
+            [['value', 'manifest_id'], 'integer'],
             [['depature_date', 'departure_time', 'created_at', 'updated_at'], 'safe'],
             [['item_name', 'sender_name', 'receiver_name', 'departure', 'destination', 'created_by', 'updated_by'], 'string', 'max' => 60],
             [['sender_phone', 'receiver_phone'], 'string', 'max' => 15],
             [['sender_subscription'], 'string', 'max' => 10],
+            [['receiver_id'],'string','max'=>16],
             [['manifest_id'], 'exist', 'skipOnError' => true, 'targetClass' => Manifest::class, 'targetAttribute' => ['manifest_id' => 'manifest_id']],
         ];
     }
