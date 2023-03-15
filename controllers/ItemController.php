@@ -51,6 +51,10 @@ class ItemController extends Controller
 
 }
 
+public function actionDuration(){
+    return $this->render('_durationform');
+}
+
     /**
      * Displays a single Item model.
      * @param int $item_id Item ID

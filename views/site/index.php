@@ -1,5 +1,9 @@
 <?php
 
+if(!Yii::$app->user->isGuest){
+    return Yii::$app->getResponse()->redirect(['dashboard/index']);
+  }
+
 /** @var yii\web\View $this */
 
 $this->title = 'My Yii Application';

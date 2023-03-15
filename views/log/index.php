@@ -166,7 +166,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'log_id',
             'done_by',
             'comment',
-            'done_at',
+            'done_at:datetime',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Log $model, $key, $index, $column) {
