@@ -18,6 +18,22 @@ use yii\web\ForbiddenHttpException;
 class ItemController extends Controller
 {
    public $items;
+
+   public function actionView($item_id)
+   {
+       if(Yii::$app->user->isGuest){
+           return Yii::$app->getResponse()->redirect(['site/login']);
+       }
+       else if(Yii::$app->user->can('View_item')){
+           return $this->render('view', [
+               'model' => $this->findModel($item_id),
+           ]);
+       }else{
+           throw new ForbiddenHttpException;
+       } 
+   }
+
+
     public function behaviors()
     {
         return array_merge(

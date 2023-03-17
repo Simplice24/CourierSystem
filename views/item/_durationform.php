@@ -128,7 +128,7 @@ if(Yii::$app->user->isGuest){
               <h3 class="page-title">
                 <span class="page-title-icon bg-gradient-primary text-white me-2">
                   <i class="mdi mdi-home"></i>
-                </span> Dashboard
+                </span> Dashboard/Report
               </h3>
               <nav aria-label="breadcrumb">
                 <ul class="breadcrumb">
@@ -157,13 +157,13 @@ if(Yii::$app->user->isGuest){
                         <!-- <label for="exampleInputUsername1">Starting date</label> -->
                         <!-- <input type="date" class="form-control" name="starting" id="exampleInputUsername1"> -->
                         <?= Html::label('Start Date', 'start_date') ?>
-                        <?= Html::textInput('start_date', null, ['class' => 'form-control', 'required' => true]) ?>
+                        <?= Html::input('date', 'start_date', null, ['class' => 'form-control', 'required' => true]) ?>
                       </div>
                       <div class="form-group">
                         <!-- <label for="exampleInputEmail1">Ending date</label>
                         <input type="date" class="form-control" name="ending" id="exampleInputEmail1"> -->
                       <?= Html::label('End Date', 'end_date') ?>
-                      <?= Html::textInput('end_date', null, ['class' => 'form-control', 'required' => true]) ?>
+                      <?= Html::input('date','end_date', null, ['class' => 'form-control', 'required' => true]) ?>
                       </div>
                       <div class="form-group">
     <?= Html::submitButton('Generate report', ['class' => 'btn btn-gradient-primary me-2']) ?>

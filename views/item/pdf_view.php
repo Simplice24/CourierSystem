@@ -49,7 +49,7 @@ tr:nth-child(even) {
   </tr>
   <?php foreach ($dataProvider->getModels() as $item): ?>
   <tr>
-  <td><?= $item->item_name ?></td>
+      <td><?= $item->item_name ?></td>
       <td><?= $item->value ?></td>
       <td><?= $item->sender_name ?></td>
       <td><?= $item->sender_phone ?></td>

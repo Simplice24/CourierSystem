@@ -187,7 +187,7 @@ if(Yii::$app->user->isGuest){
 <div class="col-md-4">
                       <div class="form-group row">
                     <div class="form-group">
-<?= $form->field($model, 'value')->textInput() ?>
+<?= $form->field($model, 'value')->input('number') ?>
 </div>
                 </div>
             </div>
@@ -195,7 +195,7 @@ if(Yii::$app->user->isGuest){
 <div class="col-md-4">
                       <div class="form-group row">
                     <div class="form-group">
-<?= $form->field($model, 'sender_name')->textInput(['maxlength' => true]) ?>
+<?= $form->field($model, 'sender_name')->input('string',['maxlength' => true]) ?>
 </div>
                 </div>
             </div>
@@ -205,7 +205,7 @@ if(Yii::$app->user->isGuest){
 <div class="col-md-4">
                       <div class="form-group row">
                     <div class="form-group">
-<?= $form->field($model, 'sender_phone')->textInput(['maxlength' => true]) ?>
+<?= $form->field($model, 'sender_phone')->input('number',['maxlength' => true]) ?>
 </div>
                 </div>
             </div>
@@ -231,7 +231,7 @@ if(Yii::$app->user->isGuest){
 <div class="col-md-4">
                       <div class="form-group row">
                     <div class="form-group">
-<?= $form->field($model, 'receiver_phone')->textInput(['maxlength' => true]) ?>
+<?= $form->field($model, 'receiver_phone')->input('number',['maxlength' => true]) ?>
 </div>
                 </div>
             </div>
@@ -257,7 +257,7 @@ if(Yii::$app->user->isGuest){
 <div class="col-md-4">
                       <div class="form-group row">
                     <div class="form-group">
-<?= $form->field($model, 'depature_date')->textInput() ?>
+<?= $form->field($model, 'depature_date')->input('date') ?>
 </div>
                 </div>
             </div>
@@ -265,7 +265,7 @@ if(Yii::$app->user->isGuest){
 <div class="col-md-4">
                       <div class="form-group row">
                     <div class="form-group">
-<?= $form->field($model, 'departure_time')->textInput() ?>
+<?= $form->field($model, 'departure_time')->input('time') ?>
 </div>
                 </div>
             </div>
