@@ -174,7 +174,6 @@ public function actionGenerate() {
     }
 
     public function actionPdf(){
-        $dataProvider= $this->items;
         $searchModel = new ItemSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
         $html = $this->renderPartial('pdf_view',['dataProvider'=>$dataProvider]);
