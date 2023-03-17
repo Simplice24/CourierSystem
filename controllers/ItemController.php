@@ -12,9 +12,6 @@ use Mpdf;
 use Yii;
 use yii\web\ForbiddenHttpException;
 
-/**
- * ItemController implements the CRUD actions for Item model.
- */
 class ItemController extends Controller
 {
    public $items;
@@ -32,7 +29,6 @@ class ItemController extends Controller
            throw new ForbiddenHttpException;
        } 
    }
-
 
     public function behaviors()
     {
@@ -75,7 +71,7 @@ public function actionGenerate() {
         $start_date = Yii::$app->request->post('start_date');
         $end_date = Yii::$app->request->post('end_date');
         $query = Item::find()
-    ->where(['between', 'created_at', $start_date, $end_date])
+    ->where(['between', 'FROM_UNIXTIME(created_at, "%Y-%m-%d")', $start_date, $end_date])
     ->orderBy('created_at');
     $this->items = $query->all();
     return $this->render('viewreport',['items' => $this->items]);
