@@ -9,52 +9,52 @@ $this->params['breadcrumbs'][]= $this->title;
 
 <div class="container">
 <h2><?= Html::encode($this->title)?></h2>
-<style>
-#customers {
-  font-family: Arial, Helvetica, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-}
-
-#customers td, #customers th {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-
-
-#customers th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: #04AA6D;
-  color:black;
-  color: white;
-}
-</style>
-
-<table id="customers">
-  <tr>
-  <th >Item ID</th>
-  <th >Item Name</th>
-  <th >Sender</th>
-  <th >Receiver</th>
-  <th >Receiver phone</th>
-  <th >Receiver ID</th>
-  <th >Departure</th>
-  <th >Destination</th>
-  </tr>
-  <?php foreach($dataProvider->getModels() as $model) {?>
-    <tr>
-        <td><?= $model->item_id?></td>
-        <td><?= $model->item_name?></td>
-        <td><?= $model->sender_name?></td>
-        <td><?= $model->receiver_name?></td>
-        <td><?= $model->receiver_phone?></td>
-        <td><?= $model->receiver_id?></td>
-        <td><?= $model->departure?></td>
-        <td><?= $model->destination?></td>
-</tr>
+<div class="col-lg-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Striped Table</h4>
+                    <p class="card-description"> Add class <code>.table-striped</code>
+                    </p>
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>Item </th>
+                          <th>Value</th>
+                          <th>Sender</th>
+                          <th>Sender's phone</th>
+                          <th>Sender's subscription</th>
+                          <th>Receiver</th>
+                          <th>Receiver's phone</th>
+                          <th>Receiver ID No</th>
+                          <th>Departure</th>
+                          <th>Departure date</th>
+                          <th>Departure time</th>
+                          <th>Destination</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                        <?php foreach($dataProvider->getModels() as $item) {?>
+                          <tr>
+                          <td><?= $item->item_name ?></td>
+                         <td><?= $item->value ?></td>
+                         <td><?= $item->sender_name ?></td>
+                         <td><?= $item->sender_phone ?></td>
+                         <td><?= $item->sender_subscription ?></td>
+                         <td><?= $item->receiver_name ?></td>
+                         <td><?= $item->receiver_phone ?></td>
+                         <td><?= $item->receiver_id ?></td>
+                         <td><?= $item->departure ?></td>
+                         <td><?= $item->depature_date ?></td>
+                         <td><?= $item->departure_time ?></td>
+                         <td><?= $item->destination ?></td>
+                          </tr>
 
 <?php } ?>
-</table>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
 </div>

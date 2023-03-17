@@ -119,26 +119,6 @@ if(Yii::$app->user->isGuest){
                 <i class="mdi mdi-table-large menu-icon"></i>
               </a>
             </li>
-
-
-
-            <!-- <li class="nav-item sidebar-actions">
-              <span class="nav-link">
-                <div class="border-bottom">
-                  <h6 class="font-weight-normal mb-3">Projects</h6>
-                </div>
-                <button class="btn btn-block btn-lg btn-gradient-primary mt-4">+ Add a project</button>
-                <div class="mt-4">
-                  <div class="border-bottom">
-                    <p class="text-secondary">Categories</p>
-                  </div>
-                  <ul class="gradient-bullet-list mt-4">
-                    <li>Free</li>
-                    <li>Pro</li>
-                  </ul>
-                </div>
-              </span>
-            </li> -->
           </ul>
         </nav>
         <!-- partial -->
@@ -164,36 +144,36 @@ if(Yii::$app->user->isGuest){
                   <div class="card-body">
                     <div class="table-responsive">
                       <div class="branch-index">
-
-
                       <div class="item-form">
 
-<?php $form = ActiveForm::begin(); ?>
-<div class="col-md-12 grid-margin stretch-card">
+    <?= Html::beginForm(['item/generate'], 'post') ?>
+              <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
                     <h4 class="card-title">Report generation form</h4>
                     <p class="card-description"> Please provide starting and ending date to provide report</p>
-                    <form class="forms-sample" >
+                    <form class="forms-sample" method="POST" action="<?= Yii::$app->urlManager->createUrl(['item/Duration']) ?>" >
                       <div class="form-group">
-                        <label for="exampleInputUsername1">Starting date</label>
-                        <input type="date" class="form-control" id="exampleInputUsername1" placeholder="Username">
+                        <!-- <label for="exampleInputUsername1">Starting date</label> -->
+                        <!-- <input type="date" class="form-control" name="starting" id="exampleInputUsername1"> -->
+                        <?= Html::label('Start Date', 'start_date') ?>
+                        <?= Html::textInput('start_date', null, ['class' => 'form-control', 'required' => true]) ?>
                       </div>
                       <div class="form-group">
-                        <label for="exampleInputEmail1">Ending date</label>
-                        <input type="date" class="form-control" id="exampleInputEmail1" placeholder="Email">
-                      </div>
-                      <div class="form-check form-check-flat form-check-primary">
-                        <label class="form-check-label">
+                        <!-- <label for="exampleInputEmail1">Ending date</label>
+                        <input type="date" class="form-control" name="ending" id="exampleInputEmail1"> -->
+                      <?= Html::label('End Date', 'end_date') ?>
+                      <?= Html::textInput('end_date', null, ['class' => 'form-control', 'required' => true]) ?>
                       </div>
                       <div class="form-group">
     <?= Html::submitButton('Generate report', ['class' => 'btn btn-gradient-primary me-2']) ?>
+                      <!-- <button type="submit" class='btn btn-gradient-primary me-2'>Generate report</button> -->
                       </div>      
                     </form>
                   </div>
                 </div>
               </div>
-<?php ActiveForm::end(); ?>
+              <?= Html::endForm() ?>
 
 </div>
 

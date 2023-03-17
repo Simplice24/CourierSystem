@@ -17,9 +17,7 @@ use yii\web\ForbiddenHttpException;
  */
 class ItemController extends Controller
 {
-    /**
-     * @inheritDoc
-     */
+   public $items;
     public function behaviors()
     {
         return array_merge(
@@ -52,27 +50,23 @@ class ItemController extends Controller
 }
 
 public function actionDuration(){
-    return $this->render('_durationform');
-}
-
-    /**
-     * Displays a single Item model.
-     * @param int $item_id Item ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($item_id)
-    {
-        if(Yii::$app->user->can('View_item')){
-            return $this->render('view', [
-                'model' => $this->findModel($item_id),
-            ]);
-        }else{
-            throw new ForbiddenHttpException;
-        }
-        
+        return $this->render('duration');
     }
 
+
+public function actionGenerate() {
+    if (Yii::$app->request->post()) {
+        $start_date = Yii::$app->request->post('start_date');
+        $end_date = Yii::$app->request->post('end_date');
+        $query = Item::find()
+    ->where(['between', 'created_at', $start_date, $end_date])
+    ->orderBy('created_at');
+    $this->items = $query->all();
+    return $this->render('viewreport',['items' => $this->items]);
+    }
+    
+    return $this->render('duration');
+}
     /**
      * Creates a new Item model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -168,6 +162,7 @@ public function actionDuration(){
     }
 
     public function actionPdf(){
+        $dataProvider= $this->items;
         $searchModel = new ItemSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
         $html = $this->renderPartial('pdf_view',['dataProvider'=>$dataProvider]);
