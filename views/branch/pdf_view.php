@@ -3,48 +3,51 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 
-$this->title ='Items';
+$this->title ='Items report';
 $this->params['breadcrumbs'][]= $this->title;
 ?>
 
 <div class="container">
 <h2><?= Html::encode($this->title)?></h2>
+<!DOCTYPE html>
+<html>
+<head>
 <style>
-#customers {
-  font-family: Arial, Helvetica, sans-serif;
+table {
+  font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 100%;
 }
 
-#customers td, #customers th {
-  border: 1px solid #ddd;
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
   padding: 8px;
 }
 
-
-#customers th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: #04AA6D;
-  color:black;
-  color: white;
+tr:nth-child(even) {
+  background-color: #dddddd;
 }
 </style>
-<table id="customers">
+</head>
+<body>
+<h2>Items report</h2>
+<table>
   <tr>
-  <th >Branch ID</th>
-  <th >Branch name</th>
-  <th >Created By</th>
-  
+      <th>Branch ID</th>
+      <th>Branch name</th>
+      <th>Created by</th>
+      <th>Created at</th>
   </tr>
-  <?php foreach($dataProvider->getModels() as $model) {?>
-    <tr>
-        <td><?= $model->branch_id?></td>
-        <td><?= $model->branch_name?></td>
-        <td><?= $model->created_by?></td>
-</tr>
-
-<?php } ?>
+  <?php foreach ($dataProvider->getModels() as $branch): ?>
+  <tr>
+      <td><?= $branch->branch_id ?></td>
+      <td><?= $branch->branch_name ?></td>
+      <td><?= $branch->created_by ?></td>
+      <td><?= $branch->created_at ?></td>
+  </tr>
+  <?php endforeach; ?>
 </table>
+</body>
+</html>
 </div>

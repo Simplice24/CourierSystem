@@ -66,6 +66,4 @@ tr:nth-child(even) {
 </table>
 </body>
 </html>
-
-
 </div>

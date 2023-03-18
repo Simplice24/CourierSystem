@@ -86,6 +86,25 @@ class BranchController extends Controller
         } 
     }
 
+    public function actionDuration(){
+        return $this->render('duration');
+    }
+
+
+public function actionGenerate() {
+    if (Yii::$app->request->post()) {
+        $start_date = Yii::$app->request->post('start_date');
+        $end_date = Yii::$app->request->post('end_date');
+        $query = Branch::find()
+    ->where(['between', 'FROM_UNIXTIME(created_at, "%Y-%m-%d")', $start_date, $end_date])
+    ->orderBy('created_at');
+    $branches = $query->all();
+    return $this->render('viewreport',['branches' => $branches]);
+    }
+    
+    return $this->render('duration');
+}
+
     /**
      * Creates a new Branch model.
      * If creation is successful, the browser will be redirected to the 'view' page.

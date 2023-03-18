@@ -178,7 +178,7 @@ if(Yii::$app->user->isGuest){
                     <div class="col-md-6">
                       <div class="form-group row">
                     <div class="form-group">
-<?= $form->field($model, 'departure_date')->textInput() ?>
+<?= $form->field($model, 'departure_date')->input('date') ?>
 </div>
                 </div>
             </div>
@@ -186,7 +186,7 @@ if(Yii::$app->user->isGuest){
             <div class="col-md-6">
                       <div class="form-group row">
                     <div class="form-group">
-<?= $form->field($model, 'departure_time')->textInput() ?>
+<?= $form->field($model, 'departure_time')->input('time') ?>
 </div>
                 </div>
             </div>

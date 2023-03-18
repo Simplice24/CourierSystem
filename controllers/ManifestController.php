@@ -17,9 +17,7 @@ use yii\web\ForbiddenHttpException;
  */
 class ManifestController extends Controller
 {
-    /**
-     * @inheritDoc
-     */
+   public $manifests;
     public function behaviors()
     {
         return array_merge(
@@ -50,6 +48,26 @@ class ManifestController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+
+    public function actionDuration(){
+        return $this->render('duration');
+    }
+
+
+public function actionGenerate() {
+    if (Yii::$app->request->post()) {
+        $start_date = Yii::$app->request->post('start_date');
+        $end_date = Yii::$app->request->post('end_date');
+        $query = Manifest::find()
+    ->where(['between', 'FROM_UNIXTIME(created_at, "%Y-%m-%d")', $start_date, $end_date])
+    ->orderBy('created_at');
+    $this->manifests = $query->all();
+    return $this->render('viewreport',['manifests' => $this->manifests]);
+    }
+    
+    return $this->render('duration');
+}
+
     public function actionPdf(){
         $searchModel = new ManifestSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);

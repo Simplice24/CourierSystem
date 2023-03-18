@@ -3,48 +3,51 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 
-$this->title ='Items';
+$this->title ='Items report';
 $this->params['breadcrumbs'][]= $this->title;
 ?>
 
 <div class="container">
 <h2><?= Html::encode($this->title)?></h2>
+<!DOCTYPE html>
+<html>
+<head>
 <style>
-#customers {
-  font-family: Arial, Helvetica, sans-serif;
+table {
+  font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 100%;
 }
 
-#customers td, #customers th {
-  border: 1px solid #ddd;
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
   padding: 8px;
 }
 
-
-#customers th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: #04AA6D;
-  color:black;
-  color: white;
+tr:nth-child(even) {
+  background-color: #dddddd;
 }
 </style>
-<table id="customers">
+</head>
+<body>
+<h2>Manifestation report</h2>
+<table>
   <tr>
-  <th >Departure date</th>
-  <th >Departure time</th>
-  <th >Plate number</th>
-  <th >Driver</th>
+      <th>Departure date </th>
+      <th>Departure time</th>
+      <th>Driver</th>
+      <th>Plate number</th>
   </tr>
-  <?php foreach($dataProvider->getModels() as $model) {?>
-    <tr>
-        <td><?= $model->departure_date?></td>
-        <td><?= $model->departure_time?></td>
-        <td><?= $model->plate_number?></td>
-        <td><?= $model->driver?></td>
-</tr>
-<?php } ?>
+  <?php foreach ($dataProvider->getModels() as $manifest): ?>
+  <tr>
+      <td><?= $manifest->departure_date ?></td>
+      <td><?= $manifest->departure_time ?></td>
+      <td><?= $manifest->driver ?></td>
+      <td><?= $manifest->plate_number ?></td>
+  </tr>
+  <?php endforeach; ?>
 </table>
+</body>
+</html>
 </div>

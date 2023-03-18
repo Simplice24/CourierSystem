@@ -50,6 +50,26 @@ class SubscriptionController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+
+    public function actionDuration(){
+        return $this->render('duration');
+    }
+
+
+public function actionGenerate() {
+    if (Yii::$app->request->post()) {
+        $start_date = Yii::$app->request->post('start_date');
+        $end_date = Yii::$app->request->post('end_date');
+        $query = Item::find()
+    ->where(['between', 'FROM_UNIXTIME(created_at, "%Y-%m-%d")', $start_date, $end_date])
+    ->orderBy('created_at');
+    $this->items = $query->all();
+    return $this->render('viewreport',['items' => $this->items]);
+    }
+    
+    return $this->render('duration');
+}
+
     public function actionPdf(){
         $searchModel = new SubscriptionSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);

@@ -14,8 +14,6 @@ use yii\web\ForbiddenHttpException;
 
 class ItemController extends Controller
 {
-   public $items;
-
    public function actionView($item_id)
    {
        if(Yii::$app->user->isGuest){
@@ -73,8 +71,8 @@ public function actionGenerate() {
         $query = Item::find()
     ->where(['between', 'FROM_UNIXTIME(created_at, "%Y-%m-%d")', $start_date, $end_date])
     ->orderBy('created_at');
-    $this->items = $query->all();
-    return $this->render('viewreport',['items' => $this->items]);
+    $items= $query->all();
+    return $this->render('viewreport',['items' => $items]);
     }
     
     return $this->render('duration');
