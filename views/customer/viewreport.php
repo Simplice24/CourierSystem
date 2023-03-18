@@ -141,25 +141,25 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="col-lg-6 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Report of Branches</h4>
+                    <h4 class="card-title">Report of Customers</h4>
                     <?= Html::a('Export PDF report', ['pdf'], ['class' => 'btn btn-info']) ?>
                     </p>
                     <table class="table table-hover">
                       <thead>
                         <tr>
-                          <th>Branch ID</th>
-                          <th>Branch name</th>
-                          <th>Created by</th>
-                          <th>Created at</th>
+                          <th>Customer name</th>
+                          <th>subscription type</th>
+                          <th>Customer's ID </th>
+                          <th>Phone</th>                        
                         </tr>
                       </thead>
                       <tbody>
-                      <?php foreach ($branches as $branch): ?>
+                      <?php foreach ($customers as $customer): ?>
                         <tr>
-                         <td><?= $branch->branch_id ?></td>
-                         <td><?= $branch->branch_name ?></td>
-                         <td><?= $branch->created_by ?></td>
-                         <td><?= $branch->created_at ?></td>
+                         <td><?= $customer->fullname ?></td>
+                         <td><?= $customer->subscription ?></td>
+                         <td><?= $customer->idn ?></td>
+                         <td><?= $customer->phone ?></td>
                         </tr>
                         <?php endforeach; ?>
                       </tbody>

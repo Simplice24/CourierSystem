@@ -31,7 +31,7 @@ tr:nth-child(even) {
 </style>
 </head>
 <body>
-<h2>Items report</h2>
+<h2>Branches report</h2>
 <table>
   <tr>
       <th>Branch ID</th>
