@@ -150,7 +150,7 @@ $this->params['breadcrumbs'][] = $this->title;
                           <th>Customer name</th>
                           <th>subscription type</th>
                           <th>Customer's ID </th>
-                          <th>Phone</th>                        
+                          <th>Phone number</th>                        
                         </tr>
                       </thead>
                       <tbody>
@@ -159,7 +159,7 @@ $this->params['breadcrumbs'][] = $this->title;
                          <td><?= $customer->fullname ?></td>
                          <td><?= $customer->subscription ?></td>
                          <td><?= $customer->idn ?></td>
-                         <td><?= $customer->phone ?></td>
+                         <td><?= $customer->telephone ?></td>
                         </tr>
                         <?php endforeach; ?>
                       </tbody>

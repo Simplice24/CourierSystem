@@ -37,14 +37,14 @@ tr:nth-child(even) {
       <th>Customer name </th>
       <th>Subscriptions type</th>
       <th>Customer's ID</th>
-      <th>Phone</th>
+      <th>Phone number</th>
   </tr>
   <?php foreach ($dataProvider->getModels() as $customer): ?>
   <tr>
       <td><?= $customer->fullname ?></td>
       <td><?= $customer->subscription ?></td>
       <td><?= $customer->idn ?></td>
-      <td><?= $customer->phone ?></td>
+      <td><?= $customer->telephone ?></td>
   </tr>
   <?php endforeach; ?>
 </table>

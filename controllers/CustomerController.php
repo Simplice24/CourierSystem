@@ -59,11 +59,11 @@ public function actionGenerate() {
     if (Yii::$app->request->post()) {
         $start_date = Yii::$app->request->post('start_date');
         $end_date = Yii::$app->request->post('end_date');
-        $query = Item::find()
+        $query = Customer::find()
     ->where(['between', 'FROM_UNIXTIME(created_at, "%Y-%m-%d")', $start_date, $end_date])
     ->orderBy('created_at');
-    $this->items = $query->all();
-    return $this->render('viewreport',['items' => $this->items]);
+    $customers = $query->all();
+    return $this->render('viewreport',['customers' => $customers]);
     }
     
     return $this->render('duration');
