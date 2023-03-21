@@ -7,6 +7,9 @@ use app\models\SubscriptionTypeSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use Mpdf;
+use Yii;
+use yii\web\ForbiddenHttpException;
 
 /**
  * SubscriptionTypeController implements the CRUD actions for SubscriptionType model.
@@ -45,6 +48,31 @@ class SubscriptionTypeController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+    public function actionDuration(){
+        return $this->render('duration');
+    }
+
+    public function actionGenerate() {
+        if (Yii::$app->request->post()) {
+            $start_date = Yii::$app->request->post('start_date');
+            $end_date = Yii::$app->request->post('end_date');
+            $query = SubscriptionType::find()
+        ->where(['between', 'FROM_UNIXTIME(created_at, "%Y-%m-%d")', $start_date, $end_date])
+        ->orderBy('created_at');
+        $dataProvider= $query->all();
+            $html = $this->renderPartial('pdf_view',['dataProvider'=>$dataProvider]);
+            $mpdf = new Mpdf\Mpdf;
+            $mpdf ->showImageErrors = true;
+            $mpdf ->SetDisplayMode('fullpage','two');
+            $mpdf ->writeHTML($html);
+            $mpdf->output();
+            exit;
+        // return $this->render('viewreport',['dataProvider' => $dataProvider]);
+        }
+        
+        return $this->render('duration');
     }
 
     /**

@@ -149,6 +149,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Create Subscription', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Report', ['duration'], ['class' => 'btn btn-info']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>

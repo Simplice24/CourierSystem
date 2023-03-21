@@ -3,84 +3,51 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 
-if(Yii::$app->user->isGuest){
-  return Yii::$app->getResponse()->redirect(['site/login']);
-}
-
-$this->title ='Items';
+$this->title ='Items report';
 $this->params['breadcrumbs'][]= $this->title;
 ?>
 
 <div class="container">
 <h2><?= Html::encode($this->title)?></h2>
+<!DOCTYPE html>
+<html>
+<head>
 <style>
-#customers {
-  font-family: Arial, Helvetica, sans-serif;
+table {
+  font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 100%;
 }
 
-#customers td, #customers th {
-  border: 1px solid #ddd;
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
   padding: 8px;
 }
 
-
-#customers th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: #04AA6D;
-  color:black;
-  color: white;
+tr:nth-child(even) {
+  background-color: #dddddd;
 }
 </style>
-<!-- <table class="table" id="customers">
-    <thead>
-<tr>
-  <th scope="col">Item Name</th>
-  <th scope="col">Sender</th>
-  <th scope="col">Receiver</th>
-  <th scope="col">Receiver phone</th>
-  <th scope="col">Receiver ID</th>
-  <th scope="col">Departure</th>
-  <th scope="col">Destination</th>
-</tr> 
-</thead>
-<?php foreach($dataProvider->getModels() as $model) {?>
-    <tr>
-        <th><?= $model->item_name?></th>
-        <th><?= $model->sender_name?></th>
-        <th><?= $model->receiver_name?></th>
-        <th><?= $model->receiver_phone?></th>
-        <th><?= $model->receiver_id?></th>
-        <th><?= $model->departure?></th>
-        <th><?= $model->destination?></th>
-</tr>
-
-<?php } ?>
-</table> -->
-<table id="customers">
+</head>
+<body>
+<h2>Statuses report</h2>
+<table>
   <tr>
-  <th >Item Name</th>
-  <th >Sender</th>
-  <th >Receiver</th>
-  <th >Receiver phone</th>
-  <th >Receiver ID</th>
-  <th >Departure</th>
-  <th >Destination</th>
+      <th>Status name </th>
+      <th>Status value</th>
+      <th>Created by</th>
+      <th>Created at</th>
   </tr>
-  <?php foreach($dataProvider->getModels() as $model) {?>
-    <tr>
-        <td><?= $model->item_name?></td>
-        <td><?= $model->sender_name?></td>
-        <td><?= $model->receiver_name?></td>
-        <td><?= $model->receiver_phone?></td>
-        <td><?= $model->receiver_id?></td>
-        <td><?= $model->departure?></td>
-        <td><?= $model->destination?></td>
-</tr>
-
-<?php } ?>
+  <?php foreach ($dataProvider as $status): ?>
+  <tr>
+      <td><?= $status->status_name ?></td>
+      <td><?= $status->status_value ?></td>
+      <td><?= $status->created_by ?></td>
+      <td><?= $status->created_at ?></td>
+  </tr>
+  <?php endforeach; ?>
 </table>
+</body>
+</html>
 </div>

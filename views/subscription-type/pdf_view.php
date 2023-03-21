@@ -36,13 +36,19 @@ $this->params['breadcrumbs'][]= $this->title;
 </style>
 <table id="customers">
   <tr>
-  <th >Subscription ID</th>
-  <th >Subscription name</th>
+  <th ></th>
+  <th ></th>
+  <th ></th>
+  <th ></th>
+  <th ></th>
   </tr>
-  <?php foreach($dataProvider->getModels() as $model) {?>
+  <?php foreach($dataProvider as $subtype) {?>
     <tr>
-        <td><?= $model->id?></td>
-        <td><?= $model->name?></td>
+        <td><?= $subtype->name ?></td>
+        <td><?= $subtype->amount ?></td>
+        <td><?= $subtype->payment_way ?></td>
+        <td><?= $subtype->created_by ?></td>
+        <td><?= $subtype->created_at ?></td>
 </tr>
 <?php } ?>
 </table>
