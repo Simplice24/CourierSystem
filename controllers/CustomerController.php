@@ -76,16 +76,6 @@ public function actionGenerate() {
     return $this->render('duration');
 }
 
-public function actionGetData($id)
-    {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        
-        $customer = Customer::findOne($id);
-        
-        return [
-            'subscription_type' => $customer->subscription,
-        ];
-    }
 
     /**
      * Displays a single Customer model.
