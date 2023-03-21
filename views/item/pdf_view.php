@@ -47,7 +47,7 @@ tr:nth-child(even) {
       <th>Departure time</th>
       <th>Destination</th>
   </tr>
-  <?php foreach ($dataProvider as $item): ?>
+  <?php foreach ($dataProvider->getModels() as $item): ?>
   <tr>
       <td><?= $item->item_name ?></td>
       <td><?= $item->value ?></td>
