@@ -63,7 +63,14 @@ public function actionGenerate() {
     ->where(['between', 'FROM_UNIXTIME(created_at, "%Y-%m-%d")', $start_date, $end_date])
     ->orderBy('created_at');
     $customers = $query->all();
-    return $this->render('viewreport',['customers' => $customers]);
+    $html = $this->renderPartial('pdf_view',['customers'=>$customers]);
+        $mpdf = new Mpdf\Mpdf;
+        $mpdf ->showImageErrors = true;
+        $mpdf ->SetDisplayMode('fullpage','two');
+        $mpdf ->writeHTML($html);
+        $mpdf->output();
+        exit;
+    // return $this->render('viewreport',['customers' => $customers]);
     }
     
     return $this->render('duration');

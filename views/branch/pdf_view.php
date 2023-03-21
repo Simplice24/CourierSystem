@@ -39,7 +39,7 @@ tr:nth-child(even) {
       <th>Created by</th>
       <th>Created at</th>
   </tr>
-  <?php foreach ($dataProvider->getModels() as $branch): ?>
+  <?php foreach ($branches as $branch): ?>
   <tr>
       <td><?= $branch->branch_id ?></td>
       <td><?= $branch->branch_name ?></td>

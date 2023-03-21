@@ -66,7 +66,14 @@ class UserController extends Controller
             ->where(['between', 'FROM_UNIXTIME(created_at, "%Y-%m-%d")', $start_date, $end_date])
             ->orderBy('created_at');
             $users = $query->all();
-            return $this->render('viewreport',['users' => $users]);
+            $html = $this->renderPartial('pdf_view',['users'=>$users]);
+        $mpdf = new Mpdf\Mpdf;
+        $mpdf ->showImageErrors = true;
+        $mpdf ->SetDisplayMode('fullpage','two');
+        $mpdf ->writeHTML($html);
+        $mpdf->output();
+        exit;
+            // return $this->render('viewreport',['users' => $users]);
                 }
             
             return $this->render('duration');

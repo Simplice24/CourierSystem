@@ -17,7 +17,7 @@ use yii\web\ForbiddenHttpException;
  */
 class ManifestController extends Controller
 {
-   public $manifests;
+   
     public function behaviors()
     {
         return array_merge(
@@ -61,8 +61,15 @@ public function actionGenerate() {
         $query = Manifest::find()
     ->where(['between', 'FROM_UNIXTIME(created_at, "%Y-%m-%d")', $start_date, $end_date])
     ->orderBy('created_at');
-    $this->manifests = $query->all();
-    return $this->render('viewreport',['manifests' => $this->manifests]);
+    $manifests = $query->all();
+    $html = $this->renderPartial('pdf_view',['manifests'=>$manifests]);
+        $mpdf = new Mpdf\Mpdf;
+        $mpdf ->showImageErrors = true;
+        $mpdf ->SetDisplayMode('fullpage','two');
+        $mpdf ->writeHTML($html);
+        $mpdf->output();
+        exit;
+    // return $this->render('viewreport',['manifests' => $this->manifests]);
     }
     
     return $this->render('duration');

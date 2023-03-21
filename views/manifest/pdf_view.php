@@ -39,7 +39,7 @@ tr:nth-child(even) {
       <th>Driver</th>
       <th>Plate number</th>
   </tr>
-  <?php foreach ($dataProvider->getModels() as $manifest): ?>
+  <?php foreach ($manifests as $manifest): ?>
   <tr>
       <td><?= $manifest->departure_date ?></td>
       <td><?= $manifest->departure_time ?></td>
