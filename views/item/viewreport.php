@@ -147,17 +147,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     <table class="table table-hover">
                       <thead>
                         <tr>
-                          <th>Item </th>
-                          <th>Value</th>
-                          <th>Sender</th>
-                          <th>Sender's phone</th>
-                          <th>Sender's subscription</th>
+                          <th>Name </th>
+                          <th>Sender </th>
+                          <th>Sender phone </th>
+                          <th>Subscription </th>
                           <th>Receiver</th>
-                          <th>Receiver's phone</th>
-                          <th>Receiver ID No</th>
-                          <th>Departure</th>
-                          <th>Departure date</th>
-                          <th>Departure time</th>
+                          <th>Phone </th>
+                          <th>Reciever ID </th>
+                          <th>Departure </th>
+                          <th>Date </th>
+                          <th>Time</th>
                           <th>Destination</th>
                         </tr>
                       </thead>
@@ -165,7 +164,6 @@ $this->params['breadcrumbs'][] = $this->title;
                       <?php foreach ($items as $item): ?>
                         <tr>
                          <td><?= $item->item_name ?></td>
-                         <td><?= $item->value ?></td>
                          <td><?= $item->sender_name ?></td>
                          <td><?= $item->sender_phone ?></td>
                          <td><?= $item->sender_subscription ?></td>

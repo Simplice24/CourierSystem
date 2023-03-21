@@ -165,8 +165,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
         // 'id',
         'name',
-        'created_at',
         'payment_way',
+        'created_at:datetime',
         'created_by',
         //'updated_by',
         //'updated_at',

@@ -51,7 +51,7 @@ class SubscriptionType extends \yii\db\ActiveRecord
             // 'id' => 'ID',
             'name' => 'Name',
             // 'created_at' => 'Created At',
-            'payment_way' => 'Payment Way',
+            'payment_way' => 'Payment',
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
             // 'updated_at' => 'Updated At',

@@ -149,7 +149,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <p>
     <?php if (\Yii::$app->user->can('Create_user')){?>
     <?= Html::a('Create User', ['create'], ['class' => 'btn btn-success']) ?>
-    <?= Html::a('Export PDF', ['pdf'], ['class' => 'btn btn-info']) ?>
+    <?= Html::a('Report', ['duration'], ['class' => 'btn btn-info']) ?>
     <?php } ?>
 </p>
 
