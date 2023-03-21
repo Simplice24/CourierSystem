@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Status;
+use app\models\Log;
 use app\models\StatusSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -98,7 +99,18 @@ class StatusController extends Controller
         $model = new Status();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+            if ($model->load($this->request->post())) {
+                $model->created_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                    $model->updated_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                    $model->created_by=Yii::$app->user->identity->username;
+                    $model->updated_by=Yii::$app->user->identity->username;
+                    if($model->save()){
+                        $log = new Log();
+                        $log->done_by=Yii::$app->user->identity->username;
+                        $log->comment="New status created";
+                        $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                        $log->save();
+                    }
                 return $this->redirect(['view', 'status_id' => $model->status_id]);
             }
         } else {

@@ -36,7 +36,7 @@ class Subscription extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['customer', 'subscription_type', 'amount', 'created_at', 'created_by', 'updated_at', 'updated_by', 'customer_id'], 'required'],
+            [['customer', 'subscription_type', 'amount', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'required'],
             [['amount', 'created_at', 'updated_at', 'customer_id'], 'integer'],
             [['customer'], 'string', 'max' => 225],
             [['subscription_type', 'created_by', 'updated_by'], 'string', 'max' => 60],

@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use app\models\Customer;
 
 /** @var yii\web\View $this */
 /** @var app\models\Subscription $model */
@@ -164,7 +165,7 @@ if(Yii::$app->user->isGuest){
                       <div class="branch-index">
 
 
-                      <?php $form = ActiveForm::begin(); ?>
+                      <?php  $form = ActiveForm::begin(); ?>
 
 <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
@@ -186,18 +187,18 @@ if(Yii::$app->user->isGuest){
                   </div>
 </div>
 </div>
-<div class="row" style="height:90px;">
+                  <div class="row" style="height:90px;">
                     <div class="col-md-6">
                       <div class="form-group row">
                   <div class="form-group">
-                  <?= $form->field($model, 'amount')->textInput() ?>
+                  <?= $form->field($model, 'amount')->input('number') ?>
                   </div>
                   </div>
                   </div>
                   <div class="col-md-6">
                       <div class="form-group row">
                   <div class="form-group">
-                  <?= $form->field($model, 'created_at')->textInput() ?>
+                  <?= $form->field($model, 'customer_id')->textInput() ?>
                   </div>
                   </div>
                   </div>
@@ -210,10 +211,7 @@ if(Yii::$app->user->isGuest){
                   </div>
                   <div class="form-group">
                   <?= $form->field($model, 'updated_by')->textInput(['maxlength' => true]) ?>
-                  </div>
-                  <div class="form-group">
-                  <?= $form->field($model, 'customer_id')->textInput() ?>
-                  </div> -->
+                  </div>-->
                   <?= Html::submitButton('Save', ['class' => 'btn btn-gradient-primary me-2']) ?>
                 </form>
               </div>

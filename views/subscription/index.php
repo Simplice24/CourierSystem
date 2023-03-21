@@ -160,12 +160,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'subscription_id',
+            // 'subscription_id',
             'customer',
             'subscription_type',
             'amount',
-            'created_at',
-            //'created_by',
+            'created_by',
+            'created_at:datetime',
             //'updated_at',
             //'updated_by',
             //'customer_id',

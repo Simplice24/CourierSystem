@@ -35,7 +35,7 @@ class SubscriptionType extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'amount', 'created_at', 'payment_way', 'created_by', 'updated_by', 'updated_at', 'subscription_id'], 'required'],
+            [['name', 'amount', 'created_at', 'payment_way', 'created_by', 'updated_by', 'updated_at'], 'required'],
             [['amount', 'subscription_id'], 'integer'],
             [['name', 'created_at', 'payment_way', 'created_by', 'updated_by', 'updated_at'], 'string', 'max' => 60],
             [['subscription_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subscription::class, 'targetAttribute' => ['subscription_id' => 'subscription_id']],
