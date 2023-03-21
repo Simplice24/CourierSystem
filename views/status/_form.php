@@ -168,28 +168,59 @@ if(Yii::$app->user->isGuest){
 
                       <?php $form = ActiveForm::begin(); ?>
 
-<div class="col-md-6 grid-margin stretch-card">
+<div class="col-md-12 grid-margin stretch-card">
             <div class="card">
               <div class="card-body">
                 <form class="forms-sample">
+                <div class="row" style="height:90px;">
+                    <div class="col-md-6">
+                      <div class="form-group row">
                   <div class="form-group">
                   <?= $form->field($model, 'status_name')->textInput(['maxlength' => true]) ?>
                   </div>
+</div>
+</div>
+<div class="col-md-6">
+                      <div class="form-group row">
                   <div class="form-group">
-                  <?= $form->field($model, 'status_value')->textInput() ?>
+                  <?= $form->field($model, 'status_value')->input('number') ?>
                   </div>
+                  </div>
+</div>
+</div>
+                    <!-- <div class="row" style="height:90px;">
+                    <div class="col-md-6">
+                      <div class="form-group row">
                   <div class="form-group">
                     <?= $form->field($model, 'created_at')->textInput(['maxlength' => true]) ?>
                     </div>
+                    </div>
+</div>
+                      <div class="col-md-6">
+                      <div class="form-group row">
                   <div class="form-group">
                     <?= $form->field($model, 'created_by')->textInput(['maxlength' => true]) ?>
                     </div>
+                    </div>
+                    </div>
+</div>
+
+<div class="row" style="height:90px;">
+                    <div class="col-md-6">
+                      <div class="form-group row">
                   <div class="form-group">
                     <?= $form->field($model, 'updated_at')->textInput(['maxlength' => true]) ?>
                     </div>
+</div>
+</div>
+<div class="col-md-6">
+                      <div class="form-group row">
                   <div class="form-group">
                     <?= $form->field($model, 'updated_by')->textInput(['maxlength' => true]) ?>
                     </div>
+</div>
+</div>
+</div> -->
                   <?= Html::submitButton('Save', ['class' => 'btn btn-gradient-primary me-2']) ?>
                 </form>
               </div>

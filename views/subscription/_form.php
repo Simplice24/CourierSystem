@@ -166,23 +166,43 @@ if(Yii::$app->user->isGuest){
 
                       <?php $form = ActiveForm::begin(); ?>
 
-<div class="col-md-6 grid-margin stretch-card">
+<div class="col-md-12 grid-margin stretch-card">
             <div class="card">
               <div class="card-body">
                 <form class="forms-sample">
+                <div class="row" style="height:90px;">
+                    <div class="col-md-6">
+                      <div class="form-group row">
                   <div class="form-group">
                   <?= $form->field($model, 'customer')->textInput(['maxlength' => true]) ?>
                   </div>
+</div>
+</div>
+                  <div class="col-md-6">
+                  <div class="form-group row">
                   <div class="form-group">
                   <?= $form->field($model, 'subscription_type')->textInput(['maxlength' => true]) ?>
                   </div>
+                  </div>
+</div>
+</div>
+<div class="row" style="height:90px;">
+                    <div class="col-md-6">
+                      <div class="form-group row">
                   <div class="form-group">
                   <?= $form->field($model, 'amount')->textInput() ?>
                   </div>
+                  </div>
+                  </div>
+                  <div class="col-md-6">
+                      <div class="form-group row">
                   <div class="form-group">
                   <?= $form->field($model, 'created_at')->textInput() ?>
                   </div>
-                  <div class="form-group">
+                  </div>
+                  </div>
+                  </div>
+                  <!-- <div class="form-group">
                   <?= $form->field($model, 'created_by')->textInput(['maxlength' => true]) ?>
                   </div>
                   <div class="form-group">
@@ -193,7 +213,7 @@ if(Yii::$app->user->isGuest){
                   </div>
                   <div class="form-group">
                   <?= $form->field($model, 'customer_id')->textInput() ?>
-                  </div>
+                  </div> -->
                   <?= Html::submitButton('Save', ['class' => 'btn btn-gradient-primary me-2']) ?>
                 </form>
               </div>

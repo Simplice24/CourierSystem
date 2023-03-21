@@ -9,7 +9,7 @@ if(Yii::$app->user->isGuest){
     return Yii::$app->getResponse()->redirect(['site/login']);
   }
 
-$this->title = 'Create Status';
+// $this->title = 'Create Status';
 $this->params['breadcrumbs'][] = ['label' => 'Statuses', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
