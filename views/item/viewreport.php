@@ -161,7 +161,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         </tr>
                       </thead>
                       <tbody>
-                      <?php foreach ($items as $item): ?>
+                      <?php foreach ($dataProvider as $item): ?>
                         <tr>
                          <td><?= $item->item_name ?></td>
                          <td><?= $item->sender_name ?></td>
