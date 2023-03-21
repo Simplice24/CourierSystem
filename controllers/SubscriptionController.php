@@ -3,14 +3,10 @@
 namespace app\controllers;
 
 use app\models\Subscription;
-use app\models\Log;
 use app\models\SubscriptionSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use Yii;
-use Mpdf;
-use yii\web\ForbiddenHttpException;
 
 /**
  * SubscriptionController implements the CRUD actions for Subscription model.
@@ -51,37 +47,6 @@ class SubscriptionController extends Controller
         ]);
     }
 
-    public function actionDuration(){
-        return $this->render('duration');
-    }
-
-
-public function actionGenerate() {
-    if (Yii::$app->request->post()) {
-        $start_date = Yii::$app->request->post('start_date');
-        $end_date = Yii::$app->request->post('end_date');
-        $query = Item::find()
-    ->where(['between', 'FROM_UNIXTIME(created_at, "%Y-%m-%d")', $start_date, $end_date])
-    ->orderBy('created_at');
-    $this->items = $query->all();
-    return $this->render('viewreport',['items' => $this->items]);
-    }
-    
-    return $this->render('duration');
-}
-
-    public function actionPdf(){
-        $searchModel = new SubscriptionSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
-        $html = $this->renderPartial('pdf_view',['dataProvider'=>$dataProvider]);
-        $mpdf = new Mpdf\Mpdf;
-        $mpdf ->showImageErrors = true;
-        $mpdf ->SetDisplayMode('fullpage','two');
-        $mpdf ->writeHTML($html);
-        $mpdf->output();
-        exit;
-    }
-
     /**
      * Displays a single Subscription model.
      * @param int $subscription_id Subscription ID
@@ -90,14 +55,9 @@ public function actionGenerate() {
      */
     public function actionView($subscription_id)
     {
-        if(Yii::$app->user->can('View_subscription')){
-            return $this->render('view', [
-                'model' => $this->findModel($subscription_id),
-            ]);
-        }else{
-            throw new ForbiddenHttpException;
-        }
-        
+        return $this->render('view', [
+            'model' => $this->findModel($subscription_id),
+        ]);
     }
 
     /**
@@ -108,34 +68,18 @@ public function actionGenerate() {
     public function actionCreate()
     {
         $model = new Subscription();
-        if(Yii::$app->user->can('Create_subscription')){
-            if ($this->request->isPost) {
-                if ($model->load($this->request->post())) {
-                    $model->created_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
-                    $model->updated_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
-                    $model->created_by=Yii::$app->user->identity->username;
-                    $model->updated_by=Yii::$app->user->identity->username;
-                    if($model->save()){
-                        $log = new Log();
-                        $log->done_by=Yii::$app->user->identity->username;
-                        $log->comment="Created new subscription ";
-                        $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
-                        $log->save();
-                    }
-                    return $this->redirect(['view', 'subscription_id' => $model->subscription_id]);
-                }
-            } else {
-                $model->loadDefaultValues();
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'subscription_id' => $model->subscription_id]);
             }
-    
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        } else {
+            $model->loadDefaultValues();
         }
-        else{
-            throw new ForbiddenHttpException;
-        }
-        
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -147,27 +91,15 @@ public function actionGenerate() {
      */
     public function actionUpdate($subscription_id)
     {
-        if(Yii::$app->user->can('Update_subscription')){
-            $model = $this->findModel($subscription_id);
+        $model = $this->findModel($subscription_id);
 
-        if ($this->request->isPost && $model->load($this->request->post())) {
-            if($model->save()){
-                $log = new Log();
-                $log->done_by=Yii::$app->user->identity->username;
-                $log->comment="Updated subscription details ";
-                $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
-                $log->save();
-            }
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'subscription_id' => $model->subscription_id]);
         }
 
         return $this->render('update', [
             'model' => $model,
         ]);
-        }else{
-            throw new ForbiddenHttpException;
-        }
-        
     }
 
     /**
@@ -179,22 +111,10 @@ public function actionGenerate() {
      */
     public function actionDelete($subscription_id)
     {
-        if(Yii::$app->user->can('Delete_subscription')){
-            $this->findModel($subscription_id)->delete();
-                $log = new Log();
-                $log->done_by=Yii::$app->user->identity->username;
-                $log->comment="Deleted subscription";
-                $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
-                $log->save();
-            
+        $this->findModel($subscription_id)->delete();
 
         return $this->redirect(['index']);
-    }else{
-        throw new ForbiddenHttpException;
     }
-
-        }
-        
 
     /**
      * Finds the Subscription model based on its primary key value.

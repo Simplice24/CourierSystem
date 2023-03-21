@@ -18,7 +18,7 @@ class StatusSearch extends Status
     {
         return [
             [['status_id', 'status_value'], 'integer'],
-            [['created_at', 'created_by', 'updated_at', 'updated_by'], 'safe'],
+            [['status_name', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'safe'],
         ];
     }
 
@@ -60,11 +60,12 @@ class StatusSearch extends Status
         $query->andFilterWhere([
             'status_id' => $this->status_id,
             'status_value' => $this->status_value,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'created_by', $this->created_by])
+        $query->andFilterWhere(['like', 'status_name', $this->status_name])
+            ->andFilterWhere(['like', 'created_at', $this->created_at])
+            ->andFilterWhere(['like', 'created_by', $this->created_by])
+            ->andFilterWhere(['like', 'updated_at', $this->updated_at])
             ->andFilterWhere(['like', 'updated_by', $this->updated_by]);
 
         return $dataProvider;

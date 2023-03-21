@@ -8,8 +8,9 @@ use yii\widgets\ActiveForm;
 /** @var yii\widgets\ActiveForm $form */
 
 if(Yii::$app->user->isGuest){
-  return Yii::$app->getResponse()->redirect(['site/login']);
-}
+    return Yii::$app->getResponse()->redirect(['site/login']);
+  }
+
 
 ?>
 
@@ -26,7 +27,6 @@ if(Yii::$app->user->isGuest){
                 <!-- <div class="nav-profile-image">
                   <img src="assets/images/faces/face1.jpg" alt="profile">
                   <span class="login-status online"></span>
-                  
                 </div> -->
                 <div class="nav-profile-text d-flex flex-column">
                   <span class="font-weight-bold mb-2"><?= \Yii::$app->user->identity->username ;?></span>
@@ -166,30 +166,43 @@ if(Yii::$app->user->isGuest){
                       <div class="branch-index">
 
 
-                      <div class="subscription-form">
+                      <?php $form = ActiveForm::begin(); ?>
 
-<?php $form = ActiveForm::begin(); ?>
 <div class="col-md-6 grid-margin stretch-card">
             <div class="card">
               <div class="card-body">
                 <form class="forms-sample">
-                <div class="form-group">
-<?= $form->field($model, 'subscription_type')->textInput(['maxlength' => true]) ?>
-</div>
-<div class="form-group">
-<?= $form->field($model, 'customer_id')->textInput() ?>
-</div>
-<div class="form-group">
-    <?= Html::submitButton('Save', ['class' => 'btn btn-gradient-primary me-2']) ?>
-</div>
-</form>
-</div>
-</div>
-</div>
+                  <div class="form-group">
+                  <?= $form->field($model, 'customer')->textInput(['maxlength' => true]) ?>
+                  </div>
+                  <div class="form-group">
+                  <?= $form->field($model, 'subscription_type')->textInput(['maxlength' => true]) ?>
+                  </div>
+                  <div class="form-group">
+                  <?= $form->field($model, 'amount')->textInput() ?>
+                  </div>
+                  <div class="form-group">
+                  <?= $form->field($model, 'created_at')->textInput() ?>
+                  </div>
+                  <div class="form-group">
+                  <?= $form->field($model, 'created_by')->textInput(['maxlength' => true]) ?>
+                  </div>
+                  <div class="form-group">
+                  <?= $form->field($model, 'updated_at')->textInput() ?>
+                  </div>
+                  <div class="form-group">
+                  <?= $form->field($model, 'updated_by')->textInput(['maxlength' => true]) ?>
+                  </div>
+                  <div class="form-group">
+                  <?= $form->field($model, 'customer_id')->textInput() ?>
+                  </div>
+                  <?= Html::submitButton('Save', ['class' => 'btn btn-gradient-primary me-2']) ?>
+                </form>
+              </div>
+            </div>
+          </div>
 
 <?php ActiveForm::end(); ?>
-
-</div>
 
 
                     </div>
@@ -200,4 +213,6 @@ if(Yii::$app->user->isGuest){
           </div>
     
   </body>
+
+
 

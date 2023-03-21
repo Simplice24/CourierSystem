@@ -6,11 +6,6 @@ use yii\widgets\ActiveForm;
 /** @var yii\web\View $this */
 /** @var app\models\SubscriptionSearch $model */
 /** @var yii\widgets\ActiveForm $form */
-
-if(Yii::$app->user->isGuest){
-    return Yii::$app->getResponse()->redirect(['site/login']);
-}
-
 ?>
 
 <div class="subscription-search">
@@ -22,13 +17,17 @@ if(Yii::$app->user->isGuest){
 
     <?= $form->field($model, 'subscription_id') ?>
 
+    <?= $form->field($model, 'customer') ?>
+
     <?= $form->field($model, 'subscription_type') ?>
+
+    <?= $form->field($model, 'amount') ?>
 
     <?= $form->field($model, 'created_at') ?>
 
-    <?= $form->field($model, 'created_by') ?>
+    <?php // echo $form->field($model, 'created_by') ?>
 
-    <?= $form->field($model, 'updated_at') ?>
+    <?php // echo $form->field($model, 'updated_at') ?>
 
     <?php // echo $form->field($model, 'updated_by') ?>
 

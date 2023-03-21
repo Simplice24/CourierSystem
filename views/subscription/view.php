@@ -6,10 +6,6 @@ use yii\widgets\DetailView;
 /** @var yii\web\View $this */
 /** @var app\models\Subscription $model */
 
-if(Yii::$app->user->isGuest){
-  return Yii::$app->getResponse()->redirect(['site/login']);
-}
-
 $this->title = $model->subscription_id;
 $this->params['breadcrumbs'][] = ['label' => 'Subscriptions', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -29,7 +25,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 <!-- <div class="nav-profile-image">
                   <img src="assets/images/faces/face1.jpg" alt="profile">
                   <span class="login-status online"></span>
-                  
                 </div> -->
                 <div class="nav-profile-text d-flex flex-column">
                   <span class="font-weight-bold mb-2"><?= \Yii::$app->user->identity->username ;?></span>
@@ -188,7 +183,9 @@ $this->params['breadcrumbs'][] = $this->title;
     'model' => $model,
     'attributes' => [
         'subscription_id',
+        'customer',
         'subscription_type',
+        'amount',
         'created_at',
         'created_by',
         'updated_at',
@@ -207,5 +204,8 @@ $this->params['breadcrumbs'][] = $this->title;
           </div>
     
   </body>
+
+
+
 
 

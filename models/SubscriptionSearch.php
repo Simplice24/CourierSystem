@@ -17,8 +17,8 @@ class SubscriptionSearch extends Subscription
     public function rules()
     {
         return [
-            [['subscription_id', 'customer_id'], 'integer'],
-            [['subscription_type', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'safe'],
+            [['subscription_id', 'amount', 'created_at', 'updated_at', 'customer_id'], 'integer'],
+            [['customer', 'subscription_type', 'created_by', 'updated_by'], 'safe'],
         ];
     }
 
@@ -59,12 +59,14 @@ class SubscriptionSearch extends Subscription
         // grid filtering conditions
         $query->andFilterWhere([
             'subscription_id' => $this->subscription_id,
+            'amount' => $this->amount,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'customer_id' => $this->customer_id,
         ]);
 
-        $query->andFilterWhere(['like', 'subscription_type', $this->subscription_type])
+        $query->andFilterWhere(['like', 'customer', $this->customer])
+            ->andFilterWhere(['like', 'subscription_type', $this->subscription_type])
             ->andFilterWhere(['like', 'created_by', $this->created_by])
             ->andFilterWhere(['like', 'updated_by', $this->updated_by]);
 

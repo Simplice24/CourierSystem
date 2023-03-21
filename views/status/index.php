@@ -10,11 +10,6 @@ use yii\grid\GridView;
 /** @var app\models\StatusSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-if(Yii::$app->user->isGuest){
-  return Yii::$app->getResponse()->redirect(['site/login']);
-}
-
-
 $this->title = 'Statuses';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -142,18 +137,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="card">
                   <div class="card-body">
                     <div class="table-responsive">
-                      <div class="branch-index">
 
 
-                      <div class="status-index">
+                    <div class="status-index">
 
 <h1><?= Html::encode($this->title) ?></h1>
 
 <p>
-<?php if(\Yii::$app->user->can('Create_status')) { ?>
     <?= Html::a('Create Status', ['create'], ['class' => 'btn btn-success']) ?>
-    <!-- <?= Html::a('Export PDF', ['pdf'], ['class' => 'btn btn-info']) ?> -->
-    <?php } ?>
 </p>
 
 <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -164,11 +155,12 @@ $this->params['breadcrumbs'][] = $this->title;
     'columns' => [
         ['class' => 'yii\grid\SerialColumn'],
 
-        // 'status_id',
+        'status_id',
+        'status_name',
         'status_value',
         'created_at',
         'created_by',
-        'updated_at',
+        //'updated_at',
         //'updated_by',
         [
             'class' => ActionColumn::className(),
@@ -179,10 +171,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ],
 ]); ?>
 
-
 </div>
-
-
                     </div>
                   </div>
                 </div>
@@ -191,4 +180,6 @@ $this->params['breadcrumbs'][] = $this->title;
           </div>
     
   </body>
+
+
 

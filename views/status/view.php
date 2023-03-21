@@ -6,10 +6,6 @@ use yii\widgets\DetailView;
 /** @var yii\web\View $this */
 /** @var app\models\Status $model */
 
-if(Yii::$app->user->isGuest){
-  return Yii::$app->getResponse()->redirect(['site/login']);
-}
-
 $this->title = $model->status_id;
 $this->params['breadcrumbs'][] = ['label' => 'Statuses', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -29,7 +25,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 <!-- <div class="nav-profile-image">
                   <img src="assets/images/faces/face1.jpg" alt="profile">
                   <span class="login-status online"></span>
-                  
                 </div> -->
                 <div class="nav-profile-text d-flex flex-column">
                   <span class="font-weight-bold mb-2"><?= \Yii::$app->user->identity->username ;?></span>
@@ -169,7 +164,7 @@ $this->params['breadcrumbs'][] = $this->title;
                       <div class="branch-index">
 
 
-                      <div class="status-view">
+<div class="status-view">
 
 <h1><?= Html::encode($this->title) ?></h1>
 
@@ -188,6 +183,7 @@ $this->params['breadcrumbs'][] = $this->title;
     'model' => $model,
     'attributes' => [
         'status_id',
+        'status_name',
         'status_value',
         'created_at',
         'created_by',
@@ -207,4 +203,7 @@ $this->params['breadcrumbs'][] = $this->title;
           </div>
     
   </body>
+
+
+
 

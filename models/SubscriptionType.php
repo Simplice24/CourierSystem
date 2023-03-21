@@ -9,6 +9,7 @@ use Yii;
  *
  * @property int $id
  * @property string $name
+ * @property int $amount
  * @property string $created_at
  * @property string $payment_way
  * @property string $created_by
@@ -34,10 +35,9 @@ class SubscriptionType extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'created_at', 'payment_way', 'created_by', 'updated_by', 'updated_at', 'subscription_id'], 'required'],
-            [['subscription_id'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
-            [['name', 'payment_way', 'created_by', 'updated_by'], 'string', 'max' => 60],
+            [['name', 'amount', 'created_at', 'payment_way', 'created_by', 'updated_by', 'updated_at', 'subscription_id'], 'required'],
+            [['amount', 'subscription_id'], 'integer'],
+            [['name', 'created_at', 'payment_way', 'created_by', 'updated_by', 'updated_at'], 'string', 'max' => 60],
             [['subscription_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subscription::class, 'targetAttribute' => ['subscription_id' => 'subscription_id']],
         ];
     }
@@ -48,13 +48,14 @@ class SubscriptionType extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            // 'id' => 'ID',
+            'id' => 'ID',
             'name' => 'Name',
-            // 'created_at' => 'Created At',
-            'payment_way' => 'Payment',
+            'amount' => 'Amount',
+            'created_at' => 'Created At',
+            'payment_way' => 'Payment Way',
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
-            // 'updated_at' => 'Updated At',
+            'updated_at' => 'Updated At',
             'subscription_id' => 'Subscription ID',
         ];
     }

@@ -10,10 +10,6 @@ use yii\grid\GridView;
 /** @var app\models\SubscriptionTypeSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-if(Yii::$app->user->isGuest){
-  return Yii::$app->getResponse()->redirect(['site/login']);
-}
-
 $this->title = 'Subscription Types';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -141,49 +137,44 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="card">
                   <div class="card-body">
                     <div class="table-responsive">
-                      <div class="branch-index">
 
 
-                      <div class="subscription-type-index">
+                    <div class="subscription-type-index">
 
-<h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode($this->title) ?></h1>
 
-<p>
-<?php if(\Yii::$app->user->can('Create_subscriptionTypes')) { ?>
-    <?= Html::a('Create Subscription Type', ['create'], ['class' => 'btn btn-success']) ?>
-    <?= Html::a('Export PDF', ['pdf'], ['class' => 'btn btn-info']) ?>
-    <?php } ?>
-</p>
+    <p>
+        <?= Html::a('Create Subscription Type', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
 
-<?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-<?= GridView::widget([
-    'dataProvider' => $dataProvider,
-    'filterModel' => $searchModel,
-    'columns' => [
-        ['class' => 'yii\grid\SerialColumn'],
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
 
-        // 'id',
-        'name',
-        'payment_way',
-        'created_at:datetime',
-        'created_by',
-        //'updated_by',
-        //'updated_at',
-        //'subscription_id',
-        [
-            'class' => ActionColumn::className(),
-            'urlCreator' => function ($action, SubscriptionType $model, $key, $index, $column) {
-                return Url::toRoute([$action, 'id' => $model->id]);
-             }
+            'id',
+            'name',
+            'amount',
+            'created_at',
+            'payment_way',
+            //'created_by',
+            //'updated_by',
+            //'updated_at',
+            //'subscription_id',
+            [
+                'class' => ActionColumn::className(),
+                'urlCreator' => function ($action, SubscriptionType $model, $key, $index, $column) {
+                    return Url::toRoute([$action, 'id' => $model->id]);
+                 }
+            ],
         ],
-    ],
-]); ?>
+    ]); ?>
 
 
 </div>
-
-
                     </div>
                   </div>
                 </div>
@@ -192,4 +183,6 @@ $this->params['breadcrumbs'][] = $this->title;
           </div>
     
   </body>
+
+
 
