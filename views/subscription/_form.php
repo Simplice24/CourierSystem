@@ -10,8 +10,6 @@ use yii\widgets\ActiveForm;
 if(Yii::$app->user->isGuest){
     return Yii::$app->getResponse()->redirect(['site/login']);
   }
-
-
 ?>
 
 <body>

@@ -9,6 +9,9 @@ use yii\grid\GridView;
 /** @var yii\web\View $this */
 /** @var app\models\SubscriptionTypeSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
+if(Yii::$app->user->isGuest){
+  return Yii::$app->getResponse()->redirect(['site/login']);
+}
 
 $this->title = 'Subscription Types';
 $this->params['breadcrumbs'][] = $this->title;
