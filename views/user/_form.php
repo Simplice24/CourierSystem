@@ -167,40 +167,95 @@ if(Yii::$app->user->isGuest){
                     <div class="table-responsive">
                         
                     <div class="user-form">
+ 
+                    <?php $form = ActiveForm::begin(); ?>
 
-<?php $form = ActiveForm::begin(); ?>
+<div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <form class="forms-sample">
 
-<?= $form->field($model, 'user_fullname')->textInput(['maxlength' => true]) ?>
+                <div class="row" style="height:90px;">
+                    <div class="col-md-4">
+                      <div class="form-group row">
+                    <div class="form-group">
+                    <?= $form->field($model, 'user_fullname')->textInput(['maxlength' => true]) ?>
+</div>
+                </div>
+            </div>
 
-<?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
+<div class="col-md-4">
+                      <div class="form-group row">
+                    <div class="form-group">
+                    <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
+</div>
+                </div>
+            </div>
+            
+<div class="col-md-4">
+                      <div class="form-group row">
+                    <div class="form-group">
+                    <?= $form->field($model, 'role')->DropDownList(['ADMIN'=>'ADMIN','Branch_manager'=>'BRANCH MANAGER','Branch_agent'=>'BRANCH AGENT'],['prompt'=>'Select user role'])?>
+</div>
+                </div>
+            </div>
+            </div>
 
-<?= $form->field($model, 'role')->DropDownList(['ADMIN'=>'ADMIN','Branch_manager'=>'BRANCH MANAGER','Branch_agent'=>'BRANCH AGENT'],['prompt'=>'Select user role'])?>
+            <div class="row" style="height:90px;">
+<div class="col-md-4">
+                      <div class="form-group row">
+                    <div class="form-group">
+                    <?= $form->field($model, 'password_hash')->passwordInput(['maxlength' => true]) ?>
+</div>
+                </div>
+            </div>
 
-<!-- <?= $form->field($model, 'auth_key')->textInput(['maxlength' => true]) ?> -->
+<div class="col-md-4">
+                      <div class="form-group row">
+                    <div class="form-group">
+                    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+</div>
+                </div>
+            </div>
 
-<?= $form->field($model, 'password_hash')->passwordInput(['maxlength' => true]) ?>
+<div class="col-md-4">
+                      <div class="form-group row">
+                    <div class="form-group">
+                    <?= $form->field($model, 'telephone')->input('number',['maxlength' => true]) ?>
+</div>
+                </div>
+            </div>
+            </div>
 
-<!-- <?= $form->field($model, 'password_reset_token')->textInput(['maxlength' => true]) ?> -->
+            <div class="row" style="height:90px;">
+<div class="col-md-4">
+                      <div class="form-group row">
+                    <div class="form-group">
+                    <?= $form->field($model, 'branche_id')->dropDownList(
+        \yii\helpers\ArrayHelper::map(
+            \app\models\Branch::find()->all(),
+            'branch_id',
+            'branch_name'
+        ),
+        ['prompt'=>'Select branch']
+    ) ?>
 
-<?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
-
-<?= $form->field($model, 'telephone')->textInput(['maxlength' => true]) ?>
-
-<?= $form->field($model, 'branche_id')->textInput() ?>
-
-<!-- <?= $form->field($model, 'status')->textInput() ?> -->
-
-<!-- <?= $form->field($model, 'created_at')->textInput() ?>
-
-<?= $form->field($model, 'updated_at')->textInput() ?> -->
-
-<!-- <?= $form->field($model, 'verification_token')->textInput(['maxlength' => true]) ?> -->
+</div>
+                </div>
+            </div>
+            </div>
 
 <div class="form-group">
     <?= Html::submitButton('Save', ['class' => 'btn btn-gradient-primary me-2']) ?>
 </div>
 
+
+</form>
+            </div>
+        </div>
+    </div>
 <?php ActiveForm::end(); ?>
+
 
 </div>
 
@@ -214,3 +269,4 @@ if(Yii::$app->user->isGuest){
   </body>
 
 
+  
