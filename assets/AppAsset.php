@@ -26,6 +26,8 @@ class AppAsset extends AssetBundle
     public $js = [
         'js/chart.js',
         'js/dashboard.js',
+        'js/Chart.min.js',
+        'js/off-canvas.js',
     ];
     public $vendors = [
         'chart.js/Chart.min.js',
