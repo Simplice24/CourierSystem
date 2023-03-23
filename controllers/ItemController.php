@@ -7,6 +7,7 @@ use app\models\Log;
 use app\models\ItemSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\data\ActiveDataProvider;
 use yii\filters\VerbFilter;
 use Mpdf;
 use Yii;
@@ -154,16 +155,40 @@ public function actionGenerate() {
         
     }
 
-    public function actionReceipt($model_id){
-        $itemdetails=$this->findModel($item_id);
-        $html = $this->renderPartial('receipt',['itemdetails'=>$itemdetails]);
+    public function actionReceipt($item_id)
+{
+    // Select all details from the Item model based on the $item_id parameter
+    $query = Item::find()->where(['item_id' => $item_id]);
+    $dataProvider = new ActiveDataProvider([
+        'query' => $query,
+    ]);
+    
+    // Get the data as an array
+    $items = $dataProvider->getModels();
+
+    // Render the PDF using a view file
+    // $pdf = new Pdf([
+    //     'mode' => Pdf::MODE_UTF8,
+    //     'format' => Pdf::FORMAT_A4,
+    //     'orientation' => Pdf::ORIENT_PORTRAIT,
+    //     'destination' => Pdf::DEST_BROWSER,
+    //     'content' => $this->renderPartial('receipt_view', [
+    //         'items' => $items,
+    //     ]),
+    //     'options' => [
+    //         'title' => 'Receipt',
+    //     ],
+    // ]);
+    // return $pdf->render();
+    $dataProvider= $query->all();
+        $html = $this->renderPartial('receipt',['items'=>$items]);
         $mpdf = new Mpdf\Mpdf;
         $mpdf ->showImageErrors = true;
         $mpdf ->SetDisplayMode('fullpage','two');
         $mpdf ->writeHTML($html);
         $mpdf->output();
         exit;
-    }
+}
 
     /**
      * Deletes an existing Item model.
