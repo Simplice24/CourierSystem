@@ -154,6 +154,17 @@ public function actionGenerate() {
         
     }
 
+    public function actionReceipt($model_id){
+        $itemdetails=$this->findModel($item_id);
+        $html = $this->renderPartial('receipt',['itemdetails'=>$itemdetails]);
+        $mpdf = new Mpdf\Mpdf;
+        $mpdf ->showImageErrors = true;
+        $mpdf ->SetDisplayMode('fullpage','two');
+        $mpdf ->writeHTML($html);
+        $mpdf->output();
+        exit;
+    }
+
     /**
      * Deletes an existing Item model.
      * If deletion is successful, the browser will be redirected to the 'index' page.

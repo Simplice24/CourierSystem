@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 07, 2023 at 06:36 PM
+-- Generation Time: Mar 23, 2023 at 12:01 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -40,9 +40,11 @@ CREATE TABLE `auth_assignment` (
 INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
 ('ADMIN', 29, NULL),
 ('Branch_agent', 31, NULL),
+('Branch_agent', 52, NULL),
 ('Branch_manager', 30, NULL),
 ('Branch_manager', 49, NULL),
-('Branch_manager', 50, NULL);
+('Branch_manager', 50, NULL),
+('Branch_manager', 51, NULL);
 
 -- --------------------------------------------------------
 
@@ -226,7 +228,7 @@ CREATE TABLE `customer` (
   `customer_id` int(225) NOT NULL,
   `fullname` varchar(60) NOT NULL,
   `subscription` varchar(10) NOT NULL,
-  `idn` int(20) NOT NULL,
+  `idn` varchar(16) NOT NULL,
   `telephone` varchar(15) NOT NULL,
   `created_at` varchar(60) NOT NULL,
   `created_by` varchar(60) NOT NULL,
@@ -240,7 +242,7 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`customer_id`, `fullname`, `subscription`, `idn`, `telephone`, `created_at`, `created_by`, `updated_at`, `updated_by`, `item_id`) VALUES
-(13, 'Robert KIYOSAKI', 'No', 2147483647, '07834527384', '1676012567', 'Simplice', '1676012567', 'Simplice', 5);
+(13, 'Robert KIYOSAKI', 'No', '1196180095883329', '07834527384', '1676012567', 'Simplice', '1676012567', 'Simplice', 5);
 
 -- --------------------------------------------------------
 
@@ -257,10 +259,10 @@ CREATE TABLE `item` (
   `sender_subscription` varchar(10) NOT NULL,
   `receiver_name` varchar(60) NOT NULL,
   `receiver_phone` varchar(15) NOT NULL,
-  `receiver_id` int(20) NOT NULL,
+  `receiver_id` varchar(16) NOT NULL,
   `departure` varchar(60) NOT NULL,
   `depature_date` date NOT NULL,
-  `departure_time` date NOT NULL,
+  `departure_time` time NOT NULL,
   `destination` varchar(60) NOT NULL,
   `created_at` varchar(60) NOT NULL,
   `created_by` varchar(60) NOT NULL,
@@ -274,8 +276,10 @@ CREATE TABLE `item` (
 --
 
 INSERT INTO `item` (`item_id`, `item_name`, `value`, `sender_name`, `sender_phone`, `sender_subscription`, `receiver_name`, `receiver_phone`, `receiver_id`, `departure`, `depature_date`, `departure_time`, `destination`, `created_at`, `created_by`, `updated_at`, `updated_by`, `manifest_id`) VALUES
-(5, 'Rich Dad, Poor Dad book', 12000, 'Robert KIYOSAKI', '0789443899', 'Monthly', 'Simplice', '0723438222', 2147483647, 'KIGALI', '2023-02-10', '0000-00-00', 'MUHANGA', '1676012533', 'Simplice', '1676012533', 'Simplice', NULL),
-(6, 'The Musical Human: a history of life on earth', 10000, 'Michael Spitzer', '0789443899', 'Monthly', 'Simplice', '0723438222', 2147483647, 'KIGALI', '2023-01-31', '0000-00-00', 'MUHANGA', '1676631760', 'Simplice', '1676631760', 'Simplice', NULL);
+(5, 'Rich Dad, Poor Dad book', 20000, 'Robert KIYOSAKI', '0789443899', 'Monthly', 'Simplice', '0723438222', '1199998003456665', 'KIGALI', '2023-02-10', '12:30:00', 'MUHANGA', '1676012533', 'Simplice', '1676012533', 'Simplice', NULL),
+(6, 'The Musical Human: a history of life on earth', 25000, 'Michael Spitzer', '0789443899', 'Monthly', 'Simplice', '0723438222', '1999800233448903', 'KIGALI', '2023-01-31', '13:15:00', 'MUHANGA', '1676631760', 'Simplice', '1676631760', 'Simplice', NULL),
+(7, 'HP pavilion', 800000, 'Robert KIYOSAKI', '0789443899', 'Monthly', 'Eulade', '0723438222', '19998002334455', 'KIGALI', '2023-02-10', '12:30:00', 'MUHANGA', '1678763026', 'Simplice', '1678763026', 'Simplice', NULL),
+(8, 'Introduction to Algorithms', 30000, 'Ronald Rivest', '0789443899', 'Monthly', 'Honore', '0723438222', '1199980014748347', 'KIGALI', '2023-03-17', '15:21:00', 'MUHANGA', '1679054622', 'Simplice', '1679054622', 'Simplice', NULL);
 
 -- --------------------------------------------------------
 
@@ -295,11 +299,11 @@ CREATE TABLE `log` (
 --
 
 INSERT INTO `log` (`log_id`, `done_by`, `comment`, `done_at`) VALUES
-(2, 'Simplice', 'Updated customer details', 1676973749),
-(3, 'Simplice', 'Created a customer', 1676977320),
-(4, 'Simplice', 'Deleted a customer', 1676977321),
-(5, 'Simplice', 'Manifest created', 1676977322),
-(6, 'Simplice', 'Updated branch details', 1677060134);
+(1, 'Simplice', 'New status created', 1679374991),
+(2, 'Simplice', 'New status created', 1679374994),
+(3, 'Simplice', 'New type of subscription is created', 1679375008),
+(8, 'Simplice', 'Updated customer details ', 1679382209),
+(9, 'Simplice', 'Updated customer details ', 1679382235);
 
 -- --------------------------------------------------------
 
@@ -310,7 +314,7 @@ INSERT INTO `log` (`log_id`, `done_by`, `comment`, `done_at`) VALUES
 CREATE TABLE `manifest` (
   `manifest_id` int(225) NOT NULL,
   `departure_date` date NOT NULL,
-  `departure_time` date NOT NULL,
+  `departure_time` time NOT NULL,
   `plate_number` varchar(15) NOT NULL,
   `driver` varchar(60) NOT NULL,
   `created_at` varchar(60) NOT NULL,
@@ -324,8 +328,8 @@ CREATE TABLE `manifest` (
 --
 
 INSERT INTO `manifest` (`manifest_id`, `departure_date`, `departure_time`, `plate_number`, `driver`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, '2023-02-20', '0000-00-00', 'RAC 123 B', 'KALISA ', '1676977354', 'Simplice', '1676977354', 'Simplice'),
-(2, '2023-02-20', '0000-00-00', 'RAC 123 B', 'KALISA ', '1676977322', 'Simplice', '1676977322', 'Simplice');
+(1, '2023-02-20', '15:45:00', 'RAC 123 B', 'KALISA ', '1676977354', 'Simplice', '1676977354', 'Simplice'),
+(2, '2023-02-20', '16:00:00', 'RAC 123 B', 'KALISA ', '1676977322', 'Simplice', '1676977322', 'Simplice');
 
 -- --------------------------------------------------------
 
@@ -357,6 +361,7 @@ INSERT INTO `migration` (`version`, `apply_time`) VALUES
 
 CREATE TABLE `status` (
   `status_id` int(225) NOT NULL,
+  `status_name` varchar(225) NOT NULL,
   `status_value` int(11) NOT NULL,
   `created_at` varchar(60) NOT NULL,
   `created_by` varchar(60) NOT NULL,
@@ -368,8 +373,10 @@ CREATE TABLE `status` (
 -- Dumping data for table `status`
 --
 
-INSERT INTO `status` (`status_id`, `status_value`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 1, '1676012549', 'Simplice', '1676012549', 'Simplice');
+INSERT INTO `status` (`status_id`, `status_name`, `status_value`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(1, 'Pending', 1, '1676012549', 'Simplice', '1676012549', 'Simplice'),
+(2, 'Sent', 2, '1679374991', 'Simplice', '1679374991', 'Simplice'),
+(3, 'Received', 3, '1679374994', 'Simplice', '1679374994', 'Simplice');
 
 -- --------------------------------------------------------
 
@@ -379,20 +386,22 @@ INSERT INTO `status` (`status_id`, `status_value`, `created_at`, `created_by`, `
 
 CREATE TABLE `subscription` (
   `subscription_id` int(225) NOT NULL,
+  `customer` varchar(225) NOT NULL,
   `subscription_type` varchar(60) NOT NULL,
+  `amount` int(11) NOT NULL,
   `created_at` int(11) NOT NULL,
   `created_by` varchar(60) NOT NULL,
   `updated_at` int(11) NOT NULL,
   `updated_by` varchar(60) NOT NULL,
-  `customer_id` int(11) NOT NULL
+  `customer_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `subscription`
 --
 
-INSERT INTO `subscription` (`subscription_id`, `subscription_type`, `created_at`, `created_by`, `updated_at`, `updated_by`, `customer_id`) VALUES
-(6, 'Monthly', 1676012545, 'Simplice', 1676012545, 'Simplice', 13);
+INSERT INTO `subscription` (`subscription_id`, `customer`, `subscription_type`, `amount`, `created_at`, `created_by`, `updated_at`, `updated_by`, `customer_id`) VALUES
+(6, 'Robert KIYOSAKI', 'Unlimited usage subscription', 0, 1676012545, 'Simplice', 1676012545, 'Simplice', 13);
 
 -- --------------------------------------------------------
 
@@ -403,20 +412,23 @@ INSERT INTO `subscription` (`subscription_id`, `subscription_type`, `created_at`
 CREATE TABLE `subscription_type` (
   `id` int(225) NOT NULL,
   `name` varchar(60) NOT NULL,
+  `amount` int(11) NOT NULL,
   `created_at` varchar(60) NOT NULL,
   `payment_way` varchar(60) NOT NULL,
   `created_by` varchar(60) NOT NULL,
   `updated_by` varchar(60) NOT NULL,
   `updated_at` varchar(60) NOT NULL,
-  `subscription_id` int(11) NOT NULL
+  `subscription_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `subscription_type`
 --
 
-INSERT INTO `subscription_type` (`id`, `name`, `created_at`, `payment_way`, `created_by`, `updated_by`, `updated_at`, `subscription_id`) VALUES
-(2, 'Monthly subscription', '1676012552', 'Visa Card', 'Simplice', 'Simplice', '1676012552', 6);
+INSERT INTO `subscription_type` (`id`, `name`, `amount`, `created_at`, `payment_way`, `created_by`, `updated_by`, `updated_at`, `subscription_id`) VALUES
+(2, 'Volume based subscription', 0, '1676012552', 'cash', 'Simplice', 'Simplice', '1676012552', 6),
+(3, 'Fixed usage Subscription', 20000, '1679375035', 'Cash', 'Simplice', 'Simplice', '1679375035', NULL),
+(5, 'Unlimited usage subscription', 40000, '1679374999', 'Cash', 'Simplice', 'Simplice', '1679374999', NULL);
 
 -- --------------------------------------------------------
 
@@ -450,7 +462,8 @@ INSERT INTO `user` (`id`, `user_fullname`, `username`, `role`, `auth_key`, `pass
 (30, 'MUPENZI Espoir', 'Espoir', 'MANAGER', '2psJA9dEjtPtoLiOuHTcHGEOc0fszJ9P', '$2y$13$vuGkGF6UWxzIlPCu4P9fn.RlvXXvQIqHIgw/gJ9Ra9cQolTGLTLMe', NULL, 'muespoir@gmail.com', '0782040963', 11, 10, 1676361767, 1676361767, 'q2wuStfwA_FUQKG6JAtJPKuIXvelVdTv'),
 (31, 'MUNANIRA Elissa', 'Elissa', 'BRANCH AGENT', 'xFqfTC1W3GV2GFI4JSYbDtPW4teznVEb', '$2y$13$8VAT9e2vWZpUPofQFuthNeyHUy77NuPiN8f1t7W6ccuVKzoXRqv0S', NULL, 'elmunanira@gmail.com', '0791010234', 11, 10, 1676365363, 1676365363, 'TNdsdlpGuulQ5OMcCNFaCC_jxx9Zs4an'),
 (48, 'HATEGIKIMANA Callixte', 'Callixte', 'Branch_agent', '2TUmFlqAGFj2bCDBlm2arBpSDx1MCS1X', '$2y$13$zWHkVKaU/0mgvQDtG/JXCebF0CqAZHiZbyoN8pIAjFfJSWPwvUhwi', NULL, 'callixte2@gmail.com', '0784657583', 10, 10, 1676797328, 1676797328, 'WaGmAFjglp-7KQh3aRCEJjhPaGQzgJs4'),
-(50, 'NIYITANGA Aime de Dieu', 'Toptech', 'Branch_manager', 'hLBcVKJSocqMBDbFG7fkBzErlx4EVK5R', '$2y$13$EF5Rp7Bl1gAV5TQPz5E4pOYFrGLqVfXwUL7SbrTtLX/UiYXC42npi', NULL, 'niyitangaaime0@gmail.com', '0723438223', 10, 10, 1676797328, 1676797328, 'GqVdutmIBaMKFdwMc8otnvqUEdT91r5g');
+(50, 'NIYITANGA Aime de Dieu', 'Toptech', 'Branch_manager', 'hLBcVKJSocqMBDbFG7fkBzErlx4EVK5R', '$2y$13$EF5Rp7Bl1gAV5TQPz5E4pOYFrGLqVfXwUL7SbrTtLX/UiYXC42npi', NULL, 'niyitangaaime0@gmail.com', '0723438223', 10, 10, 1676797328, 1676797328, 'GqVdutmIBaMKFdwMc8otnvqUEdT91r5g'),
+(52, 'KIMENYI Honore', 'Honore', 'Branch_agent', '_AngHvBkwiXgBUV9_NwLcyQcydvBvIBC', '$2y$13$CFOxaJnckZVfERFBq/PVPe2q4zuQcO.QrXxhJPdJcA3kftfiNHl1y', NULL, 'honore.kimenyi@gmail.com', '0784657583', 11, 10, 1679382235, 1679382235, 'e-mmQ2CmGlXVVvh1t7z9982sMyq4CQyA');
 
 --
 -- Indexes for dumped tables
@@ -571,13 +584,13 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
-  MODIFY `item_id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `item_id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `log_id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `log_id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `manifest`
@@ -589,7 +602,7 @@ ALTER TABLE `manifest`
 -- AUTO_INCREMENT for table `status`
 --
 ALTER TABLE `status`
-  MODIFY `status_id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `status_id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `subscription`
@@ -601,13 +614,13 @@ ALTER TABLE `subscription`
 -- AUTO_INCREMENT for table `subscription_type`
 --
 ALTER TABLE `subscription_type`
-  MODIFY `id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- Constraints for dumped tables
