@@ -245,7 +245,7 @@ $this->params['breadcrumbs'][] = $this->title;
                       <h4 class="card-title float-left">Items Analytics</h4>
                       <div id="visit-sale-chart-legend" class="rounded-legend legend-horizontal legend-top-right float-right"></div>
                     </div>
-                    <canvas id="myChart" class="mt-4"></canvas>
+                    <canvas id="barChart"></canvas>
                   </div>
                 </div>
               </div>
@@ -261,7 +261,9 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
 
-        
+        <script>
+          
+        </script> 
     
   </body>
 
