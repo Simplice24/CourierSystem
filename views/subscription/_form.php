@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use app\models\Customer;
+use yii\helpers\ArrayHelper;
+use app\models\SubscriptionType;
 
 /** @var yii\web\View $this */
 /** @var app\models\Subscription $model */
@@ -182,7 +184,9 @@ if(Yii::$app->user->isGuest){
                   <div class="col-md-6">
                   <div class="form-group row">
                   <div class="form-group">
-                  <?= $form->field($model, 'subscription_type')->textInput(['maxlength' => true]) ?>
+                  <?= $form->field($model, 'subscription_type')->DropDownList(
+                        ArrayHelper::map(SubscriptionType::find()->all(),'name','name'),['prompt'=>'Select subscription type']
+                    ) ?>
                   </div>
                   </div>
 </div>
@@ -191,7 +195,7 @@ if(Yii::$app->user->isGuest){
                     <div class="col-md-6">
                       <div class="form-group row">
                   <div class="form-group">
-                  <?= $form->field($model, 'amount')->input('number') ?>
+                  <?= $form->field($model, 'amount')->textInput() ?>
                   </div>
                   </div>
                   </div>
@@ -217,7 +221,29 @@ if(Yii::$app->user->isGuest){
               </div>
             </div>
           </div>
+<?php
+          $script = <<< JS
+$(function() {
+    $('#subscription').on('change', function() {
+        var subscriptionName = $(this).val();
+        if (subscriptionName) {
+            $.ajax({
+                url: '/subscriptions/get-amount',
+                type: 'GET',
+                data: {subscription: subscriptionName},
+                success: function(data) {
+                    $('#subscriptionform-amount').val(data.amount);
+                }
+            });
+        } else {
+            $('#subscriptionform-amount').val('');
+        }
+    });
+});
+JS;
+$this->registerJs($script);
 
+?>
 <?php ActiveForm::end(); ?>
 
 
