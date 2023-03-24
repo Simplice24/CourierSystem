@@ -195,13 +195,13 @@ if(Yii::$app->user->isGuest){
                   </div>
                   </div>
                   </div>
-                  <div class="col-md-6">
+                  <!-- <div class="col-md-6">
                       <div class="form-group row">
                   <div class="form-group">
                   <?= $form->field($model, 'customer_id')->textInput() ?>
                   </div>
                   </div>
-                  </div>
+                  </div> -->
                   </div>
                   <!-- <div class="form-group">
                   <?= $form->field($model, 'created_by')->textInput(['maxlength' => true]) ?>

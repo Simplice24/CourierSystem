@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Item;
+use app\models\SubscriptionType;
 
 /** @var yii\web\View $this */
 /** @var app\models\Customer $model */
@@ -189,7 +190,9 @@ if(Yii::$app->user->isGuest){
             <div class="col-md-6">
                 <div class="form-group row">
                     <div class="form-group">
-                    <?= $form->field($model, 'subscription')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'subscription')->DropDownList(
+                        ArrayHelper::map(SubscriptionType::find()->all(),'name','name'),['prompt'=>'Select subscription type']
+                    ) ?>
                     </div>
                     </div>
                 </div>
@@ -224,7 +227,6 @@ if(Yii::$app->user->isGuest){
                     </div>
                     </div>
                     </div>
-                   
                     <div class="form-group">
                         <?= Html::submitButton('Save', ['class' => 'btn btn-gradient-primary me-2']) ?>
                     </div>

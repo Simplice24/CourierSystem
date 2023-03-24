@@ -37,11 +37,11 @@ class Customer extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['fullname', 'subscription', 'idn', 'telephone', 'created_at', 'created_by', 'updated_at', 'updated_by', 'item_id'], 'required'],
+            [['fullname', 'subscription', 'idn', 'telephone', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'required'],
             [['item_id'], 'integer'],
             [['created_at', 'updated_at'], 'integer'],
             [['fullname', 'created_by', 'updated_by'], 'string', 'max' => 60],
-            [['subscription'], 'string', 'max' => 10],
+            [['subscription'], 'string', 'max' => 60],
             [['telephone'], 'string', 'max' => 15],
             [['idn'], 'string', 'max' => 16,'min'=>16],
             // [['idn'], 'unique'],

@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use app\models\Branch;
 
 /** @var yii\web\View $this */
 /** @var app\models\Item $model */
@@ -247,7 +249,9 @@ if(Yii::$app->user->isGuest){
 <div class="col-md-4">
                       <div class="form-group row">
                     <div class="form-group">
-<?= $form->field($model, 'departure')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'departure')->DropDownList(
+                        ArrayHelper::map(Branch::find()->all(),'branch_name','branch_name'),['prompt'=>'Select Departure']
+                    ) ?>
 </div>
                 </div>
             </div>
@@ -273,7 +277,9 @@ if(Yii::$app->user->isGuest){
 <div class="col-md-4">
                       <div class="form-group row">
                     <div class="form-group">
-<?= $form->field($model, 'destination')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'destination')->DropDownList(
+                        ArrayHelper::map(Branch::find()->all(),'branch_name','branch_name'),['prompt'=>'Select Customer item']
+                    ) ?>
 </div>
                 </div>
             </div>
