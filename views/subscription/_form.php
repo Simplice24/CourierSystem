@@ -244,9 +244,6 @@ $(document).ready(function(){
 });
 JS;
 
-// Modify the AJAX URL to use `Url::to()`
-$script = str_replace('/subscription/get-amount', Url::to(['/subscription/get-amount']), $script);
-
 $this->registerJs($script);
 
 ?>
