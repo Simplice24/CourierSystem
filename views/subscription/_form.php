@@ -195,7 +195,8 @@ if(Yii::$app->user->isGuest){
                     <div class="col-md-6">
                       <div class="form-group row">
                   <div class="form-group">
-                  <?= $form->field($model, 'amount')->textInput() ?>
+                  <!-- <?= $form->field($model, 'amount')->textInput() ?> -->
+                  <?= $form->field($model, 'amount')->textInput(['id' => 'amount']) ?>
                   </div>
                   </div>
                   </div>
@@ -221,26 +222,31 @@ if(Yii::$app->user->isGuest){
               </div>
             </div>
           </div>
-<?php
-          $script = <<< JS
-$(function() {
-    $('#subscription').on('change', function() {
-        var subscriptionName = $(this).val();
-        if (subscriptionName) {
+          <?php
+$script = <<< JS
+$(document).ready(function(){
+    $('#subscription-type').on('change',function(){
+        var subscription_type = $(this).val();
+        console.log('Selected subscription type: ' + subscription_type)
+        if(subscription_type){
             $.ajax({
-                url: '/subscriptions/get-amount',
+                url: '/subscription/get-amount?subscription_type='+subscription_type,
                 type: 'GET',
-                data: {subscription: subscriptionName},
-                success: function(data) {
-                    $('#subscriptionform-amount').val(data.amount);
+                dataType: 'json',
+                success: function(data){
+                    $('#amount').val(data);
                 }
             });
-        } else {
-            $('#subscriptionform-amount').val('');
+        }else{
+            $('#amount').val('');
         }
     });
 });
 JS;
+
+// Modify the AJAX URL to use `Url::to()`
+$script = str_replace('/subscription/get-amount', Url::to(['/subscription/get-amount']), $script);
+
 $this->registerJs($script);
 
 ?>

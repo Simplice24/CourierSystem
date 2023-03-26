@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Subscription;
 use app\models\Log;
+use app\models\SubscriptionType;
 use app\models\SubscriptionSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -170,5 +171,14 @@ class SubscriptionController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionGetAmount($subscription_type){
+        $subscriptionType = SubscriptionType::find()->where(['name'=>$subscription_type])->one();
+        $amount = $subscriptionType->amount;
+    
+        var_dump($amount); // debug output
+        return json_encode($amount);
+        
     }
 }
