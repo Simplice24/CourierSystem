@@ -60,11 +60,18 @@ public function actionGenerate() {
     if (Yii::$app->request->post()) {
         $start_date = Yii::$app->request->post('start_date');
         $end_date = Yii::$app->request->post('end_date');
-        $query = Item::find()
-    ->where(['between', 'FROM_UNIXTIME(created_at, "%Y-%m-%d")', $start_date, $end_date])
-    ->orderBy('created_at');
-    $this->items = $query->all();
-    return $this->render('viewreport',['items' => $this->items]);
+        $query = Log::find()
+    ->where(['between', 'FROM_UNIXTIME(done_at, "%Y-%m-%d")', $start_date, $end_date])
+    ->orderBy('done_at');
+    $dataProvider= $query->all();
+        $html = $this->renderPartial('pdf_view',['dataProvider'=>$dataProvider]);
+        $mpdf = new Mpdf\Mpdf;
+        $mpdf ->showImageErrors = true;
+        $mpdf ->SetDisplayMode('fullpage','two');
+        $mpdf ->writeHTML($html);
+        $mpdf->output();
+        exit;
+    // return $this->render('viewreport',['dataProvider' => $dataProvider]);
     }
     
     return $this->render('duration');

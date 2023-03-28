@@ -3,47 +3,49 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 
-$this->title ='Items';
+$this->title ='Items report';
 $this->params['breadcrumbs'][]= $this->title;
 ?>
 
 <div class="container">
 <h2><?= Html::encode($this->title)?></h2>
+<!DOCTYPE html>
+<html>
+<head>
 <style>
-#customers {
-  font-family: Arial, Helvetica, sans-serif;
+table {
+  font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 100%;
 }
 
-#customers td, #customers th {
-  border: 1px solid #ddd;
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
   padding: 8px;
 }
 
-
-#customers th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: #04AA6D;
-  color:black;
-  color: white;
+tr:nth-child(even) {
+  background-color: #dddddd;
 }
 </style>
-<table id="customers">
+</head>
+<body>
+<h2>Items report</h2>
+<table>
   <tr>
-  <th >Log Id</th>
-  <th >Done By</th>
-  <th >Comment</th>
+      <th>Log ID </th>
+      <th>Done by</th>
+      <th>Comment</th>
   </tr>
-  <?php foreach($dataProvider->getModels() as $model) {?>
-    <tr>
-        <td><?= $model->log_id?></td>
-        <td><?= $model->done_by?></td>
-        <td><?= $model->comment?></td>
-</tr>
-
-<?php } ?>
+  <?php foreach ($dataProvider as $log): ?>
+  <tr>
+      <td><?= $log->log_id ?></td>
+      <td><?= $log->done_by ?></td>
+      <td><?= $log->comment ?></td>
+  </tr>
+  <?php endforeach; ?>
 </table>
+</body>
+</html>
 </div>
