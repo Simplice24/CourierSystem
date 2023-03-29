@@ -56,7 +56,8 @@ class BranchController extends Controller
     }
     public function actionPdf(){
         $branches = unserialize(urldecode($_GET['branches']));
-        $html = $this->renderPartial('pdf_view',['branches'=>$branches]);
+        $no=0;
+        $html = $this->renderPartial('pdf_view',['branches'=>$branches,'no'=>$no]);
         $mpdf = new Mpdf\Mpdf;
         $mpdf ->showImageErrors = true;
         $mpdf ->SetDisplayMode('fullpage','two');

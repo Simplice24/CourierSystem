@@ -34,14 +34,14 @@ tr:nth-child(even) {
 <h2>Branches report</h2>
 <table>
   <tr>
-      <th>Branch ID</th>
+      <th>No</th>
       <th>Branch name</th>
       <th>Created by</th>
       <th>Created at</th>
   </tr>
   <?php foreach ($branches as $branch): ?>
   <tr>
-      <td><?= $branch->branch_id ?></td>
+      <td><?= ++$no ?></td>
       <td><?= $branch->branch_name ?></td>
       <td><?= $branch->created_by ?></td>
       <td><?= $branch->created_at ?></td>

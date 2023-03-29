@@ -34,6 +34,7 @@ tr:nth-child(even) {
 <h2>Items report</h2>
 <table>
   <tr>
+      <th>No </th>
       <th>Item </th>
       <th>Value</th>
       <th>Sender</th>
@@ -49,6 +50,7 @@ tr:nth-child(even) {
   </tr>
   <?php foreach ($dataProvider as $item): ?>
   <tr>
+      <td><?= ++$no ?></td>
       <td><?= $item->item_name ?></td>
       <td><?= $item->value ?></td>
       <td><?= $item->sender_name ?></td>

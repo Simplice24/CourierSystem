@@ -63,14 +63,8 @@ public function actionGenerate() {
     ->where(['between', 'FROM_UNIXTIME(created_at, "%Y-%m-%d")', $start_date, $end_date])
     ->orderBy('created_at');
     $customers = $query->all();
-    $html = $this->renderPartial('pdf_view',['customers'=>$customers]);
-        $mpdf = new Mpdf\Mpdf;
-        $mpdf ->showImageErrors = true;
-        $mpdf ->SetDisplayMode('fullpage','two');
-        $mpdf ->writeHTML($html);
-        $mpdf->output();
-        exit;
-    // return $this->render('viewreport',['customers' => $customers]);
+    $no=0;
+    return $this->render('viewreport',['customers' => $customers,'no'=>$no]);
     }
     
     return $this->render('duration');
@@ -95,9 +89,9 @@ public function actionGenerate() {
        
     }
     public function actionPdf(){
-        $searchModel = new CustomerSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
-        $html = $this->renderPartial('pdf_view',['dataProvider'=>$dataProvider]);
+        $customers=unserialize(urldecode($_GET['customers']));
+        $no=0;
+        $html = $this->renderPartial('pdf_view',['customers'=>$customers,'no'=>$no]);
         $mpdf = new Mpdf\Mpdf;
         $mpdf ->showImageErrors = true;
         $mpdf ->SetDisplayMode('fullpage','two');
