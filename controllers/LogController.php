@@ -64,14 +64,8 @@ public function actionGenerate() {
     ->where(['between', 'FROM_UNIXTIME(done_at, "%Y-%m-%d")', $start_date, $end_date])
     ->orderBy('done_at');
     $dataProvider= $query->all();
-        $html = $this->renderPartial('pdf_view',['dataProvider'=>$dataProvider]);
-        $mpdf = new Mpdf\Mpdf;
-        $mpdf ->showImageErrors = true;
-        $mpdf ->SetDisplayMode('fullpage','two');
-        $mpdf ->writeHTML($html);
-        $mpdf->output();
-        exit;
-    // return $this->render('viewreport',['dataProvider' => $dataProvider]);
+    $no=0;
+    return $this->render('viewreport',['dataProvider' => $dataProvider,'no'=>$no]);
     }
     
     return $this->render('duration');
@@ -79,9 +73,9 @@ public function actionGenerate() {
 
 
     public function actionPdf(){
-        $searchModel = new LogSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
-        $html = $this->renderPartial('pdf_view',['dataProvider'=>$dataProvider]);
+        $dataProvider=unserialize(urldecode($_GET['dataProvider']));
+        $no=0;
+        $html = $this->renderPartial('pdf_view',['dataProvider'=>$dataProvider,'no'=>$no]);
         $mpdf = new Mpdf\Mpdf;
         $mpdf ->showImageErrors = true;
         $mpdf ->SetDisplayMode('fullpage','two');

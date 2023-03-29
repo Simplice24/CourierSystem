@@ -142,11 +142,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="card">
                   <div class="card-body">
                     <h4 class="card-title">Report of Items</h4>
-                    <?= Html::a('Export PDF report', ['pdf'], ['class' => 'btn btn-info']) ?>
+                    <?= Html::a('Export PDF report', ['pdf', 'manifests' => urlencode(serialize($manifests))], ['class' => 'btn btn-info']) ?>
                     </p>
                     <table class="table table-hover">
                       <thead>
                         <tr>
+                          <th>No</th>
                           <th>Departure date </th>
                           <th>Departure time</th>
                           <th>Driver</th>
@@ -156,6 +157,7 @@ $this->params['breadcrumbs'][] = $this->title;
                       <tbody>
                       <?php foreach ($manifests as $manifest): ?>
                         <tr>
+                         <td><?= ++$no ?></td> 
                          <td><?= $manifest->departure_date ?></td>
                          <td><?= $manifest->departure_time ?></td>
                          <td><?= $manifest->driver ?></td>

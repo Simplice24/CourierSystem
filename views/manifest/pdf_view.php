@@ -33,7 +33,8 @@ tr:nth-child(even) {
 <body>
 <h2>Manifestation report</h2>
 <table>
-  <tr>
+  <tr> 
+      <th>No </th>
       <th>Departure date </th>
       <th>Departure time</th>
       <th>Driver</th>
@@ -41,6 +42,7 @@ tr:nth-child(even) {
   </tr>
   <?php foreach ($manifests as $manifest): ?>
   <tr>
+      <td><?= ++$no ?></td>
       <td><?= $manifest->departure_date ?></td>
       <td><?= $manifest->departure_time ?></td>
       <td><?= $manifest->driver ?></td>

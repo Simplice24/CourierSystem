@@ -34,13 +34,13 @@ tr:nth-child(even) {
 <h2>Items report</h2>
 <table>
   <tr>
-      <th>Log ID </th>
+      <th>No</th>
       <th>Done by</th>
       <th>Comment</th>
   </tr>
   <?php foreach ($dataProvider as $log): ?>
   <tr>
-      <td><?= $log->log_id ?></td>
+      <td><?= ++$no ?></td>
       <td><?= $log->done_by ?></td>
       <td><?= $log->comment ?></td>
   </tr>
