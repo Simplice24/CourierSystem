@@ -73,14 +73,7 @@ public function actionGenerate() {
     ->where(['between', 'FROM_UNIXTIME(created_at, "%Y-%m-%d")', $start_date, $end_date])
     ->orderBy('created_at');
     $dataProvider= $query->all();
-        $html = $this->renderPartial('pdf_view',['dataProvider'=>$dataProvider]);
-        $mpdf = new Mpdf\Mpdf;
-        $mpdf ->showImageErrors = true;
-        $mpdf ->SetDisplayMode('fullpage','two');
-        $mpdf ->writeHTML($html);
-        $mpdf->output();
-        exit;
-    // return $this->render('viewreport',['dataProvider' => $dataProvider]);
+    return $this->render('viewreport',['dataProvider' => $dataProvider]);
     }
     
     return $this->render('duration');
@@ -165,21 +158,6 @@ public function actionGenerate() {
     
     // Get the data as an array
     $items = $dataProvider->getModels();
-
-    // Render the PDF using a view file
-    // $pdf = new Pdf([
-    //     'mode' => Pdf::MODE_UTF8,
-    //     'format' => Pdf::FORMAT_A4,
-    //     'orientation' => Pdf::ORIENT_PORTRAIT,
-    //     'destination' => Pdf::DEST_BROWSER,
-    //     'content' => $this->renderPartial('receipt_view', [
-    //         'items' => $items,
-    //     ]),
-    //     'options' => [
-    //         'title' => 'Receipt',
-    //     ],
-    // ]);
-    // return $pdf->render();
     $dataProvider= $query->all();
         $html = $this->renderPartial('receipt',['items'=>$items]);
         $mpdf = new Mpdf\Mpdf;
@@ -215,8 +193,7 @@ public function actionGenerate() {
     }
 
     public function actionPdf(){
-        $searchModel = new ItemSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider = unserialize(urldecode($_GET['dataProvider']));
         $html = $this->renderPartial('pdf_view',['dataProvider'=>$dataProvider]);
         $mpdf = new Mpdf\Mpdf;
         $mpdf ->showImageErrors = true;

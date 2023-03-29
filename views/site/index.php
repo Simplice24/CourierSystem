@@ -42,8 +42,8 @@ $this->title = 'My Yii Application';
                 <div class="container">
                     <div class="hero-inner">
 						<div class="hero-copy">
-	                        <h1 class="hero-title mt-0">Landing template for startups</h1>
-	                        <p class="hero-paragraph">Our landing page template works on all devices, so you only have to set it up once, and get beautiful results forever.</p>
+	                        <h1 class="hero-title mt-0">Courier Management System</h1>
+	                        <p class="hero-paragraph">Welcome to our courier management system, the most efficient way to manage your courier and delivery operations.</p>
 	                        <div class="hero-cta">
                                 <!-- <a class="button button-primary" href="#">Pre order now</a>
                             <a class="button" href="#">Get in touch</a> -->

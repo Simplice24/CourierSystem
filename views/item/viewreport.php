@@ -142,7 +142,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="card">
                   <div class="card-body">
                     <h4 class="card-title">Report of Items</h4>
-                    <?= Html::a('Export PDF report', ['pdf'], ['class' => 'btn btn-info']) ?>
+                    <?= Html::a('Export PDF report', ['pdf', 'dataProvider' => urlencode(serialize($dataProvider))], ['class' => 'btn btn-info']) ?>
                     </p>
                     <table class="table table-hover">
                       <thead>

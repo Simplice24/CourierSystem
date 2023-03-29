@@ -54,8 +54,8 @@ $this->title = 'My Yii Application';
                                     <div class="feature-icon">
 										<img src="dist/images/feature-icon-01.svg" alt="Feature 01">
                                     </div>
-                                    <h4 class="feature-title mt-24">Be Productive</h4>
-                                    <p class="text-sm mb-0">Fermentum posuere urna nec tincidunt praesent semper feugiat nibh. A arcu cursus vitae congue mauris. Nam at lectus urna duis convallis. Mauris rhoncus aenean vel elit scelerisque mauris.</p>
+                                    <h4 class="feature-title mt-24">Our Mission</h4>
+                                    <p class="text-sm mb-0">We are skilled technologists that apply our passion for technology to create successful products an and solutions for our clients.Our passion drives us to be innovative, creative, and experts. Our love of technology keeps us learning, motivated, and excited about what we do. We empower our clients with technology.</p>
                                 </div>
                             </div>
 							<div class="feature text-center is-revealing">
@@ -63,8 +63,8 @@ $this->title = 'My Yii Application';
                                     <div class="feature-icon">
 										<img src="dist/images/feature-icon-02.svg" alt="Feature 02">
                                     </div>
-                                    <h4 class="feature-title mt-24">Be Productive</h4>
-                                    <p class="text-sm mb-0">Fermentum posuere urna nec tincidunt praesent semper feugiat nibh. A arcu cursus vitae congue mauris. Nam at lectus urna duis convallis. Mauris rhoncus aenean vel elit scelerisque mauris.</p>
+                                    <h4 class="feature-title mt-24">Our Vision</h4>
+                                    <p class="text-sm mb-0">Our vision is to become a respected technology solutions company based on a strong team of passionate and expert technologists, and evidenced by a very large portfolio of successful projects and clients across the world. We envision a company led by smart, self-motivated multi-national people doing what they enjoy.</p>
                                 </div>
                             </div>
                             <div class="feature text-center is-revealing">
@@ -72,8 +72,8 @@ $this->title = 'My Yii Application';
                                     <div class="feature-icon">
 										<img src="dist/images/feature-icon-03.svg" alt="Feature 03">
                                     </div>
-                                    <h4 class="feature-title mt-24">Be Productive</h4>
-                                    <p class="text-sm mb-0">Fermentum posuere urna nec tincidunt praesent semper feugiat nibh. A arcu cursus vitae congue mauris. Nam at lectus urna duis convallis. Mauris rhoncus aenean vel elit scelerisque mauris.</p>
+                                    <h4 class="feature-title mt-24">Our Passion</h4>
+                                    <p class="text-sm mb-0">We are driven to apply best in class technologies to create rewarding experiences and empower businesses and consumers.</p>
                                 </div>
                             </div>
                             <div class="feature text-center is-revealing">
@@ -81,11 +81,11 @@ $this->title = 'My Yii Application';
                                     <div class="feature-icon">
 										<img src="dist/images/feature-icon-04.svg" alt="Feature 04">
                                     </div>
-                                    <h4 class="feature-title mt-24">Be Productive</h4>
-                                    <p class="text-sm mb-0">Fermentum posuere urna nec tincidunt praesent semper feugiat nibh. A arcu cursus vitae congue mauris. Nam at lectus urna duis convallis. Mauris rhoncus aenean vel elit scelerisque mauris.</p>
+                                    <h4 class="feature-title mt-24">Our Excellence</h4>
+                                    <p class="text-sm mb-0">We set our standards high and then strive to exceed them. We create elegant solutions that redefine business services.</p>
                                 </div>
                             </div>
-							<div class="feature text-center is-revealing">
+							<!-- <div class="feature text-center is-revealing">
                                 <div class="feature-inner">
                                     <div class="feature-icon">
 										<img src="dist/images/feature-icon-05.svg" alt="Feature 05">
@@ -103,7 +103,7 @@ $this->title = 'My Yii Application';
                                     <p class="text-sm mb-0">Fermentum posuere urna nec tincidunt praesent semper feugiat nibh. A arcu cursus vitae congue mauris. Nam at lectus urna duis convallis. Mauris rhoncus aenean vel elit scelerisque mauris.</p>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </section>
