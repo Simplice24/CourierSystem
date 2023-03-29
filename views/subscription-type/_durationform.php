@@ -146,13 +146,13 @@ if(Yii::$app->user->isGuest){
                       <div class="branch-index">
                       <div class="item-form">
 
-    <?= Html::beginForm(['subscriptionType/generate'], 'post') ?>
+    <?= Html::beginForm(['subscription-type/generate'], 'post') ?>
               <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
                     <h4 class="card-title">Report generation form</h4>
                     <p class="card-description"> Please provide starting and ending date to provide report</p>
-                    <form class="forms-sample" method="POST" action="<?= Yii::$app->urlManager->createUrl(['subscriptionType/Duration']) ?>" >
+                    <form class="forms-sample" method="POST" action="<?= Yii::$app->urlManager->createUrl(['subscription-type/Duration']) ?>" >
                       <div class="form-group">
                         <!-- <label for="exampleInputUsername1">Starting date</label> -->
                         <!-- <input type="date" class="form-control" name="starting" id="exampleInputUsername1"> -->

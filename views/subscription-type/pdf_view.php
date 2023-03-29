@@ -3,53 +3,49 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 
-if(Yii::$app->user->isGuest){
-  return Yii::$app->getResponse()->redirect(['site/login']);
-}
-$this->title ='Items';
+$this->title ='Items report';
 $this->params['breadcrumbs'][]= $this->title;
 ?>
 
 <div class="container">
 <h2><?= Html::encode($this->title)?></h2>
+<!DOCTYPE html>
+<html>
+<head>
 <style>
-#customers {
-  font-family: Arial, Helvetica, sans-serif;
+table {
+  font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 100%;
 }
 
-#customers td, #customers th {
-  border: 1px solid #ddd;
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
   padding: 8px;
 }
 
-
-#customers th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: #04AA6D;
-  color:black;
-  color: white;
+tr:nth-child(even) {
+  background-color: #dddddd;
 }
 </style>
-<table id="customers">
+</head>
+<body>
+<h2>Subscription type report</h2>
+<table>
   <tr>
-  <th ></th>
-  <th ></th>
-  <th ></th>
-  <th ></th>
-  <th ></th>
+      <th>No </th>
+      <th>Subscription name </th>
+      <th>Amount </th>
   </tr>
-  <?php foreach($dataProvider as $subtype) {?>
-    <tr>
-        <td><?= $subtype->name ?></td>
-        <td><?= $subtype->amount ?></td>
-        <td><?= $subtype->payment_way ?></td>
-        <td><?= $subtype->created_by ?></td>
-        <td><?= $subtype->created_at ?></td>
-</tr>
-<?php } ?>
+  <?php foreach ($dataProvider as $sub): ?>
+  <tr>
+      <td><?= ++$no ?></td>
+      <td><?= $sub->name ?></td>
+      <td><?= $sub->amount ?></td>
+  </tr>
+  <?php endforeach; ?>
 </table>
+</body>
+</html>
 </div>
