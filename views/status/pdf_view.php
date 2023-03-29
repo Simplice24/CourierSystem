@@ -34,17 +34,17 @@ tr:nth-child(even) {
 <h2>Statuses report</h2>
 <table>
   <tr>
+      <th>No </th>
       <th>Status name </th>
       <th>Status value</th>
       <th>Created by</th>
-      <th>Created at</th>
   </tr>
   <?php foreach ($dataProvider as $status): ?>
   <tr>
-      <td><?= $status->status_name ?></td>
-      <td><?= $status->status_value ?></td>
-      <td><?= $status->created_by ?></td>
-      <td><?= $status->created_at ?></td>
+        <td><?= ++$no ?></td>
+        <td><?= $status->status_name ?></td>
+        <td><?= $status->status_value ?></td>
+        <td><?= $status->created_by ?></td>
   </tr>
   <?php endforeach; ?>
 </table>
