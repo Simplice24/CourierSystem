@@ -34,6 +34,7 @@ tr:nth-child(even) {
 <h2>Subscriptions report</h2>
 <table>
   <tr>
+      <th>No </th>
       <th>Customer </th>
       <th>Subscription </th>
       <th>Amount </th>
@@ -41,6 +42,7 @@ tr:nth-child(even) {
   </tr>
   <?php foreach ($dataProvider as $sub): ?>
   <tr>
+      <td><?= ++$no ?></td>
       <td><?= $sub->customer ?></td>
       <td><?= $sub->subscription_type ?></td>
       <td><?= $sub->amount ?></td>

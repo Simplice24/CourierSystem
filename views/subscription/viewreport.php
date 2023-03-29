@@ -147,17 +147,21 @@ $this->params['breadcrumbs'][] = $this->title;
                     <table class="table table-hover">
                       <thead>
                         <tr>
-                          <th>No</th>
-                          <th>Done By </th>
-                          <th>Comment </th>
+                          <th>No </th>
+                          <th>Customer </th>
+                          <th>Subscription type </th>
+                          <th>Amount </th>
+                          <th>Created by </th>
                         </tr>
                       </thead>
                       <tbody>
-                      <?php foreach ($dataProvider as $log): ?>
+                      <?php foreach ($dataProvider as $subscription): ?>
                         <tr>
                          <td><?= ++$no ?></td>
-                         <td><?= $log->done_by ?></td>
-                         <td><?= $log->comment ?></td>
+                         <td><?= $subscription->customer ?></td>
+                         <td><?= $subscription->subscription_type ?></td>
+                         <td><?= $subscription->amount ?></td>
+                         <td><?= $subscription->created_by ?></td>
                         </tr>
                         <?php endforeach; ?>
                       </tbody>
