@@ -73,7 +73,8 @@ public function actionGenerate() {
     ->where(['between', 'FROM_UNIXTIME(created_at, "%Y-%m-%d")', $start_date, $end_date])
     ->orderBy('created_at');
     $dataProvider= $query->all();
-    return $this->render('viewreport',['dataProvider' => $dataProvider]);
+    $no=0;
+    return $this->render('viewreport',['dataProvider' => $dataProvider,'no'=>$no]);
     }
     
     return $this->render('duration');

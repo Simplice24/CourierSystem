@@ -55,9 +55,8 @@ class BranchController extends Controller
         ]);
     }
     public function actionPdf(){
-        $searchModel = new BranchSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
-        $html = $this->renderPartial('pdf_view',['dataProvider'=>$dataProvider]);
+        $branches = unserialize(urldecode($_GET['branches']));
+        $html = $this->renderPartial('pdf_view',['branches'=>$branches]);
         $mpdf = new Mpdf\Mpdf;
         $mpdf ->showImageErrors = true;
         $mpdf ->SetDisplayMode('fullpage','two');
@@ -78,7 +77,7 @@ class BranchController extends Controller
             return Yii::$app->getResponse()->redirect(['site/login']);
         }
         else if(Yii::$app->user->can('View_branch')){
-            return $this->render('view', [
+            return $this->render('view',[
                 'model' => $this->findModel($branch_id),
             ]);
         }else{
@@ -99,14 +98,8 @@ public function actionGenerate() {
     ->where(['between', 'FROM_UNIXTIME(created_at, "%Y-%m-%d")', $start_date, $end_date])
     ->orderBy('created_at');
     $branches = $query->all();
-    $html = $this->renderPartial('pdf_view',['branches'=>$branches]);
-        $mpdf = new Mpdf\Mpdf;
-        $mpdf ->showImageErrors = true;
-        $mpdf ->SetDisplayMode('fullpage','two');
-        $mpdf ->writeHTML($html);
-        $mpdf->output();
-        exit;
-    // return $this->render('viewreport',['branches' => $branches]);
+    $no=0;
+    return $this->render('viewreport',['branches' => $branches,'no'=>$no]);
     }
     
     return $this->render('duration');

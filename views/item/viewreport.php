@@ -147,6 +147,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <table class="table table-hover">
                       <thead>
                         <tr>
+                          <th>No </th>
                           <th>Name </th>
                           <th>Sender </th>
                           <th>Sender phone </th>
@@ -163,6 +164,7 @@ $this->params['breadcrumbs'][] = $this->title;
                       <tbody>
                       <?php foreach ($dataProvider as $item): ?>
                         <tr>
+                         <td><?= ++$no ?></td> 
                          <td><?= $item->item_name ?></td>
                          <td><?= $item->sender_name ?></td>
                          <td><?= $item->sender_phone ?></td>
