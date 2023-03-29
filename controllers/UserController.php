@@ -60,29 +60,23 @@ class UserController extends Controller
 
         public function actionGenerate() {
             if (Yii::$app->request->post()) {
-                    $start_date = Yii::$app->request->post('start_date');
+                $start_date = Yii::$app->request->post('start_date');
                 $end_date = Yii::$app->request->post('end_date');
                 $query = User::find()
             ->where(['between', 'FROM_UNIXTIME(created_at, "%Y-%m-%d")', $start_date, $end_date])
             ->orderBy('created_at');
             $users = $query->all();
-            $html = $this->renderPartial('pdf_view',['users'=>$users]);
-        $mpdf = new Mpdf\Mpdf;
-        $mpdf ->showImageErrors = true;
-        $mpdf ->SetDisplayMode('fullpage','two');
-        $mpdf ->writeHTML($html);
-        $mpdf->output();
-        exit;
-            // return $this->render('viewreport',['users' => $users]);
+            $no=0;
+            return $this->render('viewreport',['users' => $users,'no'=>$no]);
                 }
             
             return $this->render('duration');
         }
 
     public function actionPdf(){
-        $searchModel = new UserSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
-        $html = $this->renderPartial('pdf_view',['dataProvider'=>$dataProvider]);
+        $users=unserialize(urldecode($_GET['users']));
+        $no=0;
+        $html = $this->renderPartial('pdf_view',['users'=>$users,'no'=>$no]);
         $mpdf = new Mpdf\Mpdf;
         $mpdf ->showImageErrors = true;
         $mpdf ->SetDisplayMode('fullpage','two');

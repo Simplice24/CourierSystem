@@ -34,6 +34,7 @@ tr:nth-child(even) {
 <h2>Users report</h2>
 <table>
   <tr>
+      <th>No </th>
       <th>Full name </th>
       <th>Username</th>
       <th>Role</th>
@@ -42,6 +43,7 @@ tr:nth-child(even) {
   </tr>
   <?php foreach ($users as $user): ?>
   <tr>
+      <td><?= ++$no ?></td>
       <td><?= $user->user_fullname ?></td>
       <td><?= $user->username ?></td>
       <td><?= $user->role ?></td>

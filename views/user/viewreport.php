@@ -139,21 +139,23 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="card">
                   <div class="card-body">
                     <h4 class="card-title">Report of Users</h4>
-                    <?= Html::a('Export PDF report', ['pdf'], ['class' => 'btn btn-info']) ?>
+                    <?= Html::a('Export PDF report', ['pdf', 'users' => urlencode(serialize($users))], ['class' => 'btn btn-info']) ?>
                     </p>
                     <table class="table table-hover">
                       <thead>
                         <tr>
+                          <th>No </th>
                           <th>Full name </th>
                           <th>Username </th>
                           <th>Role </th>
                           <th>Email </th>
-                          <th>Phone number</th>
+                          <th>Phone number </th>
                         </tr>
                       </thead>
                       <tbody>
                       <?php foreach ($users as $user): ?>
                         <tr>
+                        <td><?= ++$no ?></td>
                          <td><?= $user->user_fullname ?></td>
                          <td><?= $user->username ?></td>
                          <td><?= $user->role ?></td>
