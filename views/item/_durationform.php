@@ -147,7 +147,7 @@ if(Yii::$app->user->isGuest){
                       <div class="item-form">
 
     <?= Html::beginForm(['item/generate'], 'post') ?>
-              <div class="col-md-12 grid-margin stretch-card">
+              <div class="col-md-12 grid-margin ">
                 <div class="card">
                   <div class="card-body">
                     <h4 class="card-title">Report generation form</h4>

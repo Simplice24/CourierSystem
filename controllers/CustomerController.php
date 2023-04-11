@@ -55,20 +55,28 @@ class CustomerController extends Controller
     }
 
 
-public function actionGenerate() {
-    if (Yii::$app->request->post()) {
-        $start_date = Yii::$app->request->post('start_date');
-        $end_date = Yii::$app->request->post('end_date');
-        $query = Customer::find()
-    ->where(['between', 'FROM_UNIXTIME(created_at, "%Y-%m-%d")', $start_date, $end_date])
-    ->orderBy('created_at');
-    $customers = $query->all();
-    $no=0;
-    return $this->render('viewreport',['customers' => $customers,'no'=>$no]);
+    public function actionGenerate()
+    {
+        if (Yii::$app->request->post()) {
+            $start_date = Yii::$app->request->post('start_date');
+            $end_date = Yii::$app->request->post('end_date');
+            $query = Customer::find()
+                ->where(['between', 'FROM_UNIXTIME(created_at, "%Y-%m-%d")', $start_date, $end_date])
+                ->orderBy('created_at');
+            $customers = $query->all();
+            $no = 0;
+    
+            if (empty($customers)) {
+                $message = "No customers found within the selected date range.";
+                return $this->render('viewreport', ['message' => $message]);
+            } else {
+                return $this->render('viewreport', ['customers' => $customers, 'no' => $no]);
+            }
+        }
+    
+        return $this->render('duration');
     }
     
-    return $this->render('duration');
-}
 
 
     /**

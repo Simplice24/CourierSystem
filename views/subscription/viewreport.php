@@ -140,7 +140,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="col-lg-6 grid-margin stretch-card">
                 <div class="card">
-                  <div class="card-body">
+                  <div class="card-body"><?php if (!empty($message)): ?>
+      <div class="alert alert-warning"><?= $message ?></div>
+    <?php endif; ?>
+    <?php if (!empty($dataProvider)): ?>
                     <h4 class="card-title">Report of Items</h4>
                     <?= Html::a('Export PDF report', ['pdf', 'dataProvider' => urlencode(serialize($dataProvider))], ['class' => 'btn btn-info']) ?>
                     </p>
@@ -166,6 +169,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?php endforeach; ?>
                       </tbody>
                     </table>
+    <?php endif; ?>
                   </div>
                 </div>
               </div>

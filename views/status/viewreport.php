@@ -139,9 +139,14 @@ $this->params['breadcrumbs'][] = $this->title;
 <h1><?= Html::encode($this->title) ?></h1>
 
 <div class="col-lg-6 grid-margin stretch-card">
+<?php if(isset($message)): ?>
+    <div class="alert alert-warning" role="alert">
+        <?= $message ?>
+    </div>
+<?php else: ?>
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Report of Items</h4>
+                    <h4 class="card-title">Report of Statuses</h4>
                     <?= Html::a('Export PDF report', ['pdf', 'dataProvider' => urlencode(serialize($dataProvider))], ['class' => 'btn btn-info']) ?>
                     </p>
                     <table class="table table-hover">
@@ -166,6 +171,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </table>
                   </div>
                 </div>
+                <?php endif; ?>
               </div>
 </div>
                     </div>

@@ -65,20 +65,23 @@ public function actionDuration(){
     }
 
 
-public function actionGenerate() {
-    if (Yii::$app->request->post()) {
-        $start_date = Yii::$app->request->post('start_date');
-        $end_date = Yii::$app->request->post('end_date');
-        $query = Item::find()
-    ->where(['between', 'FROM_UNIXTIME(created_at, "%Y-%m-%d")', $start_date, $end_date])
-    ->orderBy('created_at');
-    $dataProvider= $query->all();
-    $no=0;
-    return $this->render('viewreport',['dataProvider' => $dataProvider,'no'=>$no]);
+    public function actionGenerate() {
+        if (Yii::$app->request->post()) {
+            $start_date = Yii::$app->request->post('start_date');
+            $end_date = Yii::$app->request->post('end_date');
+            $query = Item::find()
+                ->where(['between', 'FROM_UNIXTIME(created_at, "%Y-%m-%d")', $start_date, $end_date])
+                ->orderBy('created_at');
+            $dataProvider = $query->all();
+            $no = 0;
+            if (empty($dataProvider)) {
+                $message = 'No item found for the selected date range.';
+            }
+            return $this->render('viewreport', ['dataProvider' => $dataProvider, 'no' => $no,'message' => $message]);
+        }
+        return $this->render('duration');
     }
     
-    return $this->render('duration');
-}
     /**
      * Creates a new Item model.
      * If creation is successful, the browser will be redirected to the 'view' page.

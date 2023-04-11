@@ -60,15 +60,20 @@ class StatusController extends Controller
             $start_date = Yii::$app->request->post('start_date');
             $end_date = Yii::$app->request->post('end_date');
             $query = Status::find()
-        ->where(['between', 'FROM_UNIXTIME(created_at, "%Y-%m-%d")', $start_date, $end_date])
-        ->orderBy('created_at');
-        $dataProvider= $query->all();
-        $no=0;
-        return $this->render('viewreport',['dataProvider' => $dataProvider,'no'=>$no]);
+                ->where(['between', 'FROM_UNIXTIME(created_at, "%Y-%m-%d")', $start_date, $end_date])
+                ->orderBy('created_at');
+            $dataProvider= $query->all();
+            $no = 0;
+            if(empty($dataProvider)) {
+                $message = 'No data found for the selected date range.';
+                return $this->render('viewreport', ['message' => $message]);
+            } else {
+                return $this->render('viewreport', ['dataProvider' => $dataProvider, 'no' => $no]);
+            }
         }
-        
         return $this->render('duration');
     }
+    
 
     public function actionPdf(){
         $dataProvider=unserialize(urldecode($_GET['dataProvider']));

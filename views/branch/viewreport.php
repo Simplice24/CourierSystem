@@ -142,6 +142,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="card">
                   <div class="card-body">
                     <h4 class="card-title">Report of Branches</h4>
+                    <?php if (!empty($branches)): ?>
                     <?= Html::a('Export PDF report', ['pdf', 'branches' => urlencode(serialize($branches))], ['class' => 'btn btn-info']) ?>
                     </p>
                     <table class="table table-hover">
@@ -164,6 +165,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?php endforeach; ?>
                       </tbody>
                     </table>
+                    <?php else: ?>
+    <div class="alert alert-warning" role="alert">
+        <?= $message ?>
+    </div>
+<?php endif; ?>
                   </div>
                 </div>
               </div>

@@ -91,20 +91,26 @@ class BranchController extends Controller
     }
 
 
-public function actionGenerate() {
-    if (Yii::$app->request->post()) {
-        $start_date = Yii::$app->request->post('start_date');
-        $end_date = Yii::$app->request->post('end_date');
-        $query = Branch::find()
-    ->where(['between', 'FROM_UNIXTIME(created_at, "%Y-%m-%d")', $start_date, $end_date])
-    ->orderBy('created_at');
-    $branches = $query->all();
-    $no=0;
-    return $this->render('viewreport',['branches' => $branches,'no'=>$no]);
+    public function actionGenerate() {
+        if (Yii::$app->request->post()) {
+            $start_date = Yii::$app->request->post('start_date');
+            $end_date = Yii::$app->request->post('end_date');
+            $query = Branch::find()
+        ->where(['between', 'FROM_UNIXTIME(created_at, "%Y-%m-%d")', $start_date, $end_date])
+        ->orderBy('created_at');
+        $branches = $query->all();
+        $no=0;
+        
+        if(empty($branches)){
+            $message = "No branches found for the selected date range.";
+            return $this->render('viewreport', ['message' => $message]);
+        }
+        
+        return $this->render('viewreport',['branches' => $branches,'no'=>$no]);
+        }
+        
+        return $this->render('duration');
     }
-    
-    return $this->render('duration');
-}
 
     /**
      * Creates a new Branch model.

@@ -54,20 +54,29 @@ class ManifestController extends Controller
     }
 
 
-public function actionGenerate() {
+    public function actionGenerate()
+{
     if (Yii::$app->request->post()) {
         $start_date = Yii::$app->request->post('start_date');
         $end_date = Yii::$app->request->post('end_date');
         $query = Manifest::find()
-    ->where(['between', 'FROM_UNIXTIME(created_at, "%Y-%m-%d")', $start_date, $end_date])
-    ->orderBy('created_at');
-    $manifests = $query->all();
-    $no=0;
-    return $this->render('viewreport',['manifests' => $manifests,'no'=>$no]);
+            ->where(['between', 'FROM_UNIXTIME(created_at, "%Y-%m-%d")', $start_date, $end_date])
+            ->orderBy('created_at');
+        $manifests = $query->all();
+        $no = 0;
+
+        if (empty($manifests)) {
+            $message = "No manifests found within the selected date range.";
+            return $this->render('viewreport', ['message' => $message]);
+        } else {
+            return $this->render('viewreport', ['manifests' => $manifests, 'no' => $no]);
+        }
     }
-    
+
     return $this->render('duration');
 }
+
+    
 
     public function actionPdf(){
         $manifests=unserialize(urldecode($_GET['manifests']));

@@ -5,6 +5,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
+use yii\web\JsExpression;
 
 /** @var yii\web\View $this */
 /** @var app\models\UserSearch $searchModel */
@@ -239,4 +240,6 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
   </body>
+ 
+
 
