@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 23, 2023 at 12:01 PM
+-- Generation Time: Apr 12, 2023 at 10:22 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -227,7 +227,7 @@ INSERT INTO `branch` (`branch_id`, `branch_name`, `created_at`, `created_by`, `u
 CREATE TABLE `customer` (
   `customer_id` int(225) NOT NULL,
   `fullname` varchar(60) NOT NULL,
-  `subscription` varchar(10) NOT NULL,
+  `subscription` varchar(60) NOT NULL,
   `idn` varchar(16) NOT NULL,
   `telephone` varchar(15) NOT NULL,
   `created_at` varchar(60) NOT NULL,
@@ -242,7 +242,7 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`customer_id`, `fullname`, `subscription`, `idn`, `telephone`, `created_at`, `created_by`, `updated_at`, `updated_by`, `item_id`) VALUES
-(13, 'Robert KIYOSAKI', 'No', '1196180095883329', '07834527384', '1676012567', 'Simplice', '1676012567', 'Simplice', 5);
+(13, 'Robert KIYOSAKI', 'Unlimited usage subscription', '1196180095883329', '07834527384', '1676012567', 'Simplice', '1676012567', 'Simplice', 5);
 
 -- --------------------------------------------------------
 
@@ -279,7 +279,10 @@ INSERT INTO `item` (`item_id`, `item_name`, `value`, `sender_name`, `sender_phon
 (5, 'Rich Dad, Poor Dad book', 20000, 'Robert KIYOSAKI', '0789443899', 'Monthly', 'Simplice', '0723438222', '1199998003456665', 'KIGALI', '2023-02-10', '12:30:00', 'MUHANGA', '1676012533', 'Simplice', '1676012533', 'Simplice', NULL),
 (6, 'The Musical Human: a history of life on earth', 25000, 'Michael Spitzer', '0789443899', 'Monthly', 'Simplice', '0723438222', '1999800233448903', 'KIGALI', '2023-01-31', '13:15:00', 'MUHANGA', '1676631760', 'Simplice', '1676631760', 'Simplice', NULL),
 (7, 'HP pavilion', 800000, 'Robert KIYOSAKI', '0789443899', 'Monthly', 'Eulade', '0723438222', '19998002334455', 'KIGALI', '2023-02-10', '12:30:00', 'MUHANGA', '1678763026', 'Simplice', '1678763026', 'Simplice', NULL),
-(8, 'Introduction to Algorithms', 30000, 'Ronald Rivest', '0789443899', 'Monthly', 'Honore', '0723438222', '1199980014748347', 'KIGALI', '2023-03-17', '15:21:00', 'MUHANGA', '1679054622', 'Simplice', '1679054622', 'Simplice', NULL);
+(8, 'Introduction to Algorithms', 30000, 'Ronald Rivest', '0789443899', 'Monthly', 'Honore', '0723438222', '1199980014748347', 'KIGALI', '2023-03-17', '15:21:00', 'MUHANGA', '1679054622', 'Simplice', '1679054622', 'Simplice', NULL),
+(9, 'Mirrorless Camera', 600000, 'KWIZERA Fabrice', '0789443899', 'No', 'HABINEZA Arsene', '0793444533', '1199980014748347', 'Kigali', '2023-03-24', '11:30:00', 'Muhanga', '1679655826', 'Simplice', '1679655826', 'Simplice', NULL),
+(10, 'Artwork', 100000, 'HABINEZA Arsene', '0728890193', 'No', 'KWIZERA Fabrice', '0793444533', '1199980014748347', 'Muhanga', '2023-03-24', '13:20:00', 'Kigali', '1679655801', 'Simplice', '1679655801', 'Simplice', NULL),
+(11, 'Artwork', 12000, 'Robert KIYOSAKI', '0789443899', 'Monthly', 'Simplice', '0723438222', '1199980014748347', 'Kigali', '2023-03-28', '05:14:00', 'Muhanga', '1679972591', 'Simplice', '1679972591', 'Simplice', NULL);
 
 -- --------------------------------------------------------
 
@@ -303,7 +306,16 @@ INSERT INTO `log` (`log_id`, `done_by`, `comment`, `done_at`) VALUES
 (2, 'Simplice', 'New status created', 1679374994),
 (3, 'Simplice', 'New type of subscription is created', 1679375008),
 (8, 'Simplice', 'Updated customer details ', 1679382209),
-(9, 'Simplice', 'Updated customer details ', 1679382235);
+(9, 'Simplice', 'Updated customer details ', 1679382235),
+(10, 'Simplice', 'New type of subscription is created', 1679652183),
+(11, 'Simplice', 'Item received by branch agent', 1679655826),
+(12, 'Simplice', 'Item received by branch agent', 1679655801),
+(13, 'Simplice', 'Updated item details ', 1679655822),
+(14, 'Simplice', 'Updated customer details ', 1679655824),
+(15, 'Simplice', 'Updated customer details ', 1679655808),
+(16, 'Simplice', 'New subscription created', 1679655814),
+(17, 'Simplice', 'New subscription created', 1679814204),
+(18, 'Simplice', 'Item received by branch agent', 1679972592);
 
 -- --------------------------------------------------------
 
@@ -401,7 +413,9 @@ CREATE TABLE `subscription` (
 --
 
 INSERT INTO `subscription` (`subscription_id`, `customer`, `subscription_type`, `amount`, `created_at`, `created_by`, `updated_at`, `updated_by`, `customer_id`) VALUES
-(6, 'Robert KIYOSAKI', 'Unlimited usage subscription', 0, 1676012545, 'Simplice', 1676012545, 'Simplice', 13);
+(6, 'Robert KIYOSAKI', 'Unlimited usage subscription', 40000, 1676012545, 'Simplice', 1676012545, 'Simplice', 13),
+(7, 'KIMENYI Honore', 'Unlimited usage subscription', 40000, 1679655814, 'Simplice', 1679655814, 'Simplice', NULL),
+(8, 'ISHIMWE Bosco', 'Fixed usage Subscription', 20000, 1679814204, 'Simplice', 1679814204, 'Simplice', NULL);
 
 -- --------------------------------------------------------
 
@@ -578,19 +592,19 @@ ALTER TABLE `branch`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `customer_id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `customer_id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
-  MODIFY `item_id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `item_id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `log_id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `log_id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `manifest`
@@ -608,13 +622,13 @@ ALTER TABLE `status`
 -- AUTO_INCREMENT for table `subscription`
 --
 ALTER TABLE `subscription`
-  MODIFY `subscription_id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `subscription_id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `subscription_type`
 --
 ALTER TABLE `subscription_type`
-  MODIFY `id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `user`
