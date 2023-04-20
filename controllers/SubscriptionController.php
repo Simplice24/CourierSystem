@@ -108,32 +108,37 @@ class SubscriptionController extends Controller
      * @return string|\yii\web\Response
      */
     public function actionCreate()
-    {
-        $model = new Subscription();
+{
+    $model = new Subscription();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                $model->created_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
-                $model->updated_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
-                $model->created_by=Yii::$app->user->identity->username;
-                $model->updated_by=Yii::$app->user->identity->username;
-                if($model->save()){
-                    $log = new Log();
-                    $log->done_by=Yii::$app->user->identity->username;
-                    $log->comment="New subscription created";
-                    $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
-                    $log->save();
-                }
-                return $this->redirect(['view', 'subscription_id' => $model->subscription_id]);
+    if ($this->request->isPost) {
+        if ($model->load($this->request->post())) {
+            $model->created_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+            $model->updated_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+            $model->created_by=Yii::$app->user->identity->username;
+            $model->updated_by=Yii::$app->user->identity->username;
+
+            // Retrieve the amount of the selected subscription type
+            $subscriptionType = SubscriptionType::findOne(['name' => $model->subscription_type]);
+            $model->amount = $subscriptionType->amount;
+
+            if($model->save()){
+                $log = new Log();
+                $log->done_by=Yii::$app->user->identity->username;
+                $log->comment="New subscription created";
+                $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                $log->save();
             }
-        } else {
-            $model->loadDefaultValues();
+            return $this->redirect(['view', 'subscription_id' => $model->subscription_id]);
         }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+    } else {
+        $model->loadDefaultValues();
     }
+
+    return $this->render('create', [
+        'model' => $model,
+    ]);
+}
 
     /**
      * Updates an existing Subscription model.
@@ -188,8 +193,6 @@ class SubscriptionController extends Controller
     public function actionGetAmount($subscription_type){
         $subscriptionType = SubscriptionType::find()->where(['name'=>$subscription_type])->one();
         $amount = $subscriptionType->amount;
-    
-        var_dump($amount); // debug output
         return json_encode($amount);
         
     }

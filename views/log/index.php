@@ -77,6 +77,12 @@ $this->params['breadcrumbs'][] = $this->title;
               </a>
             </li>
             <?php } ?>
+            <li class="nav-item">
+              <a class="nav-link">
+              <?= Html::a('Invoice', ['/invoice'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
+                <i class="mdi mdi-chart-bar menu-icon"></i>
+              </a>
+            </li>
             <?php if(\Yii::$app->user->can('View_log')) {?>
             <li class="nav-item">
               <a class="nav-link">

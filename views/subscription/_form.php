@@ -71,75 +71,35 @@ if(Yii::$app->user->isGuest){
             <li class="nav-item">
               <a class="nav-link">
               <?= Html::a('Logs', ['/log'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
-                <!-- <span class="menu-title">Logs</span> -->
+
                 <i class="mdi mdi-table-large menu-icon"></i>
               </a>
             </li>
-            <!-- <li class="nav-item">
-              <a class="nav-link" data-bs-toggle="collapse" href="#general-pages" aria-expanded="false" aria-controls="general-pages">
-                <span class="menu-title">Sample Pages</span>
-                <i class="menu-arrow"></i>
-                <i class="mdi mdi-medical-bag menu-icon"></i>
-              </a>
-              <div class="collapse" id="general-pages">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="pages/samples/blank-page.html"> Blank Page </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html"> 404 </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> 500 </a></li>
-                </ul>
-              </div>
-            </li> -->
 
             <li class="nav-item">
               <a class="nav-link">
               <?= Html::a('Manifests', ['/manifest'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
-                <!-- <span class="menu-title">Manifests</span> -->
                 <i class="mdi mdi-contacts menu-icon"></i>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link">
               <?= Html::a('Status', ['/status'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
-                <!-- <span class="menu-title">Status</span> -->
                 <i class="mdi mdi-format-list-bulleted menu-icon"></i>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link">
               <?= Html::a('Subscriptions', ['/subscription'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
-                <!-- <span class="menu-title">Subscriptions</span> -->
                 <i class="mdi mdi-chart-bar menu-icon"></i>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link">
               <?= Html::a('Types of subscription', ['/subscription-type'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
-                <!-- <span class="menu-title">Types of subscription</span> -->
                 <i class="mdi mdi-table-large menu-icon"></i>
               </a>
             </li>
-
-
-
-            <!-- <li class="nav-item sidebar-actions">
-              <span class="nav-link">
-                <div class="border-bottom">
-                  <h6 class="font-weight-normal mb-3">Projects</h6>
-                </div>
-                <button class="btn btn-block btn-lg btn-gradient-primary mt-4">+ Add a project</button>
-                <div class="mt-4">
-                  <div class="border-bottom">
-                    <p class="text-secondary">Categories</p>
-                  </div>
-                  <ul class="gradient-bullet-list mt-4">
-                    <li>Free</li>
-                    <li>Pro</li>
-                  </ul>
-                </div>
-              </span>
-            </li> -->
           </ul>
         </nav>
         <!-- partial -->
@@ -185,68 +145,29 @@ if(Yii::$app->user->isGuest){
                   <div class="form-group row">
                   <div class="form-group">
                   <?= $form->field($model, 'subscription_type')->DropDownList(
-                        ArrayHelper::map(SubscriptionType::find()->all(),'name','name'),['prompt'=>'Select subscription type']
-                    ) ?>
+                      ArrayHelper::map(
+                          SubscriptionType::find()->all(),
+                          'name',
+                          function($model) {
+                              return $model->name . ' (' . $model->amount . 'Frw)';
+                          }
+                      ),
+                      [
+                          'prompt' => 'Select subscription type',
+                          'style' => 'height: 46px;'
+                      ]
+                  ) ?>
                   </div>
                   </div>
 </div>
 </div>
-                  <div class="row" style="height:90px;">
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                  <div class="form-group">
-                  <!-- <?= $form->field($model, 'amount')->textInput() ?> -->
-                  <?= $form->field($model, 'amount')->textInput(['id' => 'amount']) ?>
-                  </div>
-                  </div>
-                  </div>
-                  <!-- <div class="col-md-6">
-                      <div class="form-group row">
-                  <div class="form-group">
-                  <?= $form->field($model, 'customer_id')->textInput() ?>
-                  </div>
-                  </div>
-                  </div> -->
-                  </div>
-                  <!-- <div class="form-group">
-                  <?= $form->field($model, 'created_by')->textInput(['maxlength' => true]) ?>
-                  </div>
-                  <div class="form-group">
-                  <?= $form->field($model, 'updated_at')->textInput() ?>
-                  </div>
-                  <div class="form-group">
-                  <?= $form->field($model, 'updated_by')->textInput(['maxlength' => true]) ?>
-                  </div>-->
+                  
                   <?= Html::submitButton('Save', ['class' => 'btn btn-gradient-primary me-2']) ?>
                 </form>
               </div>
             </div>
           </div>
-          <?php
-$script = <<< JS
-$(document).ready(function(){
-    $('#subscription-type').on('change',function(){
-        var subscription_type = $(this).val();
-        console.log('Selected subscription type: ' + subscription_type)
-        if(subscription_type){
-            $.ajax({
-                url: '/subscription/get-amount?subscription_type='+subscription_type,
-                type: 'GET',
-                dataType: 'json',
-                success: function(data){
-                    $('#amount').val(data);
-                }
-            });
-        }else{
-            $('#amount').val('');
-        }
-    });
-});
-JS;
-
-$this->registerJs($script);
-
-?>
+          
 <?php ActiveForm::end(); ?>
 
 

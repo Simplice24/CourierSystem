@@ -1,21 +1,6 @@
 <?php
-
-use app\models\Item;
 use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\grid\ActionColumn;
-use yii\grid\GridView;
-
-/** @var yii\web\View $this */
-/** @var app\models\ItemSearch $searchModel */
-/** @var yii\data\ActiveDataProvider $dataProvider */
-
-if(Yii::$app->user->isGuest){
-  return Yii::$app->getResponse()->redirect(['site/login']);
-}
-
-$this->title = 'Items';
-$this->params['breadcrumbs'][] = $this->title;
+use yii\widgets\ActiveForm;
 ?>
 
 <body>
@@ -31,6 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <!-- <div class="nav-profile-image">
                   <img src="assets/images/faces/face1.jpg" alt="profile">
                   <span class="login-status online"></span>
+                  
                 </div> -->
                 <div class="nav-profile-text d-flex flex-column">
                   <span class="font-weight-bold mb-2"><?= \Yii::$app->user->identity->username ;?></span>
@@ -45,84 +31,69 @@ $this->params['breadcrumbs'][] = $this->title;
                 <i class="mdi mdi-home menu-icon"></i>
               </a>
             </li>
-            <?php if(\Yii::$app->user->can('View_branch')) {?>
             <li class="nav-item">
-              <a class="nav-link">  
+              <a class="nav-link">
               <?= Html::a('Branches', ['/branch'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
-              <i class="mdi mdi-contacts menu-icon"></i>
+                <i class="mdi mdi-contacts menu-icon"></i>
               </a>
             </li>
-            <?php } ?>
-            <?php if(\Yii::$app->user->can('View_user')) {?>
             <li class="nav-item">
               <a class="nav-link">
               <?= Html::a('Users', ['/user'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
                 <i class="mdi mdi-contacts menu-icon"></i>
               </a>
             </li>
-            <?php } ?>
-            <?php if(\Yii::$app->user->can('View_customer')) {?>
             <li class="nav-item">
               <a class="nav-link">
               <?= Html::a('Customers', ['/customer'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
+                <!-- <span class="menu-title">Customers</span> -->
                 <i class="mdi mdi-format-list-bulleted menu-icon"></i>
               </a>
             </li>
-            <?php } ?>
-            <?php if(\Yii::$app->user->can('View_item')) {?>
             <li class="nav-item">
               <a class="nav-link">
               <?= Html::a('Items', ['/item'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
+                <!-- <span class="menu-title">Items</span> -->
                 <i class="mdi mdi-chart-bar menu-icon"></i>
               </a>
             </li>
-            <?php } ?>
-            <li class="nav-item">
-              <a class="nav-link">
-              <?= Html::a('Invoice', ['/invoice'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
-                <i class="mdi mdi-chart-bar menu-icon"></i>
-              </a>
-            </li>
-            <?php if(\Yii::$app->user->can('View_log')) {?>
             <li class="nav-item">
               <a class="nav-link">
               <?= Html::a('Logs', ['/log'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
+                <!-- <span class="menu-title">Logs</span> -->
                 <i class="mdi mdi-table-large menu-icon"></i>
               </a>
             </li>
-            <?php } ?>
-            <?php if(\Yii::$app->user->can('View_manifest')) {?>    
+
             <li class="nav-item">
               <a class="nav-link">
               <?= Html::a('Manifests', ['/manifest'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
+                <!-- <span class="menu-title">Manifests</span> -->
                 <i class="mdi mdi-contacts menu-icon"></i>
               </a>
             </li>
-            <?php } ?>
-            <?php if(\Yii::$app->user->can('View_status')) {?>
             <li class="nav-item">
               <a class="nav-link">
               <?= Html::a('Status', ['/status'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
+                <!-- <span class="menu-title">Status</span> -->
                 <i class="mdi mdi-format-list-bulleted menu-icon"></i>
               </a>
             </li>
-            <?php } ?>
-            <?php if(\Yii::$app->user->can('View_subscription')) {?>
             <li class="nav-item">
               <a class="nav-link">
               <?= Html::a('Subscriptions', ['/subscription'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
+                <!-- <span class="menu-title">Subscriptions</span> -->
                 <i class="mdi mdi-chart-bar menu-icon"></i>
               </a>
             </li>
-            <?php } ?>
-            <?php if(\Yii::$app->user->can('View_subscriptionTypes')) {?>
             <li class="nav-item">
               <a class="nav-link">
               <?= Html::a('Types of subscription', ['/subscription-type'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
+                <!-- <span class="menu-title">Types of subscription</span> -->
                 <i class="mdi mdi-table-large menu-icon"></i>
               </a>
             </li>
-            <?php } ?>
+
           </ul>
         </nav>
         <!-- partial -->
@@ -148,51 +119,52 @@ $this->params['breadcrumbs'][] = $this->title;
                   <div class="card-body">
                     <div class="table-responsive">
                       <div class="branch-index">
-                      <div class="item-index">
 
-<h1><?= Html::encode($this->title) ?></h1>
 
-<p>
-    <?php if(\Yii::$app->user->can('Create_item')) {?>
-    <?= Html::a('Create Item', ['create'], ['class' => 'btn btn-success']) ?>
-    <?= Html::a('Report', ['duration'], ['class' => 'btn btn-info']) ?>
-    <?php } ?>
-</p>
+                      <div class="item-form">
 
-<?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+                      <h1>Create Invoice</h1>
 
-<?= GridView::widget([
-    'dataProvider' => $dataProvider,
-    'filterModel' => $searchModel,
-    'columns' => [
-        ['class' => 'yii\grid\SerialColumn'],
+                      <?php $form = ActiveForm::begin(['action' => ['invoice/create']]); ?>
 
-        // 'item_id',
-        'item_name',
-        // 'value',
-        'sender_name',
-        // 'sender_phone',
-        //'sender_subscription',
-        'receiver_name',
-        // 'receiver_phone',
-        //'receiver_id',
-        //'departure',
-        //'depature_date',
-        //'departure_time',
-        //'destination',
-        //'created_at',
-        //'created_by',
-        //'updated_at',
-        //'updated_by',
-        //'manifest_id',
-        [
-            'class' => ActionColumn::className(),
-            'urlCreator' => function ($action, Item $model, $key, $index, $column) {
-                return Url::toRoute([$action, 'item_id' => $model->item_id]);
-             }
-        ],
-    ],
-]); ?>
+<div class="col-md-4">
+    <div class="form-group">
+        <?= $form->field($model, 'customer_name')->textInput(['maxlength' => true]) ?>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th><b>Item</b></th>
+            <th><b>Sender</b></th>
+            <th><b>Item value</b></th>
+            <th><b>Receiver</b></th>
+            <th><b>Departure</b></th>
+            <th><b>Destination</b></th>
+            <th><b>Add to Invoice</b></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($items as $item): ?>
+            <tr style="height: 30px;">
+                <td><?= $item->item_name ?></td>
+                <td><?= $item->sender_name ?></td>
+                <td><?= $item->value ?></td>
+                <td><?= $item->receiver_name ?></td>
+                <td><?= $item->departure ?></td>
+                <td><?= $item->destination  ?></td>
+                <td>
+                    <?= $form->field($item, "selected[$item->item_name]")->checkbox() ?>
+                </td>
+            </tr>
+        <?php endforeach ?>
+    </tbody>
+</table>
+
+<?= Html::submitButton('Create Invoice', ['class' => 'btn btn-success']) ?>
+
+<?php ActiveForm::end(); ?>
 
 
 </div>

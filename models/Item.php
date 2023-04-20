@@ -35,6 +35,9 @@ class Item extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+
+     public $selected;
+     public $quantity;
     public static function tableName()
     {
         return 'item';

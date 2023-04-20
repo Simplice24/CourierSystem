@@ -1,20 +1,16 @@
 <?php
 
-use app\models\Item;
+use app\models\Invoice;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 
 /** @var yii\web\View $this */
-/** @var app\models\ItemSearch $searchModel */
+/** @var app\models\InvoiceSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-if(Yii::$app->user->isGuest){
-  return Yii::$app->getResponse()->redirect(['site/login']);
-}
-
-$this->title = 'Items';
+$this->title = 'Invoices';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -147,16 +143,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="card">
                   <div class="card-body">
                     <div class="table-responsive">
-                      <div class="branch-index">
-                      <div class="item-index">
+                    <div class="invoice-index">
 
 <h1><?= Html::encode($this->title) ?></h1>
 
 <p>
-    <?php if(\Yii::$app->user->can('Create_item')) {?>
-    <?= Html::a('Create Item', ['create'], ['class' => 'btn btn-success']) ?>
-    <?= Html::a('Report', ['duration'], ['class' => 'btn btn-info']) ?>
-    <?php } ?>
+    <?= Html::a('Create Invoice', ['create-invoice'], ['class' => 'btn btn-success']) ?>
 </p>
 
 <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -167,28 +159,16 @@ $this->params['breadcrumbs'][] = $this->title;
     'columns' => [
         ['class' => 'yii\grid\SerialColumn'],
 
-        // 'item_id',
+        'id',
+        'customer_name',
         'item_name',
-        // 'value',
-        'sender_name',
-        // 'sender_phone',
-        //'sender_subscription',
-        'receiver_name',
-        // 'receiver_phone',
-        //'receiver_id',
-        //'departure',
-        //'depature_date',
-        //'departure_time',
-        //'destination',
-        //'created_at',
-        //'created_by',
+        'total_amount',
+        'created_at',
         //'updated_at',
-        //'updated_by',
-        //'manifest_id',
         [
             'class' => ActionColumn::className(),
-            'urlCreator' => function ($action, Item $model, $key, $index, $column) {
-                return Url::toRoute([$action, 'item_id' => $model->item_id]);
+            'urlCreator' => function ($action, Invoice $model, $key, $index, $column) {
+                return Url::toRoute([$action, 'id' => $model->id]);
              }
         ],
     ],
@@ -196,6 +176,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 </div>
+
 
 
                     </div>
@@ -206,5 +187,6 @@ $this->params['breadcrumbs'][] = $this->title;
           </div>
     
   </body>
+
 
 
