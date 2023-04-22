@@ -1,20 +1,16 @@
 <?php
 
-use app\models\Branch;
+use app\models\Invoice;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 
 /** @var yii\web\View $this */
-/** @var app\models\BranchSearch $searchModel */
+/** @var app\models\InvoiceSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-if(Yii::$app->user->isGuest){
-  return Yii::$app->getResponse()->redirect(['site/login']);
-}
-
-$this->title = 'Branches';
+$this->title = 'Invoices';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -147,42 +143,39 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="card">
                   <div class="card-body">
                     <div class="table-responsive">
+                    <div class="invoice-index">
 
+<h1><?= Html::encode($this->title) ?></h1>
 
-                      <div class="branch-index">
+<p>
+    <?= Html::a('Create Invoice', ['create'], ['class' => 'btn btn-success']) ?>
+</p>
 
-                      <h1><?= Html::encode($this->title) ?></h1>
-    <p>
-      <?php if(\Yii::$app->user->can('Create_branch')){?>
-        <?= Html::a('Create Branch', ['create'], ['class' => 'btn btn-success']) ?>
-        <?= Html::a('Report', ['duration'], ['class' => 'btn btn-info']) ?>
-        <?php } ?>
-    </p>
+<?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+<?= GridView::widget([
+    'dataProvider' => $dataProvider,
+    'filterModel' => $searchModel,
+    'columns' => [
+        ['class' => 'yii\grid\SerialColumn'],
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            // 'branch_id',
-            'branch_name',
-            'created_at',
-            'created_by',
-            'updated_at',
-            'updated_by',
-            [
-                'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Branch $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'branch_id' => $model->branch_id]);
-                 }
-            ],
+        'invoice_id',
+        'customer_name',
+        'invoice_date',
+        'amount_due',
+        'created_at',
+        //'updated_at',
+        [
+            'class' => ActionColumn::className(),
+            'urlCreator' => function ($action, Invoice $model, $key, $index, $column) {
+                return Url::toRoute([$action, 'invoice_id' => $model->invoice_id]);
+             }
         ],
-    ]); ?>
+    ],
+]); ?>
 
-  </div>
+
+</div>
 
                     </div>
                   </div>
@@ -192,5 +185,6 @@ $this->params['breadcrumbs'][] = $this->title;
           </div>
     
 </body>
+
 
 
