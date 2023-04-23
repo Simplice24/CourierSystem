@@ -3,10 +3,12 @@
 namespace app\controllers;
 
 use app\models\InvoiceItems;
+use app\models\Item;
 use app\models\InvoiceItemsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use Yii;
 
 /**
  * InvoiceItemsController implements the CRUD actions for InvoiceItems model.
@@ -67,10 +69,22 @@ class InvoiceItemsController extends Controller
      */
     public function actionCreate()
     {
+        $invoice_id = Yii::$app->request->get('invoice_id');
         $model = new InvoiceItems();
-
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+            if ($model->load($this->request->post())) {
+                $item_id = $model->item_id;
+                $item = Item::findOne($item_id);
+                $model->invoice_id=$invoice_id;
+                $model->item_name=$item->item_name;
+                $model->sender_name=$item->sender_name;
+                $model->receiver_name=$item->receiver_name;
+                $model->item_value=$item->value;
+                $model->departure=$item->departure;
+                $model->destination=$item->destination;
+                $model->created_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                $model->updated_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                $model->save();  
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {

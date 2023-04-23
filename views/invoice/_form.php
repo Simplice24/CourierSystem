@@ -163,7 +163,7 @@ use yii\widgets\ActiveForm;
             </div>
             </div>
 <div class="form-group">
-    <?= Html::submitButton('Save', ['class' => 'btn btn-gradient-primary me-2']) ?>
+    <?= Html::submitButton('Add items', ['class' => 'btn btn-gradient-primary me-2']) ?>
 </div>
 </form>
             </div>

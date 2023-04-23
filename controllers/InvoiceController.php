@@ -81,7 +81,8 @@ class InvoiceController extends Controller
                     $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                     $log->save();
                 }
-                return $this->redirect(['view', 'invoice_id' => $model->invoice_id]);
+                return $this->redirect(['invoice-items/create', 'invoice_id' => $model->invoice_id]);
+
             }
         } else {
             $model->loadDefaultValues();

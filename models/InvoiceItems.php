@@ -38,7 +38,7 @@ class InvoiceItems extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'invoice_id', 'item_id', 'item_name', 'sender_name', 'receiver_name', 'item_value', 'departure', 'destination'], 'required'],
+            [['invoice_id', 'item_id'], 'required'],
             [['id', 'invoice_id', 'item_id'], 'integer'],
             [['item_value'], 'number'],
             [['created_at', 'updated_at'], 'safe'],
@@ -55,9 +55,9 @@ class InvoiceItems extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            // 'id' => 'ID',
             'invoice_id' => 'Invoice ID',
-            'item_id' => 'Item ID',
+            'item_id' => 'Item ',
             'item_name' => 'Item Name',
             'sender_name' => 'Sender Name',
             'receiver_name' => 'Receiver Name',

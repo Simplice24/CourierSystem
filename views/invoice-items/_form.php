@@ -136,93 +136,24 @@ use yii\widgets\ActiveForm;
                 <form class="forms-sample">
 
                 <div class="row" style="height:90px;">
-                    <div class="col-md-4">
-                      <div class="form-group row">
-                    <div class="form-group">
-                    <?= $form->field($model, 'invoice_id')->textInput() ?>
-</div>
-                </div>
-            </div>
-
+                  
 <div class="col-md-4">
                       <div class="form-group row">
                     <div class="form-group">
-                    <?= $form->field($model, 'item_id')->textInput() ?>
+                    <?= $form->field($model, 'item_id')->dropDownList(
+                      \yii\helpers\ArrayHelper::map(\app\models\Item::find()->all(), 'item_id', 'item_name','sender_name'),
+                      [
+                          'prompt' => 'Select Item',
+                          'style' => 'height: 45px;',
+                      ]
+                  )->label('Item Name') ?>
+
 </div>
                 </div>
             </div>
+            </div>
+
             
-<div class="col-md-4">
-                      <div class="form-group row">
-                    <div class="form-group">
-                    <?= $form->field($model, 'item_name')->textInput(['maxlength' => true]) ?>
-</div>
-                </div>
-            </div>
-            </div>
-
-            <div class="row" style="height:90px;">
-<div class="col-md-4">
-                      <div class="form-group row">
-                    <div class="form-group">
-                    <?= $form->field($model, 'sender_name')->textInput(['maxlength' => true]) ?>
-</div>
-                </div>
-            </div>
-
-<div class="col-md-4">
-                      <div class="form-group row">
-                    <div class="form-group">
-                    <?= $form->field($model, 'receiver_name')->textInput(['maxlength' => true]) ?>
-</div>
-                </div>
-            </div>
-
-<div class="col-md-4">
-                      <div class="form-group row">
-                    <div class="form-group">
-                    <?= $form->field($model, 'item_value')->textInput(['maxlength' => true]) ?>
-</div>
-                </div>
-            </div>
-            </div>
-
-            <div class="row" style="height:90px;">
-<div class="col-md-4">
-                      <div class="form-group row">
-                    <div class="form-group">
-                    <?= $form->field($model, 'departure')->textInput(['maxlength' => true]) ?>
-</div>
-                </div>
-            </div>
-
-<div class="col-md-4">
-                      <div class="form-group row">
-                    <div class="form-group">
-                    <?= $form->field($model, 'destination')->textInput(['maxlength' => true]) ?>
-</div>
-            </div>
-            </div>
-
-<div class="col-md-4">
-                      <div class="form-group row">
-                    <div class="form-group">
-                    <?= $form->field($model, 'created_at')->textInput() ?>
-</div>
-                </div>
-            </div>
-            </div>
-
-            <div class="row" style="height:90px;">
-
-<div class="col-md-4">
-                      <div class="form-group row">
-                    <div class="form-group">
-                    <?= $form->field($model, 'updated_at')->textInput() ?>
-</div>
-                </div>
-            </div>
-</div>
 
 
 
