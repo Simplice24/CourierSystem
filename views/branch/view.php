@@ -186,11 +186,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <?= DetailView::widget([
     'model' => $model,
     'attributes' => [
-        'branch_id',
+        // 'branch_id',
         'branch_name',
-        'created_at',
+        'created_at:datetime',
         'created_by',
-        'updated_at',
+        'updated_at:datetime',
         'updated_by',
     ],
 ]) ?>

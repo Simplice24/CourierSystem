@@ -172,7 +172,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'created_by',
             'created_at:datetime',
             //'updated_by',
-            //'updated_at',
+            //'updated_at:datetime',
             //'subscription_id',
             [
                 'class' => ActionColumn::className(),

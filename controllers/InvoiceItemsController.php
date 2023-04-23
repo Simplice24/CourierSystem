@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\InvoiceItems;
 use app\models\Item;
+use app\models\Log;
 use app\models\InvoiceItemsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -85,7 +86,13 @@ class InvoiceItemsController extends Controller
                 $model->destination=$item->destination;
                 $model->created_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                 $model->updated_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
-                $model->save();  
+                if($model->save()){
+                    $log = new Log();
+                    $log->done_by=Yii::$app->user->identity->username;
+                    $log->comment="New item is added to the invoice";
+                    $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                    $log->save();
+                }  
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {

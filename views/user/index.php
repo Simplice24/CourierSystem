@@ -178,8 +178,8 @@ $this->params['breadcrumbs'][] = $this->title;
         //'telephone',
         //'branche_id',
         //'status',
-        //'created_at',
-        //'updated_at',
+        //'created_at:datetime',
+        //'updated_at:datetime',
         //'verification_token',
         [
             'class' => ActionColumn::className(),

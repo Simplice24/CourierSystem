@@ -171,7 +171,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'status_value',
         'created_by',
         'created_at:datetime',
-        //'updated_at',
+        //'updated_at:datetime',
         //'updated_by',
         [
             'class' => ActionColumn::className(),

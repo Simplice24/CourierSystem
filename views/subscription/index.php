@@ -172,7 +172,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'amount',
             'created_by',
             'created_at:datetime',
-            //'updated_at',
+            //'updated_at:datetime',
             //'updated_by',
             //'customer_id',
             [

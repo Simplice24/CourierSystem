@@ -175,7 +175,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'subscription',
         'idn',
         'telephone',
-        //'created_at',
+        // 'created_at:datetime',
         //'created_by',
         //'updated_at',
         //'updated_by',

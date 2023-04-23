@@ -151,7 +151,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?= DetailView::widget([
     'model' => $model,
     'attributes' => [
-        'item_id',
+        // 'item_id',
         'item_name',
         'value',
         'sender_name',
@@ -164,11 +164,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'depature_date',
         'departure_time',
         'destination',
-        'created_at',
+        'created_at:datetime',
         'created_by',
-        'updated_at',
+        'updated_at:datetime',
         'updated_by',
-        'manifest_id',
+        // 'manifest_id',
     ],
 ]) ?>
 

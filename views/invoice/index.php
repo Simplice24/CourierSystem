@@ -159,11 +159,11 @@ $this->params['breadcrumbs'][] = $this->title;
     'columns' => [
         ['class' => 'yii\grid\SerialColumn'],
 
-        'invoice_id',
+        // 'invoice_id',
         'customer_name',
         'invoice_date',
         'amount_due',
-        'created_at',
+        'created_at:datetime',
         //'updated_at',
         [
             'class' => ActionColumn::className(),
