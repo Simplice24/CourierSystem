@@ -142,8 +142,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
-        <?= Html::a('Add items', ['invoice-items/create', 'invoice_id' => $model->invoice_id], ['class' => 'btn btn-primary']) ?>
-
+        <?= Html::a('Add items', ['invoice-items/create', 'invoice_id' => $model->invoice_id], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Invoice details', ['invoice-items/index', 'invoice_id' => $model->invoice_id], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= DetailView::widget([
