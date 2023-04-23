@@ -70,6 +70,7 @@ class InvoiceItemsController extends Controller
     public function actionCreate()
     {
         $invoice_id = Yii::$app->request->get('invoice_id');
+        
         $model = new InvoiceItems();
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
