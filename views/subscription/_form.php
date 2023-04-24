@@ -42,64 +42,84 @@ if(Yii::$app->user->isGuest){
                 <i class="mdi mdi-home menu-icon"></i>
               </a>
             </li>
+            <?php if(\Yii::$app->user->can('View_branch')) {?>
             <li class="nav-item">
-              <a class="nav-link">
+              <a class="nav-link">  
               <?= Html::a('Branches', ['/branch'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
-                <i class="mdi mdi-contacts menu-icon"></i>
+              <i class="mdi mdi-contacts menu-icon"></i>
               </a>
             </li>
+            <?php } ?>
+            <?php if(\Yii::$app->user->can('View_user')) {?>
             <li class="nav-item">
               <a class="nav-link">
               <?= Html::a('Users', ['/user'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
                 <i class="mdi mdi-contacts menu-icon"></i>
               </a>
             </li>
+            <?php } ?>
+            <?php if(\Yii::$app->user->can('View_customer')) {?>
             <li class="nav-item">
               <a class="nav-link">
               <?= Html::a('Customers', ['/customer'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
-                <!-- <span class="menu-title">Customers</span> -->
                 <i class="mdi mdi-format-list-bulleted menu-icon"></i>
               </a>
             </li>
+            <?php } ?>
+            <?php if(\Yii::$app->user->can('View_item')) {?>
             <li class="nav-item">
               <a class="nav-link">
               <?= Html::a('Items', ['/item'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
-                <!-- <span class="menu-title">Items</span> -->
                 <i class="mdi mdi-chart-bar menu-icon"></i>
               </a>
             </li>
+            <?php } ?>
+            <li class="nav-item">
+              <a class="nav-link">
+              <?= Html::a('Invoice', ['/invoice'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
+                <i class="mdi mdi-chart-bar menu-icon"></i>
+              </a>
+            </li>
+            <?php if(\Yii::$app->user->can('View_log')) {?>
             <li class="nav-item">
               <a class="nav-link">
               <?= Html::a('Logs', ['/log'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
-
                 <i class="mdi mdi-table-large menu-icon"></i>
               </a>
             </li>
-
+            <?php } ?>
+            <?php if(\Yii::$app->user->can('View_manifest')) {?>    
             <li class="nav-item">
               <a class="nav-link">
               <?= Html::a('Manifests', ['/manifest'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
                 <i class="mdi mdi-contacts menu-icon"></i>
               </a>
             </li>
+            <?php } ?>
+            <?php if(\Yii::$app->user->can('View_status')) {?>
             <li class="nav-item">
               <a class="nav-link">
               <?= Html::a('Status', ['/status'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
                 <i class="mdi mdi-format-list-bulleted menu-icon"></i>
               </a>
             </li>
+            <?php } ?>
+            <?php if(\Yii::$app->user->can('View_subscription')) {?>
             <li class="nav-item">
               <a class="nav-link">
               <?= Html::a('Subscriptions', ['/subscription'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
                 <i class="mdi mdi-chart-bar menu-icon"></i>
               </a>
             </li>
+            <?php } ?>
+            <?php if(\Yii::$app->user->can('View_subscriptionTypes')) {?>
             <li class="nav-item">
               <a class="nav-link">
               <?= Html::a('Types of subscription', ['/subscription-type'], ['class'=>'menu-title','style'=>'text-decoration:none; font-weight:bold;']) ?>
                 <i class="mdi mdi-table-large menu-icon"></i>
               </a>
             </li>
+            <?php } ?>
           </ul>
         </nav>
         <!-- partial -->
