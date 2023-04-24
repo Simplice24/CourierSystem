@@ -40,15 +40,19 @@ class InvoiceItemsController extends Controller
      * @return string
      */
     public function actionIndex()
-    {
-        $searchModel = new InvoiceItemsSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+{
+    $invoice_id = Yii::$app->request->get('invoice_id');
+    $searchModel = new InvoiceItemsSearch();
+    $searchModel->invoice_id = $invoice_id; // add a filter condition
+    $dataProvider = $searchModel->search($this->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
+    return $this->render('index', [
+        'searchModel' => $searchModel,
+        'dataProvider' => $dataProvider,
+        'invoice_id'=>$invoice_id,
+    ]);
+}
+
 
     /**
      * Displays a single InvoiceItems model.

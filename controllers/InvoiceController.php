@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Invoice;
 use app\models\Log;
+use app\models\InvoiceItems;
 use app\models\InvoiceSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -121,11 +122,16 @@ class InvoiceController extends Controller
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($invoice_id)
-    {
-        $this->findModel($invoice_id)->delete();
+{
+    // delete all invoice items with the specified invoice_id
+    InvoiceItems::deleteAll(['invoice_id' => $invoice_id]);
 
-        return $this->redirect(['index']);
-    }
+    // delete the invoice model
+    $this->findModel($invoice_id)->delete();
+
+    return $this->redirect(['index']);
+}
+
 
     /**
      * Finds the Invoice model based on its primary key value.

@@ -17,6 +17,7 @@ class InvoiceItemsSearch extends InvoiceItems
     public function rules()
     {
         return [
+            [['invoice_id'], 'safe'],
             [['id', 'invoice_id', 'item_id'], 'integer'],
             [['item_name', 'sender_name', 'receiver_name', 'departure', 'destination', 'created_at', 'updated_at'], 'safe'],
             [['item_value'], 'number'],
