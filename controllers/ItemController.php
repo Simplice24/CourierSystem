@@ -76,8 +76,9 @@ public function actionDuration(){
             $no = 0;
             if (empty($dataProvider)) {
                 $message = 'No item found for the selected date range.';
+                return $this->render('viewreport',['message'=>$message]);
             }
-            return $this->render('viewreport', ['dataProvider' => $dataProvider, 'no' => $no,'message' => $message]);
+            return $this->render('viewreport', ['dataProvider' => $dataProvider, 'no' => $no]);
         }
         return $this->render('duration');
     }
@@ -197,8 +198,9 @@ public function actionDuration(){
     }
 
     public function actionPdf(){
+        $no=0;
         $dataProvider = unserialize(urldecode($_GET['dataProvider']));
-        $html = $this->renderPartial('pdf_view',['dataProvider'=>$dataProvider]);
+        $html = $this->renderPartial('pdf_view',['dataProvider'=>$dataProvider,'no'=>$no]);
         $mpdf = new Mpdf\Mpdf;
         $mpdf ->showImageErrors = true;
         $mpdf ->SetDisplayMode('fullpage','two');

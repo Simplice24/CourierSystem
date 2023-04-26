@@ -58,21 +58,22 @@ class InvoiceItemsController extends Controller
 
 public function actionInvoice($invoice_id)
 {
-    $query = InvoiceItems::find()->where(['invoice_id' => $invoice_id]);
-    $dataProvider = new ActiveDataProvider([
-        'query' => $query,
-    ]);
-    
-    // retrieve the data and load it into the data provider
-    $invoiceItems = $dataProvider->getModels();
-    $dataProvider= $query->all();
-         $html = $this->renderPartial('invoice-pdf',['invoiceItems'=>$invoiceItems]);
-         $mpdf = new Mpdf\Mpdf;
-         $mpdf ->showImageErrors = true;
-         $mpdf ->SetDisplayMode('fullpage','two');
-         $mpdf ->writeHTML($html);
-         $mpdf->output();
-         exit;
+$query = InvoiceItems::find()->where(['invoice_id' => $invoice_id]);
+$dataProvider = new ActiveDataProvider([
+    'query' => $query,
+]);
+
+// render the view with the data provider
+$html = $this->renderPartial('invoice-pdf', ['dataProvider' => $dataProvider]);
+
+// output the PDF
+$mpdf = new Mpdf\Mpdf;
+$mpdf->showImageErrors = true;
+$mpdf->SetDisplayMode('fullpage','two');
+$mpdf->writeHTML($html);
+$mpdf->output();
+exit;
+
 }
 
 
