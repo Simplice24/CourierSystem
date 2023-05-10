@@ -22,6 +22,8 @@ class AppAsset extends AssetBundle
     public $css = [
         'css/site.css',
         'css/style.css',
+        'assets/vendors/mdi/css/materialdesignicons.min.css',
+        'assets/vendors/css/vendor.bundle.base.css',
     ];
     public $scss=[
         'src/scss/abstracts/_functions.scss',
