@@ -137,7 +137,7 @@ use yii\widgets\ActiveForm;
               <div class="collapse" id="general-pages">
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href=""> Profile </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="<?= Yii::$app->urlManager->createUrl(['signature/index']) ?>"> Signature </a></li>
+                  <li class="nav-item"> <a class="nav-link" href="<?= Yii::$app->urlManager->createUrl(['user-signatures/index']) ?>"> Signature </a></li>
                 </ul>
               </div>
             </li>
@@ -228,22 +228,3 @@ use yii\widgets\ActiveForm;
     
   </body>
 
-<!-- <div class="user-signatures-form">
-
-    <?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'signature_name')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'user_id')->textInput() ?>
-
-    <?= $form->field($model, 'signature_image')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'timestamp')->textInput() ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
-    </div>
-
-    <?php ActiveForm::end(); ?>
-
-</div> -->

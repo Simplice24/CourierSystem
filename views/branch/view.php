@@ -145,7 +145,7 @@ $this->params['breadcrumbs'][] = $this->title;
               <div class="collapse" id="general-pages">
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href=""> Profile </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="<?= Yii::$app->urlManager->createUrl(['signature/index']) ?>"> Signature </a></li>
+                  <li class="nav-item"> <a class="nav-link" href="<?= Yii::$app->urlManager->createUrl(['user-signatures/index']) ?>"> Signature </a></li>
                 </ul>
               </div>
             </li>
