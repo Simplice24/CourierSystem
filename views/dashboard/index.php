@@ -14,26 +14,22 @@ use yii\web\JsExpression;
 $this->title = 'Dashboard';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
 <style>
 .nav-link {
-
   font-size: 14px;
   text-decoration: none;
   font-weight: bold;
   color: #000000;
 }
-
 .menu-icon {
   font-size: 24px;
   margin-right: 8px;
 }
-
 .menu-title {
   display: inline-block;
 }
-
-</style>  
-
+</style> 
 <body>
     <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
@@ -117,7 +113,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php } ?>
             <?php if(\Yii::$app->user->can('View_status')) {?>
             <li class="nav-item">
-              <a class="nav-link">
+              <a class="nav-link" href="<?= Yii::$app->urlManager->createUrl(['status/index']) ?>">
                 <span class="menu-title">Status</span>
                 <i class="mdi mdi-format-list-bulleted menu-icon"></i>
               </a>
@@ -147,8 +143,8 @@ $this->params['breadcrumbs'][] = $this->title;
               </a>
               <div class="collapse" id="general-pages">
                 <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="pages/samples/blank-page.html"> Profile </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Signature </a></li>
+                  <li class="nav-item"> <a class="nav-link" href=""> Profile </a></li>
+                  <li class="nav-item"> <a class="nav-link" href="<?= Yii::$app->urlManager->createUrl(['signature/index']) ?>"> Signature </a></li>
                 </ul>
               </div>
             </li>
@@ -176,7 +172,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="card bg-gradient-danger card-img-holder text-white">
                   <div class="card-body">
                     <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Branches <i class="mdi mdi-chart-line mdi-24px float-right"></i>
+                    <h4 class="font-weight-normal mb-3">Branches <i class="mdi mdi-bank mdi-24px float-right"></i>
                     </h4>
                     <h2 class="mb-5"><?= $branches ; ?></h2>
                     <!-- <h6 class="card-text">Increased by </h6> -->
@@ -187,7 +183,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="card bg-gradient-info card-img-holder text-white">
                   <div class="card-body">
                     <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">System users <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
+                    <h4 class="font-weight-normal mb-3">System users <i class="mdi mdi-account-multiple mdi-24px float-right"></i>
                     </h4>
                     <h2 class="mb-5"><?= $users ; ?></h2>
                     <!-- <h6 class="card-text">Decreased by </h6> -->
@@ -198,7 +194,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="card bg-gradient-success card-img-holder text-white">
                   <div class="card-body">
                     <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Customers <i class="mdi mdi-diamond mdi-24px float-right"></i>
+                    <h4 class="font-weight-normal mb-3">Customers <i class="mdi mdi-account-multiple mdi-24px float-right"></i>
                     </h4>
                     <h2 class="mb-5"><?= $customers ; ?></h2>
                     <!-- <h6 class="card-text">Increased by </h6> -->
@@ -211,7 +207,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="card bg-gradient-secondary card-img-holder text-white">
                   <div class="card-body">
                     <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Items <i class="mdi mdi-chart-line mdi-24px float-right"></i>
+                    <h4 class="font-weight-normal mb-3">Items <i class="mdi mdi-archive mdi-24px float-right"></i>
                     </h4>
                     <h2 class="mb-5"><?= $items ; ?></h2>
                     <!-- <h6 class="card-text">Increased by </h6> -->
@@ -222,7 +218,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="card bg-gradient-warning card-img-holder text-white">
                   <div class="card-body">
                     <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Logs <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
+                    <h4 class="font-weight-normal mb-3">Logs <i class="mdi mdi-animation mdi-24px float-right"></i>
                     </h4>
                     <h2 class="mb-5"><?= $logs ; ?></h2>
                     <!-- <h6 class="card-text">Decreased by </h6> -->
@@ -233,7 +229,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="card bg-gradient-dark card-img-holder text-white">
                   <div class="card-body">
                     <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Manifests <i class="mdi mdi-diamond mdi-24px float-right"></i>
+                    <h4 class="font-weight-normal mb-3">Manifests <i class="mdi mdi-contacts mdi-24px float-right"></i>
                     </h4>
                     <h2 class="mb-5"><?= $manifests ; ?></h2>
                     <!-- <h6 class="card-text">Increased by </h6> -->
@@ -246,7 +242,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="card bg-gradient-primary card-img-holder text-white">
                   <div class="card-body">
                     <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Status <i class="mdi mdi-chart-line mdi-24px float-right"></i>
+                    <h4 class="font-weight-normal mb-3">Status <i class="mdi mdi-format-list-bulleted mdi-24px float-right"></i>
                     </h4>
                     <h2 class="mb-5"><?= $status ; ?></h2>
                     <!-- <h6 class="card-text">Increased by </h6> -->
@@ -257,7 +253,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="card bg-gradient-success card-img-holder text-white">
                   <div class="card-body">
                     <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3"> Subscriptions <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
+                    <h4 class="font-weight-normal mb-3"> Subscriptions <i class="mdi mdi-comment-check  mdi-24px float-right"></i>
                     </h4>
                     <h2 class="mb-5"><?= $subscriptions ; ?></h2>
                     <!-- <h6 class="card-text">Decreased by </h6> -->
@@ -268,7 +264,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="card bg-gradient-info card-img-holder text-white">
                   <div class="card-body">
                     <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Types of subscriptions <i class="mdi mdi-diamond mdi-24px float-right"></i>
+                    <h4 class="font-weight-normal mb-3">Types of subscriptions <i class="mdi mdi-apps mdi-24px float-right"></i>
                     </h4>
                     <h2 class="mb-5"><?= $subscriptiontypes ; ?></h2>
                     <!-- <h6 class="card-text">Increased by </h6> -->
