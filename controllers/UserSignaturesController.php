@@ -170,11 +170,16 @@ class UserSignaturesController extends Controller
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($signature_id)
-    {
-        $this->findModel($signature_id)->delete();
-
-        return $this->redirect(['index']);
+{
+    $model = $this->findModel($signature_id);
+    $imagePath = Yii::getAlias('@webroot') . $model->signature_image;
+    if (file_exists($imagePath)) {
+        unlink($imagePath);
     }
+    $model->delete();
+    return $this->redirect(['index']);
+}
+
 
     /**
      * Finds the UserSignatures model based on its primary key value.
