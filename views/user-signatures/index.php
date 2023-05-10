@@ -190,8 +190,8 @@ $this->params['breadcrumbs'][] = $this->title;
         // 'signature_id',
         'signature_name',
         // 'user_id',
-        'signature_image',
-        'timestamp',
+        // 'signature_image',
+        'timestamp:datetime',
         [
             'class' => ActionColumn::className(),
             'urlCreator' => function ($action, UserSignatures $model, $key, $index, $column) {

@@ -115,17 +115,52 @@ class UserSignaturesController extends Controller
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($signature_id)
-    {
-        $model = $this->findModel($signature_id);
+{
+    $model = $this->findModel($signature_id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'signature_id' => $model->signature_id]);
+    if ($this->request->isPost) {
+        $oldImage = $model->signature_image; // Save the old image path for deletion
+        if ($model->load($this->request->post())) {
+            $image = UploadedFile::getInstance($model, 'signature_image');
+
+            if ($image !== null) {
+                // Generate a unique filename
+                $filename = uniqid() . '.' . $image->extension;
+
+                // Define the path where the file will be saved
+                $path = Yii::getAlias('@webroot') . '/uploads/' . $filename;
+
+                // Save the uploaded file
+                if ($image->saveAs($path)) {
+                    // Delete the old image file
+                    if ($oldImage !== null) {
+                        $oldImagePath = Yii::getAlias('@webroot') . $oldImage;
+                        if (file_exists($oldImagePath)) {
+                            unlink($oldImagePath);
+                        }
+                    }
+
+                    // Set the path of the signature image in the model
+                    $model->signature_image = '/uploads/' . $filename;
+                } else {
+                    // Image upload failed, set signature_image to null
+                    $model->signature_image = null;
+                }
+            }
+            
+            if ($model->save()) {
+                return $this->redirect(['view', 'signature_id' => $model->signature_id]);
+            }
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
     }
+
+    return $this->render('update', [
+        'model' => $model,
+    ]);
+}
+
+
+
 
     /**
      * Deletes an existing UserSignatures model.
