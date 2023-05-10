@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Receipt</title>
+    <title>Invoice</title>
 
     <style>
         body{
 background:#eee;
-margin-top:20px;
+margin-top:10px;
 }
 .text-danger strong {
         	color: #9f181c;
