@@ -41,15 +41,21 @@ class UserSignaturesController extends Controller
      * @return string
      */
     public function actionIndex()
-    {
-        $searchModel = new UserSiganturesSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+{
+    $searchModel = new UserSiganturesSearch();
+    $queryParams = $this->request->queryParams;
+    
+    // only show records where user_id is equal to the authenticated user's ID
+    $queryParams['UserSiganturesSearch']['user_id'] = Yii::$app->user->id;
+    
+    $dataProvider = $searchModel->search($queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
+    return $this->render('index', [
+        'searchModel' => $searchModel,
+        'dataProvider' => $dataProvider,
+    ]);
+}
+
 
     /**
      * Displays a single UserSignatures model.
