@@ -18,7 +18,7 @@ class InvoiceSearch extends Invoice
     {
         return [
             [['invoice_id'], 'integer'],
-            [['customer_name', 'invoice_date', 'created_at', 'updated_at'], 'safe'],
+            [['customer_name', 'invoice_date', 'created_at', 'updated_at','signed'], 'safe'],
             [['amount_due'], 'number'],
         ];
     }
@@ -62,6 +62,7 @@ class InvoiceSearch extends Invoice
             'invoice_id' => $this->invoice_id,
             'invoice_date' => $this->invoice_date,
             'amount_due' => $this->amount_due,
+            'signed' => $this->signed,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);

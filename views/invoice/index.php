@@ -184,40 +184,44 @@ $this->params['breadcrumbs'][] = $this->title;
     'dataProvider' => $dataProvider,
     'filterModel' => $searchModel,
     'columns' => [
-        ['class' => 'yii\grid\SerialColumn'],
-
-        // 'invoice_id',
-        'customer_name',
-        'invoice_date',
-        'amount_due',
-        'signed',
-        'created_at:datetime',
-        //'updated_at',
-        [
+      ['class' => 'yii\grid\SerialColumn'],
+  
+      // 'invoice_id',
+      'customer_name',
+      'invoice_date',
+      'amount_due',
+      [
+          'attribute' => 'signed',
+          'label' => 'Status',
+          'value' => function ($model) {
+              return $model->signed == 1 ? 'Signed' : 'Not signed';
+          }
+      ],
+      'created_at:datetime',
+      //'updated_at',
+      [
           'class' => ActionColumn::className(),
           'template' => '{view} {update} {delete} {sign}',
           'buttons' => [
               'sign' => function ($url, $model, $key) {
-                if ($model->signed == 0) {
-                  return Html::a('<span class="mdi mdi-pen mdi-30px"></span>', ['sign', 'id' => $model->invoice_id], [
-                      'data' => [
-                          'method' => 'post',
-                      ],
-                      'title' => 'Sign',
-                  ]);
-              } else {
-                  return '';
-              }
+                  if ($model->signed == 0) {
+                      return Html::a('<span class="mdi mdi-pen mdi-30px"></span>', ['sign', 'id' => $model->invoice_id], [
+                          'data' => [
+                              'method' => 'post',
+                          ],
+                          'title' => 'Sign',
+                      ]);
+                  } else {
+                      return '';
+                  }
               },
           ],
           'urlCreator' => function ($action, Invoice $model, $key, $index, $column) {
               return Url::toRoute([$action, 'invoice_id' => $model->invoice_id]);
           },
       ],
-      
-      
-      
-    ],
+  ],
+  
 ]); ?>
 
 
