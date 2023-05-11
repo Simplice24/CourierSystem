@@ -43,13 +43,17 @@ class InvoiceController extends Controller
     public function actionIndex()
     {
         $searchModel = new InvoiceSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
-
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+    
+        // filter the dataProvider to only show records where user_id is equal to authenticated user's id
+        $dataProvider->query->andWhere(['user_id' => Yii::$app->user->id]);
+    
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
+    
 
 
     public function actionSign($id)
