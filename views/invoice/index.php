@@ -193,11 +193,29 @@ $this->params['breadcrumbs'][] = $this->title;
         'created_at:datetime',
         //'updated_at',
         [
-            'class' => ActionColumn::className(),
-            'urlCreator' => function ($action, Invoice $model, $key, $index, $column) {
-                return Url::toRoute([$action, 'invoice_id' => $model->invoice_id]);
-             }
-        ],
+          'class' => ActionColumn::className(),
+          'template' => '{view} {update} {delete} {sign}',
+          'buttons' => [
+              'sign' => function ($url, $model, $key) {
+                if ($model->signed == 0) {
+                  return Html::a('<span class="mdi mdi-pen mdi-30px"></span>', ['sign', 'id' => $model->invoice_id], [
+                      'data' => [
+                          'method' => 'post',
+                      ],
+                      'title' => 'Sign',
+                  ]);
+              } else {
+                  return '';
+              }
+              },
+          ],
+          'urlCreator' => function ($action, Invoice $model, $key, $index, $column) {
+              return Url::toRoute([$action, 'invoice_id' => $model->invoice_id]);
+          },
+      ],
+      
+      
+      
     ],
 ]); ?>
 

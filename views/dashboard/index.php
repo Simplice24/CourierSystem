@@ -89,6 +89,12 @@ $this->params['breadcrumbs'][] = $this->title;
               </a>
             </li>
             <?php } ?>
+            <!-- <li class="nav-item">
+              <a class="nav-link" href="<?= Yii::$app->urlManager->createUrl(['documents/index']) ?>">
+                <span class="menu-title">Documents</span>
+                <i class="mdi mdi-book menu-icon"></i>
+              </a>
+            </li> -->
             <li class="nav-item">
               <a class="nav-link" href="<?= Yii::$app->urlManager->createUrl(['invoice/index']) ?>">
                 <span class="menu-title">Invoices</span>

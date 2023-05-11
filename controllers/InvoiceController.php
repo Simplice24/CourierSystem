@@ -8,7 +8,9 @@ use app\models\InvoiceItems;
 use app\models\InvoiceSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use app\models\UserSignatures;
 use yii\filters\VerbFilter;
+use yii\web\HttpException;
 use Yii;
 /**
  * InvoiceController implements the CRUD actions for Invoice model.
@@ -49,6 +51,29 @@ class InvoiceController extends Controller
         ]);
     }
 
+
+    public function actionSign($id)
+    {
+        $model = $this->findModel($id);
+        $user_id=$model->user_id;
+        $userSignature = UserSignatures::findOne(['user_id' => $user_id]);
+        $signature_id=$userSignature->signature_id;
+        if ($signature_id !== null) {
+            $model->signature_id = $signature_id;
+            $model->signed=1;
+            if ($model->save()) {
+                Yii::$app->session->setFlash('success', 'Invoice signed successfully.');
+            } else {
+                Yii::$app->session->setFlash('error', 'Failed to sign invoice.');
+            }
+        } else {
+            Yii::$app->session->setFlash('error', 'Upload your signature in order to sign this Invoice');
+        }
+    
+        return $this->redirect(['view', 'invoice_id' => $model->invoice_id]);
+    }
+    
+
     /**
      * Displays a single Invoice model.
      * @param int $invoice_id Invoice ID
@@ -73,6 +98,7 @@ class InvoiceController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
+                $model->user_id=Yii::$app->user->id;
                 $model->created_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                 $model->updated_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                 if($model->save()){

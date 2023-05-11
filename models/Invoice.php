@@ -33,9 +33,11 @@ class Invoice extends \yii\db\ActiveRecord
     {
         return [
             [['customer_name', 'invoice_date', 'amount_due'], 'required'],
-            [['invoice_id'], 'integer'],
+            [['invoice_id','signed','signature_id'], 'integer'],
+            [['signature_id'], 'default', 'value' => null],
             [['invoice_date', 'created_at', 'updated_at'], 'safe'],
             [['amount_due'], 'number'],
+            [['signed'], 'default', 'value' =>0],
             [['customer_name'], 'string', 'max' => 255],
             [['invoice_id'], 'unique'],
         ];
@@ -48,6 +50,9 @@ class Invoice extends \yii\db\ActiveRecord
     {
         return [
             // 'invoice_id' => 'Invoice ID',
+            'user_id'=>'User Id',
+            'signature_id'=>'Signature Id',
+            'signed'=>'Signed',
             'customer_name' => 'Customer Name',
             'invoice_date' => 'Invoice Date',
             'amount_due' => 'Amount Due',
