@@ -173,11 +173,18 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="table-responsive">
                     <div class="user-signatures-index">
 
-<h1><?= Html::encode($this->title) ?></h1>
+                    <h1><?= Html::encode($this->title) ?></h1>
 
-<p>
-    <?= Html::a('Create Signature', ['create'], ['class' => 'btn btn-success']) ?>
-</p>
+<?php 
+$userID = Yii::$app->user->id;
+$hasSignature = UserSignatures::find()->where(['user_id' => $userID])->exists();
+?>
+
+<?php if (!$hasSignature): ?>
+    <p>
+        <?= Html::a('Create Signature', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
+<?php endif; ?>
 
 <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 

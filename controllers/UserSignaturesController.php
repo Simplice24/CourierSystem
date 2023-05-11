@@ -7,6 +7,7 @@ use app\models\UserSiganturesSearch;
 use app\models\Log;
 use app\models\AuthAssignment;
 use yii\web\Controller;
+use app\models\Invoice;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
@@ -176,15 +177,21 @@ class UserSignaturesController extends Controller
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($signature_id)
-{
-    $model = $this->findModel($signature_id);
-    $imagePath = Yii::getAlias('@webroot') . $model->signature_image;
-    if (file_exists($imagePath)) {
-        unlink($imagePath);
-    }
-    $model->delete();
-    return $this->redirect(['index']);
-}
+        {
+            // delete the signature image file
+            $model = $this->findModel($signature_id);
+            $imagePath = Yii::getAlias('@webroot') . $model->signature_image;
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+
+            // update the invoice records
+            Invoice::updateAll(['signature_id' => null, 'signed' => 0], ['signature_id' => $signature_id]);
+
+            // delete the signature record
+            $model->delete();
+            return $this->redirect(['index']);
+        }
 
 
     /**
