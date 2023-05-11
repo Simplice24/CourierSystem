@@ -144,7 +144,6 @@ margin-top:20px;
                         <tr>
                         <th>Item details</th>  
                         </tr>
-                  
                         <tr>
                             <td class="col-md-9">Item name</td>
                             <td class="col-md-3"><i class="fa fa-inr"></i> <?= $item->item_name ?></td>

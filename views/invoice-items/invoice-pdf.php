@@ -99,20 +99,19 @@ margin-top:10px;
 			background-color: #dcdcdc;
 		}
 		table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-}
+			font-family: arial, sans-serif;
+			border-collapse: collapse;
+			width: 100%;
+			margin: auto; /* center the table horizontally */
+		}
 
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-}
+		td, th {
+			border: 1px solid #dddddd;
+			text-align: left;
+			padding: 8px;
+		}
 
-tr:nth-child(even) {
-  background-color: #dddddd;
-}
+		
     </style>
 </head>
 <body>
@@ -195,7 +194,12 @@ tr:nth-child(even) {
 						    <p><b>Invoice number :</b><?= $invoice_id ?></p>
                             <p><b>Invoice printed by :</b><?= Yii::$app->user->identity->username ?></p>
 							<p><b>Printed at :</b><?= date('Y-m-d H:i:s') ?></p>
-							<h5 style="color: rgb(140, 140, 140);">Thanks for working with us!</h5>
+							<br>
+						</div>
+					</div>
+					<div class="col-xs-4 col-sm-4 col-md-4">
+						<div class="receipt-left">
+							<img src="<?= $signatureImagePath ?>" alt="Signature" style="max-width: 100px; max-height: 100px;">
 						</div>
 					</div>
 					<div class="col-xs-4 col-sm-4 col-md-4">

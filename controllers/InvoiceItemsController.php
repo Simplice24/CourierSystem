@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\InvoiceItems;
 use app\models\Item;
 use app\models\Invoice;
+use app\models\UserSignatures;
 use app\models\Log;
 use app\models\InvoiceItemsSearch;
 use yii\web\Controller;
@@ -67,17 +68,22 @@ public function actionInvoice($invoice_id)
     $customerQuery = Invoice::find()->where(['invoice_id' => $invoice_id]);
     $customer = $customerQuery->one();
 
+    // fetch signature image path for the corresponding user
+    $userSignature = UserSignatures::find()->where(['user_id' => $customer->user_id])->one();
+    $signatureImagePath = 'uploads/' . basename($userSignature->signature_image);
+
     $html = $this->renderPartial('invoice-pdf', [
         'invoiceItems' => $invoiceItems,
         'customer' => $customer,
-        'invoice_id'=>$invoice_id,
+        'invoice_id' => $invoice_id,
+        'signatureImagePath' => $signatureImagePath,
     ]);
 
     $mpdf = new Mpdf\Mpdf;
     $mpdf->showImageErrors = true;
     $mpdf->SetDisplayMode('fullpage','two');
-    $mpdf->writeHTML($html);
-    $mpdf->output();
+    $mpdf->WriteHTML($html);
+    $mpdf->Output();
     exit;
 }
 
