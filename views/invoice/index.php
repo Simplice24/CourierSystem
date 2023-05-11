@@ -190,6 +190,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'customer_name',
         'invoice_date',
         'amount_due',
+        'signed',
         'created_at:datetime',
         //'updated_at',
         [
