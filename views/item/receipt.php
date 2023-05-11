@@ -178,7 +178,12 @@ margin-top:20px;
 						<div class="receipt-right">
                             <p><b>Item received by :</b><?= Yii::$app->user->identity->username ?></p>
 							<p><b>Printed :</b><?= date('Y-m-d H:i:s') ?></p>
-							<h5 style="color: rgb(140, 140, 140);">Thanks for working with us!</h5>
+							<br>
+						</div>
+					</div>
+					<div class="col-xs-4 col-sm-4 col-md-4">
+						<div class="receipt-left">
+							<img src="<?= $signatureImagePath ?>" alt="Signature" style="max-width: 100px; max-height: 100px;">
 						</div>
 					</div>
 					<div class="col-xs-4 col-sm-4 col-md-4">

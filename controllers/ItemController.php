@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\Item;
 use app\models\Log;
 use app\models\ItemSearch;
+use app\models\UserSignatures;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\data\ActiveDataProvider;
@@ -155,16 +156,24 @@ public function actionDuration(){
 
     public function actionReceipt($item_id)
 {
+    $userID = Yii::$app->user->id;
     // Select all details from the Item model based on the $item_id parameter
     $query = Item::find()->where(['item_id' => $item_id]);
     $dataProvider = new ActiveDataProvider([
         'query' => $query,
     ]);
+
+    $signatureImage = UserSignatures::find()
+    ->select(['signature_image'])
+    ->where(['user_id' => $userID])
+    ->scalar();
+    $userSignature = UserSignatures::find()->where(['user_id' => $userID])->one();
+    $signatureImagePath = 'uploads/' . basename($userSignature->signature_image);
     
     // Get the data as an array
     $items = $dataProvider->getModels();
     $dataProvider= $query->all();
-        $html = $this->renderPartial('receipt',['items'=>$items]);
+        $html = $this->renderPartial('receipt',['items'=>$items,'signatureImagePath'=>$signatureImagePath]);
         $mpdf = new Mpdf\Mpdf;
         $mpdf ->showImageErrors = true;
         $mpdf ->SetDisplayMode('fullpage','two');
