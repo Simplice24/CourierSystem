@@ -40,10 +40,10 @@ $this->params['breadcrumbs'][] = $this->title;
           <ul class="nav">
             <li class="nav-item nav-profile">
               <a href="#" class="nav-link">
-                <!-- <div class="nav-profile-image">
+                <div class="nav-profile-image">
                   <img src="assets/images/faces/face1.jpg" alt="profile">
                   <span class="login-status online"></span>
-                </div> -->
+                </div>
                 <div class="nav-profile-text d-flex flex-column">
                   <span class="font-weight-bold mb-2"><?= \Yii::$app->user->identity->username ;?></span>
                   <span class="text-secondary text-small"><?= Yii::$app->getUser()->identity->role; ?></span>
@@ -149,7 +149,7 @@ $this->params['breadcrumbs'][] = $this->title;
               </a>
               <div class="collapse" id="general-pages">
                 <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href=""> Profile </a></li>
+                  <li class="nav-item"> <a class="nav-link" href="<?= Yii::$app->urlManager->createUrl(['profile/index']) ?>"> Profile </a></li>
                   <li class="nav-item"> <a class="nav-link" href="<?= Yii::$app->urlManager->createUrl(['user-signatures/index']) ?>"> Signature </a></li>
                 </ul>
               </div>
