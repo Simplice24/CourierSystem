@@ -35,6 +35,10 @@ class ProfileController extends \yii\web\Controller
     return $this->redirect(['index']);
 }
 
+public function actionImage(){
+    
+}
+
 public function actionPassword(){
     $model = User::findOne(Yii::$app->user->id);
     $currentPassword = Yii::$app->request->post('current-password');

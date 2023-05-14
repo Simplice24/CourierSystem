@@ -10,6 +10,7 @@ use Yii;
  * @property int $id
  * @property string $user_fullname
  * @property string $username
+ * @property string $profile
  * @property string $role
  * @property string $auth_key
  * @property string $password_hash
@@ -40,10 +41,10 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            [['user_fullname', 'username', 'role', 'auth_key', 'password_hash', 'email', 'telephone', 'branche_id', 'created_at', 'updated_at'], 'required'],
+            [['user_fullname', 'username','profile', 'role', 'auth_key', 'password_hash', 'email', 'telephone', 'branche_id', 'created_at', 'updated_at'], 'required'],
             [['branche_id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['user_fullname'], 'string', 'max' => 224],
-            [['username', 'password_hash', 'password_reset_token', 'email', 'verification_token'], 'string', 'max' => 255],
+            [['username','profile', 'password_hash', 'password_reset_token', 'email', 'verification_token'], 'string', 'max' => 255],
             [['role'], 'string', 'max' => 40],
             [['auth_key'], 'string', 'max' => 32],
             [['telephone'], 'string', 'max' => 15],
@@ -63,6 +64,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             // 'id' => 'ID',
             'user_fullname' => 'Full name',
             'username' => 'Username',
+            'profile' => 'Profile',
             'role' => 'Role',
             'auth_key' => 'Auth Key',
             'password_hash' => 'Password',
