@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\Branch;
 use app\models\Log;
 use app\models\BranchSearch;
+use app\models\User;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -43,6 +44,9 @@ class BranchController extends Controller
      */
     public function actionIndex()
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         $searchModel = new BranchSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
@@ -52,6 +56,7 @@ class BranchController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'userProfileImage' => $userProfileImage ,
         ]);
     }
     public function actionPdf(){
@@ -74,12 +79,15 @@ class BranchController extends Controller
      */
     public function actionView($branch_id)
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         if(Yii::$app->user->isGuest){
             return Yii::$app->getResponse()->redirect(['site/login']);
         }
         else if(Yii::$app->user->can('View_branch')){
             return $this->render('view',[
-                'model' => $this->findModel($branch_id),
+                'model' => $this->findModel($branch_id),'userProfileImage' => $userProfileImage,
             ]);
         }else{
             throw new ForbiddenHttpException;
@@ -87,11 +95,17 @@ class BranchController extends Controller
     }
 
     public function actionDuration(){
-        return $this->render('duration');
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
+        return $this->render('duration',['userProfileImage' => $userProfileImage,]);
     }
 
 
     public function actionGenerate() {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         if (Yii::$app->request->post()) {
             $start_date = Yii::$app->request->post('start_date');
             $end_date = Yii::$app->request->post('end_date');
@@ -103,10 +117,10 @@ class BranchController extends Controller
         
         if(empty($branches)){
             $message = "No branches found for the selected date range.";
-            return $this->render('viewreport', ['message' => $message]);
+            return $this->render('viewreport', ['message' => $message, 'userProfileImage' => $userProfileImage,]);
         }
         
-        return $this->render('viewreport',['branches' => $branches,'no'=>$no]);
+        return $this->render('viewreport',['branches' => $branches,'no'=>$no ,'userProfileImage' => $userProfileImage,]);
         }
         
         return $this->render('duration');
@@ -119,6 +133,9 @@ class BranchController extends Controller
      */
     public function actionCreate()
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         $model = new Branch();
         if(Yii::$app->user->isGuest){
             return Yii::$app->getResponse()->redirect(['site/login']);
@@ -138,13 +155,14 @@ class BranchController extends Controller
                         $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                         $log->save();
                     }
-                    return $this->redirect(['view', 'branch_id' => $model->branch_id]);
+                    return $this->redirect(['view', 'branch_id' => $model->branch_id,'userProfileImage' => $userProfileImage,]);
                 }
             } else {
                 $model->loadDefaultValues();
             }
             return $this->render('create', [
                 'model' => $model,
+                'userProfileImage' => $userProfileImage,
             ]);
         }
         else{
@@ -162,6 +180,9 @@ class BranchController extends Controller
      */
     public function actionUpdate($branch_id)
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         if(Yii::$app->user->isGuest){
             return Yii::$app->getResponse()->redirect(['site/login']);
         }
@@ -177,11 +198,11 @@ class BranchController extends Controller
                     $log->save();
                 }
                 
-                return $this->redirect(['view', 'branch_id' => $model->branch_id]);
+                return $this->redirect(['view', 'branch_id' => $model->branch_id,'userProfileImage' => $userProfileImage,]);
             }
     
             return $this->render('update', [
-                'model' => $model,
+                'model' => $model,'userProfileImage' => $userProfileImage,
             ]);
         }else{
             throw new ForbiddenHttpException;
@@ -198,6 +219,9 @@ class BranchController extends Controller
      */
     public function actionDelete($branch_id)
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         if(Yii::$app->user->isGuest){
             return Yii::$app->getResponse()->redirect(['site/login']);
         }

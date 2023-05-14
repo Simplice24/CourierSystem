@@ -121,7 +121,7 @@ class UserController extends Controller
                     $model->created_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                     $model->updated_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                     $model->setPassword($model->password_hash);
-                    $model->profile = 'userImage.jpg';
+                    $model->profile = 'profiles/userImage.jpg';
                     if($model->save()){
                         $auth=new AuthAssignment;
                         $auth->user_id= $model->id;
