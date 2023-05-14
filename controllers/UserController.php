@@ -7,6 +7,7 @@ use app\models\Log;
 use app\models\AuthAssignment;
 use app\models\UserSearch;
 use yii\web\Controller;
+use app\models\UserSignatures;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\db\Expression;
@@ -120,6 +121,7 @@ class UserController extends Controller
                     $model->created_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                     $model->updated_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                     $model->setPassword($model->password_hash);
+                    $model->profile = 'userImage.jpg';
                     if($model->save()){
                         $auth=new AuthAssignment;
                         $auth->user_id= $model->id;
@@ -187,20 +189,28 @@ class UserController extends Controller
      */
     public function actionDelete($id)
     {
-        if(Yii::$app->user->can('Delete_user')){
-            $this->findModel($id)->delete();
-                $log = new Log();
-                $log->done_by=Yii::$app->user->identity->username;
-                $log->comment="Deleted a system user";
-                $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
-                $log->save();
+        if (Yii::$app->user->can('Delete_user')) {
+            $model = $this->findModel($id);
+            $userSignaturesModel = UserSignatures::findOne(['user_id' => $id]);
 
-        return $this->redirect(['index']);
-        }else{
+            if ($userSignaturesModel !== null) {
+                $userSignaturesModel->delete();
+            }
+
+            $model->delete();
+
+            $log = new Log();
+            $log->done_by = Yii::$app->user->identity->username;
+            $log->comment = "Deleted a system user";
+            $log->done_at = Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+            $log->save();
+
+            return $this->redirect(['index']);
+        } else {
             throw new ForbiddenHttpException;
         }
-        
     }
+
 
     /**
      * Finds the User model based on its primary key value.
