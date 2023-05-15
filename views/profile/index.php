@@ -41,8 +41,8 @@ $this->params['breadcrumbs'][] = $this->title;
             <li class="nav-item nav-profile">
               <a href="#" class="nav-link">
                 <div class="nav-profile-image">
-                  <img src="assets/images/faces/face1.jpg" alt="profile">
-                  <span class="login-status online"></span>
+                    <img src="<?= Yii::getAlias('@web/' . $userProfileImage) ?>" alt="profile">
+                    <span class="login-status online"></span>
                 </div>
                 <div class="nav-profile-text d-flex flex-column">
                   <span class="font-weight-bold mb-2"><?= \Yii::$app->user->identity->username ;?></span>
