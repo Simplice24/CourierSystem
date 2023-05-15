@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\UserSignatures;
 use app\models\UserSiganturesSearch;
 use app\models\Log;
+use app\models\User;
 use app\models\AuthAssignment;
 use yii\web\Controller;
 use app\models\Invoice;
@@ -43,6 +44,9 @@ class UserSignaturesController extends Controller
      */
     public function actionIndex()
 {
+    $user_id = Yii::$app->user->id;
+    $userDetails = User::findOne($user_id);
+    $userProfileImage = $userDetails->profile;
     $searchModel = new UserSiganturesSearch();
     $queryParams = $this->request->queryParams;
     
@@ -54,6 +58,7 @@ class UserSignaturesController extends Controller
     return $this->render('index', [
         'searchModel' => $searchModel,
         'dataProvider' => $dataProvider,
+        'userProfileImage' => $userProfileImage,
     ]);
 }
 
@@ -66,8 +71,12 @@ class UserSignaturesController extends Controller
      */
     public function actionView($signature_id)
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         return $this->render('view', [
             'model' => $this->findModel($signature_id),
+            'userProfileImage' => $userProfileImage,
         ]);
     }
 
@@ -78,6 +87,9 @@ class UserSignaturesController extends Controller
      */
     public function actionCreate()
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         $model = new UserSignatures();
 
         if ($this->request->isPost) {
@@ -100,7 +112,7 @@ class UserSignaturesController extends Controller
 
                     // Save the model in the database
                     $model->save();
-                    return $this->redirect(['view', 'signature_id' => $model->signature_id]);
+                    return $this->redirect(['view', 'signature_id' => $model->signature_id,'userProfileImage'=>$userProfileImage]);
                 }
                 
                 
@@ -111,6 +123,8 @@ class UserSignaturesController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'userProfileImage' => $userProfileImage,
+
         ]);
     }
 
@@ -123,6 +137,9 @@ class UserSignaturesController extends Controller
      */
     public function actionUpdate($signature_id)
 {
+    $user_id = Yii::$app->user->id;
+    $userDetails = User::findOne($user_id);
+    $userProfileImage = $userDetails->profile;
     $model = $this->findModel($signature_id);
 
     if ($this->request->isPost) {
@@ -156,13 +173,14 @@ class UserSignaturesController extends Controller
             }
             
             if ($model->save()) {
-                return $this->redirect(['view', 'signature_id' => $model->signature_id]);
+                return $this->redirect(['view', 'signature_id' => $model->signature_id,'userProfileImage'=> $userProfileImage,]);
             }
         }
     }
 
     return $this->render('update', [
         'model' => $model,
+        'userProfileImage' => $userProfileImage,
     ]);
 }
 
@@ -178,6 +196,9 @@ class UserSignaturesController extends Controller
      */
     public function actionDelete($signature_id)
         {
+            $user_id = Yii::$app->user->id;
+            $userDetails = User::findOne($user_id);
+            $userProfileImage = $userDetails->profile;
             // delete the signature image file
             $model = $this->findModel($signature_id);
             $imagePath = Yii::getAlias('@webroot') . $model->signature_image;
@@ -190,7 +211,7 @@ class UserSignaturesController extends Controller
 
             // delete the signature record
             $model->delete();
-            return $this->redirect(['index']);
+            return $this->redirect(['index','userProfileImage'=>$userProfileImage,]);
         }
 
 

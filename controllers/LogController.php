@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\Log;
 use app\models\LogSearch;
 use yii\web\Controller;
+use app\models\User;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\ForbiddenHttpException;
@@ -42,21 +43,31 @@ class LogController extends Controller
      */
     public function actionIndex()
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         $searchModel = new LogSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'userProfileImage' => $userProfileImage,
         ]);
     }
 
     public function actionDuration(){
-        return $this->render('duration');
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
+        return $this->render('duration',['userProfileImage' => $userProfileImage,]);
     }
 
 
     public function actionGenerate() {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         if (Yii::$app->request->post()) {
             $start_date = Yii::$app->request->post('start_date');
             $end_date = Yii::$app->request->post('end_date');
@@ -68,13 +79,13 @@ class LogController extends Controller
             
             if (empty($dataProvider)) {
                 $message = 'No data found for the selected date range.';
-                return $this->render('viewreport', ['message' => $message]);
+                return $this->render('viewreport', ['message' => $message,'userProfileImage'=>$userProfileImage,]);
             } else {
-                return $this->render('viewreport', ['dataProvider' => $dataProvider, 'no' => $no]);
+                return $this->render('viewreport', ['dataProvider' => $dataProvider, 'no' => $no,'userProfileImage' => $userProfileImage,]);
             }
         }
         
-        return $this->render('duration');
+        return $this->render('duration',['userProfileImage' => $userProfileImage]);
     }
     
 
@@ -99,8 +110,12 @@ class LogController extends Controller
      */
     public function actionView($log_id)
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         return $this->render('view', [
             'model' => $this->findModel($log_id),
+            'userProfileImage' => $userProfileImage,
         ]);
     }
 
@@ -111,6 +126,9 @@ class LogController extends Controller
      */
     public function actionCreate()
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         $model = new Log();
         if(Yii::$app->user->can('Create_log')){
             if ($this->request->isPost) {
@@ -123,6 +141,7 @@ class LogController extends Controller
     
             return $this->render('create', [
                 'model' => $model,
+                'userProfileImage' => $userProfileImage,
             ]);
         }else{
             throw new ForbiddenHttpException;
@@ -139,6 +158,9 @@ class LogController extends Controller
      */
     public function actionUpdate($log_id)
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         $model = $this->findModel($log_id);
         if(Yii::$app->user->can('Update_log')){
             if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
@@ -147,6 +169,7 @@ class LogController extends Controller
     
             return $this->render('update', [
                 'model' => $model,
+                'userProfileImage' => $userProfileImage,
             ]);
         }else{
             throw new ForbiddenHttpException;
@@ -163,10 +186,13 @@ class LogController extends Controller
      */
     public function actionDelete($log_id)
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         if(Yii::$app->user->can('Delete_log')){
             $this->findModel($log_id)->delete();
 
-            return $this->redirect(['index']);
+            return $this->redirect(['index','userProfileImage' => $userProfileImage,]);
         }else{
             throw new ForbiddenHttpException;
         }

@@ -45,21 +45,31 @@ class UserController extends Controller
      */
     public function actionIndex()
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'userProfileImage' => $userProfileImage,
         ]);
     }
 
     public function actionDuration(){
-        return $this->render('duration');
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
+        return $this->render('duration',['userProfileImage' => $userProfileImage]);
     }
 
 
         public function actionGenerate() {
+            $user_id = Yii::$app->user->id;
+            $userDetails = User::findOne($user_id);
+            $userProfileImage = $userDetails->profile;
             if (Yii::$app->request->post()) {
                 $start_date = Yii::$app->request->post('start_date');
                 $end_date = Yii::$app->request->post('end_date');
@@ -68,10 +78,10 @@ class UserController extends Controller
             ->orderBy('created_at');
             $users = $query->all();
             $no=0;
-            return $this->render('viewreport',['users' => $users,'no'=>$no]);
+            return $this->render('viewreport',['users' => $users,'no'=>$no,'userProfileImage'=>$userProfileImage]);
                 }
             
-            return $this->render('duration');
+            return $this->render('duration',['userProfileImage'=>$userProfileImage]);
         }
 
     public function actionPdf(){
@@ -94,9 +104,13 @@ class UserController extends Controller
      */
     public function actionView($id)
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         if(Yii::$app->user->can('View_user')){
             return $this->render('view', [
                 'model' => $this->findModel($id),
+                'userProfileImage' => $userProfileImage,
             ]);
         }else{
             throw new ForbiddenHttpException;
@@ -111,6 +125,9 @@ class UserController extends Controller
      */
     public function actionCreate()
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         $model = new User();
         if(Yii::$app->user->can('Create_user')){
             if ($this->request->isPost) {
@@ -134,7 +151,7 @@ class UserController extends Controller
                             $log->save();
                     }
 
-                    return $this->redirect(['view', 'id' => $model->id]);
+                    return $this->redirect(['view', 'id' => $model->id,'userProfileImage'=>$userProfileImage]);
                 }
             } else {
                 $model->loadDefaultValues();
@@ -142,6 +159,7 @@ class UserController extends Controller
     
             return $this->render('create', [
                 'model' => $model,
+                'userProfileImage' => $userProfileImage,
             ]);
         }else{
             throw new ForbiddenHttpException;
@@ -158,6 +176,9 @@ class UserController extends Controller
      */
     public function actionUpdate($id)
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         if(Yii::$app->user->can('Update_user')){
             $model = $this->findModel($id);
         if ($this->request->isPost && $model->load($this->request->post())) {
@@ -168,11 +189,12 @@ class UserController extends Controller
                 $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                 $log->save();
             }
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model->id,'userProfileImag'=>$userProfileImage]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'userProfileImage' =>$userProfileImage,
         ]);
         }else{
             throw new ForbiddenHttpException;
@@ -189,6 +211,9 @@ class UserController extends Controller
      */
     public function actionDelete($id)
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         if (Yii::$app->user->can('Delete_user')) {
             $model = $this->findModel($id);
             $userSignaturesModel = UserSignatures::findOne(['user_id' => $id]);
@@ -205,7 +230,7 @@ class UserController extends Controller
             $log->done_at = Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
             $log->save();
 
-            return $this->redirect(['index']);
+            return $this->redirect(['index','userProfileImage'=> $userProfileImage]);
         } else {
             throw new ForbiddenHttpException;
         }

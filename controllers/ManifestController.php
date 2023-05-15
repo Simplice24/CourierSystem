@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Manifest;
 use app\models\Log;
+use app\models\User;
 use app\models\ManifestSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -40,22 +41,32 @@ class ManifestController extends Controller
      */
     public function actionIndex()
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         $searchModel = new ManifestSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'userProfileImage' => $userProfileImage,
         ]);
     }
 
     public function actionDuration(){
-        return $this->render('duration');
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
+        return $this->render('duration',['userProfileImage' => $userProfileImage,]);
     }
 
 
     public function actionGenerate()
 {
+    $user_id = Yii::$app->user->id;
+    $userDetails = User::findOne($user_id);
+    $userProfileImage = $userDetails->profile;
     if (Yii::$app->request->post()) {
         $start_date = Yii::$app->request->post('start_date');
         $end_date = Yii::$app->request->post('end_date');
@@ -67,13 +78,13 @@ class ManifestController extends Controller
 
         if (empty($manifests)) {
             $message = "No manifests found within the selected date range.";
-            return $this->render('viewreport', ['message' => $message]);
+            return $this->render('viewreport', ['message' => $message,'userProfileImage' => $userProfileImage]);
         } else {
-            return $this->render('viewreport', ['manifests' => $manifests, 'no' => $no]);
+            return $this->render('viewreport', ['manifests' => $manifests, 'no' => $no, 'userProfileImage'=>$userProfileImage,]);
         }
     }
 
-    return $this->render('duration');
+    return $this->render('duration',['userProfileImage' => $userProfileImage]);
 }
 
     
@@ -98,9 +109,13 @@ class ManifestController extends Controller
      */
     public function actionView($manifest_id)
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         if(Yii::$app->user->can('View_manifest')){
             return $this->render('view', [
                 'model' => $this->findModel($manifest_id),
+                'userProfileImage' => $userProfileImage,
             ]);
         }else{
             throw new ForbiddenHttpException;
@@ -115,6 +130,9 @@ class ManifestController extends Controller
      */
     public function actionCreate()
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         $model = new Manifest();
         if(Yii::$app->user->can('Create_manifest')){
             if ($this->request->isPost) {
@@ -130,7 +148,7 @@ class ManifestController extends Controller
                         $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                         $log->save();
                     }
-                    return $this->redirect(['view', 'manifest_id' => $model->manifest_id]);
+                    return $this->redirect(['view', 'manifest_id' => $model->manifest_id,'userProfileImage'=>$userProfileImage,]);
                 }
             } else {
                 $model->loadDefaultValues();
@@ -138,6 +156,7 @@ class ManifestController extends Controller
     
             return $this->render('create', [
                 'model' => $model,
+                'userProfileImage' => $userProfileImage
             ]);
         }else{
             throw new ForbiddenHttpException;
@@ -155,6 +174,9 @@ class ManifestController extends Controller
      */
     public function actionUpdate($manifest_id)
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         if(Yii::$app->user->can('Update_manifest')){
             $model = $this->findModel($manifest_id);
 
@@ -166,11 +188,12 @@ class ManifestController extends Controller
                     $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                     $log->save();
                 }
-                return $this->redirect(['view', 'manifest_id' => $model->manifest_id]);
+                return $this->redirect(['view', 'manifest_id' => $model->manifest_id,'userProfileImage' => $userProfileImage]);
             }
     
             return $this->render('update', [
                 'model' => $model,
+                'userProfileImage' => $userProfileImage,
             ]);
         }else{
             throw new ForbiddenHttpException;
@@ -187,6 +210,9 @@ class ManifestController extends Controller
      */
     public function actionDelete($manifest_id)
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         if(Yii::$app->user->can('Delete_manifest')){
             $this->findModel($manifest_id)->delete();
                 $log = new Log();
@@ -196,7 +222,7 @@ class ManifestController extends Controller
                 $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                 $log->save();
 
-            return $this->redirect(['index']);
+            return $this->redirect(['index','userProfileImage'=>$userProfileImage]);
         }else{
             throw new ForbiddenHttpException;
         }

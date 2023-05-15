@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Customer;
 use app\models\Log;
+use app\models\User;
 use app\models\CustomerSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -42,21 +43,31 @@ class CustomerController extends Controller
      */
     public function actionIndex()
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         $searchModel = new CustomerSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'userProfileImage' =>$userProfileImage ,
         ]);
     }
 
     public function actionDuration(){
-        return $this->render('duration');
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
+        return $this->render('duration',['userProfileImage' => $userProfileImage]);
     }
 
 
     public function actionGenerate()
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         if (Yii::$app->request->post()) {
             $start_date = Yii::$app->request->post('start_date');
             $end_date = Yii::$app->request->post('end_date');
@@ -68,13 +79,13 @@ class CustomerController extends Controller
     
             if (empty($customers)) {
                 $message = "No customers found within the selected date range.";
-                return $this->render('viewreport', ['message' => $message]);
+                return $this->render('viewreport', ['message' => $message,'userProfileImage'=>$userProfileImage,]);
             } else {
-                return $this->render('viewreport', ['customers' => $customers, 'no' => $no]);
+                return $this->render('viewreport', ['customers' => $customers, 'no' => $no,'userProfileImage' => $userProfileImage,]);
             }
         }
     
-        return $this->render('duration');
+        return $this->render('duration',['userProfileImage' => $userProfileImage,]);
     }
     
 
@@ -87,9 +98,13 @@ class CustomerController extends Controller
      */
     public function actionView($customer_id)
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         if(Yii::$app->user->can('View_customer')){
             return $this->render('view', [
                 'model' => $this->findModel($customer_id),
+                'userProfileImage' => $userProfileImage,
             ]);
         }else{
             throw new ForbiddenHttpException;
@@ -115,10 +130,12 @@ class CustomerController extends Controller
      */
     public function actionCreate()
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         $model = new Customer();
        
         if(Yii::$app->user->can('Create_customer')){
-
             if ($this->request->isPost) {
                 if ($model->load($this->request->post())) {
                     $model->created_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
@@ -132,7 +149,7 @@ class CustomerController extends Controller
                         $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                         $log->save();
                     }
-                    return $this->redirect(['view', 'customer_id' => $model->customer_id]);
+                    return $this->redirect(['view', 'customer_id' => $model->customer_id,'userProfileImage' => $userProfileImage,]);
                 }
             } else {
                 $model->loadDefaultValues();
@@ -140,6 +157,7 @@ class CustomerController extends Controller
     
             return $this->render('create', [
                 'model' => $model,
+                'userProfileImage' => $userProfileImage,
             ]);
         }else{
             throw new ForbiddenHttpException;
@@ -156,6 +174,9 @@ class CustomerController extends Controller
      */
     public function actionUpdate($customer_id)
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         if(Yii::$app->user->can('Update_customer')){
             $model = $this->findModel($customer_id);
 
@@ -168,11 +189,12 @@ class CustomerController extends Controller
                     $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                     $log->save();
                 }
-                return $this->redirect(['view', 'customer_id' => $model->customer_id]);
+                return $this->redirect(['view', 'customer_id' => $model->customer_id,'userProfileImage' =>$userProfileImage,]);
             }
     
             return $this->render('update', [
                 'model' => $model,
+                'userProfileImage' =>$userProfileImage,
             ]);
         }else{
             throw new ForbiddenHttpException;
@@ -189,6 +211,9 @@ class CustomerController extends Controller
      */
     public function actionDelete($customer_id)
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         if(Yii::$app->user->can('Delete_customer')){
             $this->findModel($customer_id)->delete();
                 $log = new Log();

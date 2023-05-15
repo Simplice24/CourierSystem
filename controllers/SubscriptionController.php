@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Subscription;
 use app\models\Log;
+use app\models\User;
 use app\models\SubscriptionType;
 use app\models\SubscriptionSearch;
 use yii\web\Controller;
@@ -43,20 +44,30 @@ class SubscriptionController extends Controller
      */
     public function actionIndex()
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         $searchModel = new SubscriptionSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'userProfileImage' => $userProfileImage,
         ]);
     }
 
     public function actionDuration(){
-        return $this->render('duration');
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
+        return $this->render('duration',['userProfileImage'=>$userProfileImage,]);
     }
 
     public function actionGenerate() {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         if (Yii::$app->request->post()) {
             $start_date = Yii::$app->request->post('start_date');
             $end_date = Yii::$app->request->post('end_date');
@@ -68,12 +79,12 @@ class SubscriptionController extends Controller
             
             if (empty($dataProvider)) {
                 $message = 'No Subscriptions found for the selected date range.';
-                return $this->render('viewreport', ['message' => $message]);
+                return $this->render('viewreport', ['message' => $message,'userProfileImage' => $userProfileImage,]);
             } else {
-                return $this->render('viewreport', ['dataProvider' => $dataProvider, 'no' => $no]);
+                return $this->render('viewreport', ['dataProvider' => $dataProvider, 'no' => $no,'userProfileImage' => $userProfileImage,]);
             }
         }
-        return $this->render('duration');
+        return $this->render('duration',['userProfileImage' => $userProfileImage,]);
     }
     
 
@@ -97,8 +108,12 @@ class SubscriptionController extends Controller
      */
     public function actionView($subscription_id)
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         return $this->render('view', [
             'model' => $this->findModel($subscription_id),
+            'userProfileImage' => $userProfileImage,
         ]);
     }
 
@@ -109,6 +124,9 @@ class SubscriptionController extends Controller
      */
     public function actionCreate()
 {
+    $user_id = Yii::$app->user->id;
+    $userDetails = User::findOne($user_id);
+    $userProfileImage = $userDetails->profile;
     $model = new Subscription();
 
     if ($this->request->isPost) {
@@ -129,7 +147,7 @@ class SubscriptionController extends Controller
                 $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                 $log->save();
             }
-            return $this->redirect(['view', 'subscription_id' => $model->subscription_id]);
+            return $this->redirect(['view', 'subscription_id' => $model->subscription_id,'userProfileImage'=>$userProfileImage,]);
         }
     } else {
         $model->loadDefaultValues();
@@ -137,6 +155,7 @@ class SubscriptionController extends Controller
 
     return $this->render('create', [
         'model' => $model,
+        'userProfileImage' => $userProfileImage,
     ]);
 }
 
@@ -149,14 +168,18 @@ class SubscriptionController extends Controller
      */
     public function actionUpdate($subscription_id)
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         $model = $this->findModel($subscription_id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'subscription_id' => $model->subscription_id]);
+            return $this->redirect(['view', 'subscription_id' => $model->subscription_id,'userProfileImage' => $userProfileImage,]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'userProfileImage' => $userProfileImage,
         ]);
     }
 
@@ -169,9 +192,12 @@ class SubscriptionController extends Controller
      */
     public function actionDelete($subscription_id)
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         $this->findModel($subscription_id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index','userProfileImage' => $userProfileImage]);
     }
 
     /**

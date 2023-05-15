@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Invoice;
 use app\models\Log;
+use app\models\User;
 use app\models\InvoiceItems;
 use app\models\InvoiceSearch;
 use yii\web\Controller;
@@ -42,6 +43,9 @@ class InvoiceController extends Controller
      */
     public function actionIndex()
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         $searchModel = new InvoiceSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
     
@@ -51,6 +55,7 @@ class InvoiceController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'userProfileImage' => $userProfileImage,
         ]);
     }
     
@@ -58,6 +63,9 @@ class InvoiceController extends Controller
 
     public function actionSign($id)
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         $model = $this->findModel($id);
         $user_id=$model->user_id;
         $userSignature = UserSignatures::findOne(['user_id' => $user_id]);
@@ -74,7 +82,7 @@ class InvoiceController extends Controller
             Yii::$app->session->setFlash('error', 'Upload your signature in order to sign this Invoice');
         }
     
-        return $this->redirect(['view', 'invoice_id' => $model->invoice_id]);
+        return $this->redirect(['view', 'invoice_id' => $model->invoice_id,'userProfileImage' => $userProfileImage,]);
     }
     
 
@@ -86,8 +94,12 @@ class InvoiceController extends Controller
      */
     public function actionView($invoice_id)
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         return $this->render('view', [
             'model' => $this->findModel($invoice_id),
+            'userProfileImage' => $userProfileImage,
         ]);
     }
 
@@ -98,6 +110,9 @@ class InvoiceController extends Controller
      */
     public function actionCreate()
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         $model = new Invoice();
 
         if ($this->request->isPost) {
@@ -112,7 +127,7 @@ class InvoiceController extends Controller
                     $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                     $log->save();
                 }
-                return $this->redirect(['invoice-items/create', 'invoice_id' => $model->invoice_id]);
+                return $this->redirect(['invoice-items/create', 'invoice_id' => $model->invoice_id,'userProfileImage' => $userProfileImage]);
 
             }
         } else {
@@ -121,6 +136,7 @@ class InvoiceController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'userProfileImage' => $userProfileImage,
         ]);
     }
 
@@ -133,14 +149,18 @@ class InvoiceController extends Controller
      */
     public function actionUpdate($invoice_id)
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         $model = $this->findModel($invoice_id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'invoice_id' => $model->invoice_id]);
+            return $this->redirect(['view', 'invoice_id' => $model->invoice_id,'userProfileImage' => $userProfileImage,]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'userProfileImage' => $userProfileImage,
         ]);
     }
 
@@ -153,13 +173,16 @@ class InvoiceController extends Controller
      */
     public function actionDelete($invoice_id)
 {
+    $user_id = Yii::$app->user->id;
+    $userDetails = User::findOne($user_id);
+    $userProfileImage = $userDetails->profile;
     // delete all invoice items with the specified invoice_id
     InvoiceItems::deleteAll(['invoice_id' => $invoice_id]);
 
     // delete the invoice model
     $this->findModel($invoice_id)->delete();
 
-    return $this->redirect(['index']);
+    return $this->redirect(['index','userProfileImage' => $userProfileImage,]);
 }
 
 

@@ -10,12 +10,18 @@ class ProfileController extends \yii\web\Controller
 {
     public function actionIndex()
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         $user_name=Yii::$app->user->identity->username;
-        return $this->render('index',['user_name'=>$user_name]);
+        return $this->render('index',['user_name'=>$user_name,'userProfileImage' => $userProfileImage,]);
     }
 
     public function actionUsername()
 {
+    $user_id = Yii::$app->user->id;
+    $userDetails = User::findOne($user_id);
+    $userProfileImage = $userDetails->profile;
     $model = User::findOne(Yii::$app->user->id); // assuming your User model is named "User"
     $newUsername = Yii::$app->request->post('new-username');
     $password = Yii::$app->request->post('password');
@@ -23,7 +29,7 @@ class ProfileController extends \yii\web\Controller
      // Validate password
      if (!$model->validatePassword($password)) {
         Yii::$app->session->setFlash('error', 'Invalid password.');
-        return $this->redirect(['index']);
+        return $this->redirect(['index','userProfileImage' => $userProfileImage]);
     }
 
     // If password is valid, update the username
@@ -34,11 +40,14 @@ class ProfileController extends \yii\web\Controller
         Yii::$app->session->setFlash('error', 'Failed to update username.');
     }
 
-    return $this->redirect(['index']);
+    return $this->redirect(['index','userProfileImage' =>$userProfileImage,]);
 }
 
 public function actionImage()
 {
+    $user_id = Yii::$app->user->id;
+    $userDetails = User::findOne($user_id);
+    $userProfileImage = $userDetails->profile;
     $userId = Yii::$app->user->identity->id; // Get the authenticated user's ID
     $user = User::findOne($userId); // Find the user record
 
@@ -66,16 +75,20 @@ public function actionImage()
 
         // Redirect or display success message
         Yii::$app->session->setFlash('success', 'Profile image updated successfully.');
-        return $this->redirect(['profile/index']); // Replace 'profile/view' with the appropriate URL to redirect after the image is updated
+        return $this->redirect(['profile/index','userProfileImage'=>$userProfileImage]); // Replace 'profile/view' with the appropriate URL to redirect after the image is updated
     }
 
     // Handle the case when no file was uploaded
     Yii::$app->session->setFlash('error', 'No profile image uploaded.');
-    return $this->redirect(['profile/index']); // Replace 'profile/view' with the appropriate URL to redirect if no image is uploaded
+    return $this->redirect(['profile/index','userProfileImage'=>$userProfileImage]); // Replace 'profile/view' with the appropriate URL to redirect if no image is uploaded
 }
 
 
-public function actionPassword(){
+public function actionPassword()
+{
+    $user_id = Yii::$app->user->id;
+    $userDetails = User::findOne($user_id);
+    $userProfileImage = $userDetails->profile;
     $model = User::findOne(Yii::$app->user->id);
     $currentPassword = Yii::$app->request->post('current-password');
     $newPassword = Yii::$app->request->post('new-password');
@@ -96,7 +109,7 @@ public function actionPassword(){
         Yii::$app->session->setFlash('error', 'New password and confirmation password do not match.');
     }
 
-    return $this->redirect(['index']);
+    return $this->redirect(['index','userProfileImage' => $userProfileImage,]);
 }
 
 }

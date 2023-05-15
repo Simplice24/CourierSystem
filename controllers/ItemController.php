@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Item;
 use app\models\Log;
+use app\models\User;
 use app\models\ItemSearch;
 use app\models\UserSignatures;
 use yii\web\Controller;
@@ -18,12 +19,16 @@ class ItemController extends Controller
 {
    public function actionView($item_id)
    {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
        if(Yii::$app->user->isGuest){
            return Yii::$app->getResponse()->redirect(['site/login']);
        }
        else if(Yii::$app->user->can('View_item')){
            return $this->render('view', [
                'model' => $this->findModel($item_id),
+               'userProfileImage' => $userProfileImage,
            ]);
        }else{
            throw new ForbiddenHttpException;
@@ -52,21 +57,31 @@ class ItemController extends Controller
      */
     public function actionIndex()
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         $searchModel = new ItemSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'userProfileImage' => $userProfileImage,
         ]);
 
 }
 
 public function actionDuration(){
-        return $this->render('duration');
+    $user_id = Yii::$app->user->id;
+    $userDetails = User::findOne($user_id);
+    $userProfileImage = $userDetails->profile;
+        return $this->render('duration',['userProfileImage' => $userProfileImage,]);
     }
 
 
     public function actionGenerate() {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         if (Yii::$app->request->post()) {
             $start_date = Yii::$app->request->post('start_date');
             $end_date = Yii::$app->request->post('end_date');
@@ -77,11 +92,11 @@ public function actionDuration(){
             $no = 0;
             if (empty($dataProvider)) {
                 $message = 'No item found for the selected date range.';
-                return $this->render('viewreport',['message'=>$message]);
+                return $this->render('viewreport',['message'=>$message,'userProfileImage' =>$userProfileImage,]);
             }
-            return $this->render('viewreport', ['dataProvider' => $dataProvider, 'no' => $no]);
+            return $this->render('viewreport', ['dataProvider' => $dataProvider, 'no' => $no,'userProfileImage' => $userProfileImage,]);
         }
-        return $this->render('duration');
+        return $this->render('duration', ['userProfileImage' => $userProfileImage]);
     }
     
     /**
@@ -91,6 +106,9 @@ public function actionDuration(){
      */
     public function actionCreate()
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         $model = new Item();
         if(Yii::$app->user->can('Create_item')){
             
@@ -107,7 +125,7 @@ public function actionDuration(){
                         $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                         $log->save();
                     }
-                    return $this->redirect(['view', 'item_id' => $model->item_id]);
+                    return $this->redirect(['view', 'item_id' => $model->item_id,'userProfileImage' => $userProfileImage]);
                 }
             } else {
                 $model->loadDefaultValues();
@@ -115,6 +133,7 @@ public function actionDuration(){
     
             return $this->render('create', [
                 'model' => $model,
+                'userProfileImage' => $userProfileImage,
             ]);
         }else{
             throw new ForbiddenHttpException;
@@ -131,6 +150,9 @@ public function actionDuration(){
      */
     public function actionUpdate($item_id)
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         if(Yii::$app->user->can('Update_item')){
             $model = $this->findModel($item_id);
 
@@ -142,11 +164,12 @@ public function actionDuration(){
                 $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                 $log->save();
             }
-            return $this->redirect(['view', 'item_id' => $model->item_id]);
+            return $this->redirect(['view', 'item_id' => $model->item_id,'userProfileImage'=>$userProfileImage,]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'userProfileImage' => $userProfileImage,
         ]);
         }else{
             throw new ForbiddenHttpException;
@@ -191,6 +214,9 @@ public function actionDuration(){
      */
     public function actionDelete($item_id)
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         if(Yii::$app->user->can('Delete_item')){
             $this->findModel($item_id)->delete();
                 $log = new Log();
@@ -199,7 +225,7 @@ public function actionDuration(){
                 $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                 $log->save();
             
-            return $this->redirect(['index']);
+            return $this->redirect(['index','userProfileImage' => $userProfileImage,]);
         }else{
             throw new ForbiddenHttpException;
         }

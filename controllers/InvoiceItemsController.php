@@ -45,6 +45,9 @@ class InvoiceItemsController extends Controller
      */
     public function actionIndex()
 {
+    $user_id = Yii::$app->user->id;
+    $userDetails = User::findOne($user_id);
+    $userProfileImage = $userDetails->profile;
     $invoice_id = Yii::$app->request->get('invoice_id');
     $searchModel = new InvoiceItemsSearch();
     $searchModel->invoice_id = $invoice_id; // add a filter condition
@@ -54,6 +57,7 @@ class InvoiceItemsController extends Controller
         'searchModel' => $searchModel,
         'dataProvider' => $dataProvider,
         'invoice_id'=>$invoice_id,
+        'userProfileImage' => $userProfileImage,
     ]);
 }
 
@@ -99,8 +103,12 @@ public function actionInvoice($invoice_id)
      */
     public function actionView($id)
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'userProfileImage' => $userProfileImage,
         ]);
     }
 
@@ -111,6 +119,9 @@ public function actionInvoice($invoice_id)
      */
     public function actionCreate()
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         $invoice_id = Yii::$app->request->get('invoice_id');
         
         $model = new InvoiceItems();
@@ -134,7 +145,7 @@ public function actionInvoice($invoice_id)
                     $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                     $log->save();
                 }  
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['view', 'id' => $model->id,'userProfileImage'=> $userProfileImage]);
             }
         } else {
             $model->loadDefaultValues();
@@ -142,6 +153,7 @@ public function actionInvoice($invoice_id)
 
         return $this->render('create', [
             'model' => $model,
+            'userProfileImage' => $userProfileImage,
         ]);
     }
 
@@ -154,14 +166,18 @@ public function actionInvoice($invoice_id)
      */
     public function actionUpdate($id)
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model->id,'userProfileImage'=>$userProfileImage]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'userProfileImage' => $userProfileImage,
         ]);
     }
 
@@ -174,9 +190,12 @@ public function actionInvoice($invoice_id)
      */
     public function actionDelete($id)
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index','userProfileImage' => $userProfileImage,]);
     }
 
     /**

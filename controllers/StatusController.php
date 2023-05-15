@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Status;
 use app\models\Log;
+use app\models\User;
 use app\models\StatusSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -42,20 +43,30 @@ class StatusController extends Controller
      */
     public function actionIndex()
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         $searchModel = new StatusSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'userProfileImage' => $userProfileImage,
         ]);
     }
 
     public function actionDuration(){
-        return $this->render('duration');
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
+        return $this->render('duration',['userProfileImage'=>$userProfileImage,]);
     }
 
     public function actionGenerate() {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         if (Yii::$app->request->post()) {
             $start_date = Yii::$app->request->post('start_date');
             $end_date = Yii::$app->request->post('end_date');
@@ -66,12 +77,12 @@ class StatusController extends Controller
             $no = 0;
             if(empty($dataProvider)) {
                 $message = 'No data found for the selected date range.';
-                return $this->render('viewreport', ['message' => $message]);
+                return $this->render('viewreport', ['message' => $message,'userProfileImage' => $userProfileImage,]);
             } else {
-                return $this->render('viewreport', ['dataProvider' => $dataProvider, 'no' => $no]);
+                return $this->render('viewreport', ['dataProvider' => $dataProvider, 'no' => $no,'userProfileImage'=>$userProfileImage,]);
             }
         }
-        return $this->render('duration');
+        return $this->render('duration',['userProfileImage' => $userProfileImage,]);
     }
     
 
@@ -95,8 +106,12 @@ class StatusController extends Controller
      */
     public function actionView($status_id)
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         return $this->render('view', [
             'model' => $this->findModel($status_id),
+            'userProfileImage' => $userProfileImage,
         ]);
     }
 
@@ -107,6 +122,9 @@ class StatusController extends Controller
      */
     public function actionCreate()
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         $model = new Status();
 
         if ($this->request->isPost) {
@@ -122,7 +140,7 @@ class StatusController extends Controller
                         $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                         $log->save();
                     }
-                return $this->redirect(['view', 'status_id' => $model->status_id]);
+                return $this->redirect(['view', 'status_id' => $model->status_id,'userProfileImage'=>$userProfileImage,]);
             }
         } else {
             $model->loadDefaultValues();
@@ -130,6 +148,7 @@ class StatusController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'userProfileImage' => $userProfileImage,
         ]);
     }
 
@@ -142,14 +161,18 @@ class StatusController extends Controller
      */
     public function actionUpdate($status_id)
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         $model = $this->findModel($status_id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'status_id' => $model->status_id]);
+            return $this->redirect(['view', 'status_id' => $model->status_id,'userProfileImage' => $userProfileImage,]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'userProfileImage' => $userProfileImage,
         ]);
     }
 
@@ -162,9 +185,12 @@ class StatusController extends Controller
      */
     public function actionDelete($status_id)
     {
+        $user_id = Yii::$app->user->id;
+        $userDetails = User::findOne($user_id);
+        $userProfileImage = $userDetails->profile;
         $this->findModel($status_id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index','userProfileImage' =>$userProfileImage,]);
     }
 
     /**
