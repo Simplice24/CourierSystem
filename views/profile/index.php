@@ -170,9 +170,9 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="profile-pic" class="cursor-pointer">
-                            <img src="assets/images/faces/face1.jpg" alt="User Profile Picture" class="img-fluid rounded-circle">
+                            <img src="<?= Yii::getAlias('@web/' . $userProfileImage) ?>" alt="User Profile Picture" class="img-fluid rounded-circle">
                         </label>
                     </div>
                     <div class="col-md-8">

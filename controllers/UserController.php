@@ -124,48 +124,67 @@ class UserController extends Controller
      * @return string|\yii\web\Response
      */
     public function actionCreate()
-    {
-        $user_id = Yii::$app->user->id;
-        $userDetails = User::findOne($user_id);
-        $userProfileImage = $userDetails->profile;
-        $model = new User();
-        if(Yii::$app->user->can('Create_user')){
-            if ($this->request->isPost) {
-                if ($model->load($this->request->post())) {
-                    // $password_hash=Yii::$app->request->get('password_hash');
-                    $model->auth_key =Yii::$app->security->generateRandomString();
-                    $model->verification_token =Yii::$app->security->generateRandomString();
-                    $model->created_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
-                    $model->updated_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+{
+    $user_id = Yii::$app->user->id;
+    $userDetails = User::findOne($user_id);
+    $userProfileImage = $userDetails->profile;
+    $model = new User();
+
+    if (Yii::$app->user->can('Create_user')) {
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                // Validate unique username and email
+                if ($this->isUsernameUnique($model->username) && $this->isEmailUnique($model->email)) {
+                    $model->auth_key = Yii::$app->security->generateRandomString();
+                    $model->verification_token = Yii::$app->security->generateRandomString();
+                    $model->created_at = Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                    $model->updated_at = Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
                     $model->setPassword($model->password_hash);
                     $model->profile = 'profiles/userImage.jpg';
-                    if($model->save()){
-                        $auth=new AuthAssignment;
-                        $auth->user_id= $model->id;
-                        $auth->item_name=$model->role;
+                    
+                    if ($model->save()) {
+                        $auth = new AuthAssignment;
+                        $auth->user_id = $model->id;
+                        $auth->item_name = $model->role;
                         $auth->save();
-                            $log = new Log();
-                            $log->done_by=Yii::$app->user->identity->username;
-                            $log->comment="Created a new system user";
-                            $log->done_at=Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
-                            $log->save();
-                    }
 
-                    return $this->redirect(['view', 'id' => $model->id,'userProfileImage'=>$userProfileImage]);
+                        $log = new Log();
+                        $log->done_by = Yii::$app->user->identity->username;
+                        $log->comment = "Created a new system user";
+                        $log->done_at = Yii::$app->formatter->asTimestamp(date('Y-m-d h:m:s'));
+                        $log->save();
+
+                        return $this->redirect(['view', 'id' => $model->id, 'userProfileImage' => $userProfileImage]);
+                    }
+                } else {
+                    $model->addError('username', 'Username is already taken.');
+                    $model->addError('email', 'Email is already taken.');
                 }
-            } else {
-                $model->loadDefaultValues();
             }
-    
-            return $this->render('create', [
-                'model' => $model,
-                'userProfileImage' => $userProfileImage,
-            ]);
-        }else{
-            throw new ForbiddenHttpException;
+        } else {
+            $model->loadDefaultValues();
         }
-        
+
+        return $this->render('create', [
+            'model' => $model,
+            'userProfileImage' => $userProfileImage,
+        ]);
+    } else {
+        throw new ForbiddenHttpException;
     }
+}
+
+private function isUsernameUnique($username)
+{
+    $existingUser = User::findOne(['username' => $username]);
+    return $existingUser === null;
+}
+
+private function isEmailUnique($email)
+{
+    $existingUser = User::findOne(['email' => $email]);
+    return $existingUser === null;
+}
 
     /**
      * Updates an existing User model.
