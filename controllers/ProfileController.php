@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 use app\models\User;
+use yii\web\UploadedFile;
+use yii\helpers\FileHelper;
 use Yii;
 
 class ProfileController extends \yii\web\Controller
@@ -35,9 +37,43 @@ class ProfileController extends \yii\web\Controller
     return $this->redirect(['index']);
 }
 
-public function actionImage(){
-    
+public function actionImage()
+{
+    $userId = Yii::$app->user->identity->id; // Get the authenticated user's ID
+    $user = User::findOne($userId); // Find the user record
+
+    // Get the uploaded file
+    $profilePic = UploadedFile::getInstanceByName('profile-pic');
+
+    // Validate if a file was uploaded successfully
+    if ($profilePic !== null) {
+        $oldProfilePicPath = Yii::getAlias('@webroot/') . $user->getAttribute('profile');
+
+        // Generate a unique file name for the new profile image
+        $fileName = 'image-' . uniqid() . '.' . $profilePic->extension;
+
+        // Update the user's profile attribute in the database
+        $user->setAttribute('profile', 'profiles/' . $fileName);
+        $user->save(false); // Save the user record without performing validation
+
+        // Save the new profile image to the specified directory
+        $profilePic->saveAs(Yii::getAlias('@webroot/profiles/') . $fileName);
+
+        // Delete the old profile image if it exists
+        if (file_exists($oldProfilePicPath) && is_file($oldProfilePicPath)) {
+            unlink($oldProfilePicPath);
+        }
+
+        // Redirect or display success message
+        Yii::$app->session->setFlash('success', 'Profile image updated successfully.');
+        return $this->redirect(['profile/index']); // Replace 'profile/view' with the appropriate URL to redirect after the image is updated
+    }
+
+    // Handle the case when no file was uploaded
+    Yii::$app->session->setFlash('error', 'No profile image uploaded.');
+    return $this->redirect(['profile/index']); // Replace 'profile/view' with the appropriate URL to redirect if no image is uploaded
 }
+
 
 public function actionPassword(){
     $model = User::findOne(Yii::$app->user->id);
