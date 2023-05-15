@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var app\models\UserSignatures $model */
 
-$this->title = 'Update User Signatures: ' . $model->signature_id;
+// $this->title = 'Update User Signatures: ' . $model->signature_id;
 $this->params['breadcrumbs'][] = ['label' => 'User Signatures', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->signature_id, 'url' => ['view', 'signature_id' => $model->signature_id]];
 $this->params['breadcrumbs'][] = 'Update';

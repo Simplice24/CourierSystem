@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\InvoiceItems;
 use app\models\Item;
 use app\models\Invoice;
+use app\models\User;
 use app\models\UserSignatures;
 use app\models\Log;
 use app\models\InvoiceItemsSearch;
