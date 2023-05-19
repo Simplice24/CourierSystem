@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 12, 2023 at 10:22 AM
+-- Generation Time: May 19, 2023 at 12:48 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -39,12 +39,15 @@ CREATE TABLE `auth_assignment` (
 
 INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
 ('ADMIN', 29, NULL),
+('ADMIN', 53, NULL),
 ('Branch_agent', 31, NULL),
 ('Branch_agent', 52, NULL),
 ('Branch_manager', 30, NULL),
 ('Branch_manager', 49, NULL),
 ('Branch_manager', 50, NULL),
-('Branch_manager', 51, NULL);
+('Branch_manager', 51, NULL),
+('Branch_manager', 54, NULL),
+('Branch_manager', 55, NULL);
 
 -- --------------------------------------------------------
 
@@ -216,7 +219,8 @@ CREATE TABLE `branch` (
 
 INSERT INTO `branch` (`branch_id`, `branch_name`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
 (10, 'Kigali', '1676008925', 'Simplice', '1676008925', 'Simplice'),
-(11, 'Muhanga', '1676008952', 'Simplice', '1676008952', 'Simplice');
+(11, 'Muhanga', '1676008952', 'Simplice', '1676008952', 'Simplice'),
+(12, 'Kamonyi', '1683363953', 'Simplice', '1683363953', 'Simplice');
 
 -- --------------------------------------------------------
 
@@ -243,6 +247,64 @@ CREATE TABLE `customer` (
 
 INSERT INTO `customer` (`customer_id`, `fullname`, `subscription`, `idn`, `telephone`, `created_at`, `created_by`, `updated_at`, `updated_by`, `item_id`) VALUES
 (13, 'Robert KIYOSAKI', 'Unlimited usage subscription', '1196180095883329', '07834527384', '1676012567', 'Simplice', '1676012567', 'Simplice', 5);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `invoice`
+--
+
+CREATE TABLE `invoice` (
+  `invoice_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `customer_name` varchar(255) NOT NULL,
+  `invoice_date` date NOT NULL,
+  `amount_due` decimal(10,2) NOT NULL,
+  `signature_id` int(11) DEFAULT NULL,
+  `signed` int(1) NOT NULL,
+  `created_at` varchar(60) NOT NULL DEFAULT current_timestamp(),
+  `updated_at` varchar(60) NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `invoice`
+--
+
+INSERT INTO `invoice` (`invoice_id`, `user_id`, `customer_name`, `invoice_date`, `amount_due`, `signature_id`, `signed`, `created_at`, `updated_at`) VALUES
+(5, 29, 'Robert KIYOSAKI', '2023-04-23', '100000.00', 12, 1, '1682240673', '1682240673'),
+(10, 29, 'Trae Young', '2023-05-11', '10000.00', NULL, 0, '1683785109', '1683785109'),
+(11, 29, 'Issa Gold', '2023-05-11', '100000.00', NULL, 0, '1683785131', '1683785131');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `invoice_items`
+--
+
+CREATE TABLE `invoice_items` (
+  `id` int(11) NOT NULL,
+  `invoice_id` int(11) NOT NULL,
+  `item_id` int(11) NOT NULL,
+  `item_name` varchar(255) NOT NULL,
+  `sender_name` varchar(255) NOT NULL,
+  `receiver_name` varchar(255) NOT NULL,
+  `item_value` decimal(10,2) NOT NULL,
+  `departure` varchar(255) NOT NULL,
+  `destination` varchar(255) NOT NULL,
+  `created_at` varchar(60) NOT NULL DEFAULT current_timestamp(),
+  `updated_at` varchar(60) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `invoice_items`
+--
+
+INSERT INTO `invoice_items` (`id`, `invoice_id`, `item_id`, `item_name`, `sender_name`, `receiver_name`, `item_value`, `departure`, `destination`, `created_at`, `updated_at`) VALUES
+(6, 5, 5, 'Rich Dad, Poor Dad book', 'Robert KIYOSAKI', 'Simplice', '20000.00', 'KIGALI', 'MUHANGA', '1682240687', '1682240687'),
+(7, 5, 7, 'HP pavilion', 'Robert KIYOSAKI', 'Eulade', '800000.00', 'KIGALI', 'MUHANGA', '1682240663', '1682240663'),
+(8, 5, 11, 'Artwork', 'Robert KIYOSAKI', 'Simplice', '12000.00', 'Kigali', 'Muhanga', '1682240682', '1682240682'),
+(15, 10, 6, 'The Musical Human: a history of life on earth', 'Michael Spitzer', 'Simplice', '25000.00', 'KIGALI', 'MUHANGA', '1683785121', '1683785121'),
+(16, 11, 9, 'Mirrorless Camera', 'KWIZERA Fabrice', 'HABINEZA Arsene', '600000.00', 'Kigali', 'Muhanga', '1683785136', '1683785136');
 
 -- --------------------------------------------------------
 
@@ -282,7 +344,8 @@ INSERT INTO `item` (`item_id`, `item_name`, `value`, `sender_name`, `sender_phon
 (8, 'Introduction to Algorithms', 30000, 'Ronald Rivest', '0789443899', 'Monthly', 'Honore', '0723438222', '1199980014748347', 'KIGALI', '2023-03-17', '15:21:00', 'MUHANGA', '1679054622', 'Simplice', '1679054622', 'Simplice', NULL),
 (9, 'Mirrorless Camera', 600000, 'KWIZERA Fabrice', '0789443899', 'No', 'HABINEZA Arsene', '0793444533', '1199980014748347', 'Kigali', '2023-03-24', '11:30:00', 'Muhanga', '1679655826', 'Simplice', '1679655826', 'Simplice', NULL),
 (10, 'Artwork', 100000, 'HABINEZA Arsene', '0728890193', 'No', 'KWIZERA Fabrice', '0793444533', '1199980014748347', 'Muhanga', '2023-03-24', '13:20:00', 'Kigali', '1679655801', 'Simplice', '1679655801', 'Simplice', NULL),
-(11, 'Artwork', 12000, 'Robert KIYOSAKI', '0789443899', 'Monthly', 'Simplice', '0723438222', '1199980014748347', 'Kigali', '2023-03-28', '05:14:00', 'Muhanga', '1679972591', 'Simplice', '1679972591', 'Simplice', NULL);
+(11, 'Artwork', 12000, 'Robert KIYOSAKI', '0789443899', 'Monthly', 'Simplice', '0723438222', '1199980014748347', 'Kigali', '2023-03-28', '05:14:00', 'Muhanga', '1679972591', 'Simplice', '1679972591', 'Simplice', NULL),
+(12, 'Smart phone', 220000, 'KT', '0789443899', 'No', 'NS', '0723438222', '1199980014748347', 'Kigali', '2023-05-12', '13:26:00', 'Muhanga', '1683889525', 'Simplice', '1683889525', 'Simplice', NULL);
 
 -- --------------------------------------------------------
 
@@ -302,20 +365,15 @@ CREATE TABLE `log` (
 --
 
 INSERT INTO `log` (`log_id`, `done_by`, `comment`, `done_at`) VALUES
-(1, 'Simplice', 'New status created', 1679374991),
-(2, 'Simplice', 'New status created', 1679374994),
-(3, 'Simplice', 'New type of subscription is created', 1679375008),
-(8, 'Simplice', 'Updated customer details ', 1679382209),
-(9, 'Simplice', 'Updated customer details ', 1679382235),
-(10, 'Simplice', 'New type of subscription is created', 1679652183),
-(11, 'Simplice', 'Item received by branch agent', 1679655826),
-(12, 'Simplice', 'Item received by branch agent', 1679655801),
-(13, 'Simplice', 'Updated item details ', 1679655822),
-(14, 'Simplice', 'Updated customer details ', 1679655824),
-(15, 'Simplice', 'Updated customer details ', 1679655808),
-(16, 'Simplice', 'New subscription created', 1679655814),
-(17, 'Simplice', 'New subscription created', 1679814204),
-(18, 'Simplice', 'Item received by branch agent', 1679972592);
+(1, 'Simplice', 'Item received by branch agent', 1683889525),
+(2, 'Simplice', 'Created a new system user', 1683857153),
+(3, 'Simplice', 'Deleted a system user', 1684047903),
+(4, 'Simplice', 'Deleted a system user', 1684047914),
+(5, 'Simplice', 'Created a new system user', 1684047931),
+(6, 'Simplice', 'Deleted a system user', 1684047951),
+(7, 'Simplice', 'Deleted a system user', 1684047937),
+(8, 'Simplice', 'Deleted a system user', 1684047921),
+(9, 'Simplice', 'Created a new system user', 1684141504);
 
 -- --------------------------------------------------------
 
@@ -415,7 +473,9 @@ CREATE TABLE `subscription` (
 INSERT INTO `subscription` (`subscription_id`, `customer`, `subscription_type`, `amount`, `created_at`, `created_by`, `updated_at`, `updated_by`, `customer_id`) VALUES
 (6, 'Robert KIYOSAKI', 'Unlimited usage subscription', 40000, 1676012545, 'Simplice', 1676012545, 'Simplice', 13),
 (7, 'KIMENYI Honore', 'Unlimited usage subscription', 40000, 1679655814, 'Simplice', 1679655814, 'Simplice', NULL),
-(8, 'ISHIMWE Bosco', 'Fixed usage Subscription', 20000, 1679814204, 'Simplice', 1679814204, 'Simplice', NULL);
+(8, 'ISHIMWE Bosco', 'Fixed usage Subscription', 20000, 1679814204, 'Simplice', 1679814204, 'Simplice', NULL),
+(9, 'Rui Hachimura', 'Unlimited usage subscription', 40000, 1681902269, 'Simplice', 1681902269, 'Simplice', NULL),
+(10, 'Eugene', 'Volume based subscription', 0, 1681902248, 'Simplice', 1681902248, 'Simplice', NULL);
 
 -- --------------------------------------------------------
 
@@ -454,6 +514,7 @@ CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `user_fullname` varchar(224) NOT NULL,
   `username` varchar(255) NOT NULL,
+  `profile` varchar(225) NOT NULL,
   `role` varchar(40) NOT NULL,
   `auth_key` varchar(32) NOT NULL,
   `password_hash` varchar(255) NOT NULL,
@@ -471,13 +532,32 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `user_fullname`, `username`, `role`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `telephone`, `branche_id`, `status`, `created_at`, `updated_at`, `verification_token`) VALUES
-(29, 'NIYONZIMA Simplice', 'Simplice', 'ADMIN', '5nxBnw-i45H5bmG447FI761AGGXK-Gpw', '$2y$13$Q8jlImIG3uLDMXtilbtoJOzVvUXKuX1iflQQWNqZhD0ffjMVXkKpa', NULL, 'nsimplice0@gmail.com', '0723438222', 10, 10, 1676008924, 1676008924, 'OLhFX-503mtUsImhVK_tO0srhT2eBArZ'),
-(30, 'MUPENZI Espoir', 'Espoir', 'MANAGER', '2psJA9dEjtPtoLiOuHTcHGEOc0fszJ9P', '$2y$13$vuGkGF6UWxzIlPCu4P9fn.RlvXXvQIqHIgw/gJ9Ra9cQolTGLTLMe', NULL, 'muespoir@gmail.com', '0782040963', 11, 10, 1676361767, 1676361767, 'q2wuStfwA_FUQKG6JAtJPKuIXvelVdTv'),
-(31, 'MUNANIRA Elissa', 'Elissa', 'BRANCH AGENT', 'xFqfTC1W3GV2GFI4JSYbDtPW4teznVEb', '$2y$13$8VAT9e2vWZpUPofQFuthNeyHUy77NuPiN8f1t7W6ccuVKzoXRqv0S', NULL, 'elmunanira@gmail.com', '0791010234', 11, 10, 1676365363, 1676365363, 'TNdsdlpGuulQ5OMcCNFaCC_jxx9Zs4an'),
-(48, 'HATEGIKIMANA Callixte', 'Callixte', 'Branch_agent', '2TUmFlqAGFj2bCDBlm2arBpSDx1MCS1X', '$2y$13$zWHkVKaU/0mgvQDtG/JXCebF0CqAZHiZbyoN8pIAjFfJSWPwvUhwi', NULL, 'callixte2@gmail.com', '0784657583', 10, 10, 1676797328, 1676797328, 'WaGmAFjglp-7KQh3aRCEJjhPaGQzgJs4'),
-(50, 'NIYITANGA Aime de Dieu', 'Toptech', 'Branch_manager', 'hLBcVKJSocqMBDbFG7fkBzErlx4EVK5R', '$2y$13$EF5Rp7Bl1gAV5TQPz5E4pOYFrGLqVfXwUL7SbrTtLX/UiYXC42npi', NULL, 'niyitangaaime0@gmail.com', '0723438223', 10, 10, 1676797328, 1676797328, 'GqVdutmIBaMKFdwMc8otnvqUEdT91r5g'),
-(52, 'KIMENYI Honore', 'Honore', 'Branch_agent', '_AngHvBkwiXgBUV9_NwLcyQcydvBvIBC', '$2y$13$CFOxaJnckZVfERFBq/PVPe2q4zuQcO.QrXxhJPdJcA3kftfiNHl1y', NULL, 'honore.kimenyi@gmail.com', '0784657583', 11, 10, 1679382235, 1679382235, 'e-mmQ2CmGlXVVvh1t7z9982sMyq4CQyA');
+INSERT INTO `user` (`id`, `user_fullname`, `username`, `profile`, `role`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `telephone`, `branche_id`, `status`, `created_at`, `updated_at`, `verification_token`) VALUES
+(29, 'NIYONZIMA Simplice', 'Simplice0', 'profiles/image-6464d45aa7840.jpg', 'ADMIN', '5nxBnw-i45H5bmG447FI761AGGXK-Gpw', '$2y$13$Q8jlImIG3uLDMXtilbtoJOzVvUXKuX1iflQQWNqZhD0ffjMVXkKpa', NULL, 'nsimplice0@gmail.com', '0723438222', 10, 10, 1676008924, 1676008924, 'OLhFX-503mtUsImhVK_tO0srhT2eBArZ'),
+(48, 'HATEGIKIMANA Callixte', 'Callixte', 'profiles/userImage.jpg', 'Branch_agent', '2TUmFlqAGFj2bCDBlm2arBpSDx1MCS1X', '$2y$13$zWHkVKaU/0mgvQDtG/JXCebF0CqAZHiZbyoN8pIAjFfJSWPwvUhwi', NULL, 'callixte2@gmail.com', '0784657583', 10, 10, 1676797328, 1676797328, 'WaGmAFjglp-7KQh3aRCEJjhPaGQzgJs4'),
+(54, 'Rui Hachimura', 'Hachimura', 'profiles/userImage.jpg', 'Branch_manager', 'r27S9bn50ad8r0TDE7ZCUWtVvq4JKc1n', '$2y$13$jLladCgNV3pyUT3NDEYsjOU/aejrC636iaclY.k9H.TN8LZvEnxFS', NULL, 'ruihachimura28@gmail.com', '0791010234', 10, 10, 1684047929, 1684047929, 'l9xFq6Dl6JKYEMJGxH5Nw5V0BnRWi9cX'),
+(55, 'Chris Paul', 'CP3', 'profiles/userImage.jpg', 'Branch_manager', 'Lfcm03tYy-qt0WVZzsEP82S1EBuNp4X1', '$2y$13$YtngiWkV0yc.CVbpS0.EyOFH174bHGiO3gIGlArZ.uO92vPI7c0KW', NULL, 'chrispaul03@gmail.com', '0784657583', 11, 10, 1684141502, 1684141502, '0Vp6AQf8irtTUkJhs0VdW4Z0snIOAKTH');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_signatures`
+--
+
+CREATE TABLE `user_signatures` (
+  `signature_id` int(11) NOT NULL,
+  `signature_name` varchar(225) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `signature_image` varchar(255) DEFAULT NULL,
+  `timestamp` int(11) NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user_signatures`
+--
+
+INSERT INTO `user_signatures` (`signature_id`, `signature_name`, `user_id`, `signature_image`, `timestamp`) VALUES
+(12, 'Invoice Signature', 29, '/uploads/6464d3d53de98.jpg', 1684336629);
 
 --
 -- Indexes for dumped tables
@@ -522,6 +602,20 @@ ALTER TABLE `branch`
 --
 ALTER TABLE `customer`
   ADD PRIMARY KEY (`customer_id`),
+  ADD KEY `item_id` (`item_id`);
+
+--
+-- Indexes for table `invoice`
+--
+ALTER TABLE `invoice`
+  ADD PRIMARY KEY (`invoice_id`);
+
+--
+-- Indexes for table `invoice_items`
+--
+ALTER TABLE `invoice_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `invoice_id` (`invoice_id`),
   ADD KEY `item_id` (`item_id`);
 
 --
@@ -579,6 +673,13 @@ ALTER TABLE `user`
   ADD KEY `branche_id` (`branche_id`);
 
 --
+-- Indexes for table `user_signatures`
+--
+ALTER TABLE `user_signatures`
+  ADD PRIMARY KEY (`signature_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -586,7 +687,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `branch`
 --
 ALTER TABLE `branch`
-  MODIFY `branch_id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `branch_id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `customer`
@@ -595,16 +696,28 @@ ALTER TABLE `customer`
   MODIFY `customer_id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
+-- AUTO_INCREMENT for table `invoice`
+--
+ALTER TABLE `invoice`
+  MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `invoice_items`
+--
+ALTER TABLE `invoice_items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
-  MODIFY `item_id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `item_id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `log_id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `log_id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `manifest`
@@ -616,13 +729,13 @@ ALTER TABLE `manifest`
 -- AUTO_INCREMENT for table `status`
 --
 ALTER TABLE `status`
-  MODIFY `status_id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `status_id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `subscription`
 --
 ALTER TABLE `subscription`
-  MODIFY `subscription_id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `subscription_id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `subscription_type`
@@ -634,7 +747,13 @@ ALTER TABLE `subscription_type`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+
+--
+-- AUTO_INCREMENT for table `user_signatures`
+--
+ALTER TABLE `user_signatures`
+  MODIFY `signature_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables
@@ -666,6 +785,13 @@ ALTER TABLE `customer`
   ADD CONSTRAINT `customer_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`);
 
 --
+-- Constraints for table `invoice_items`
+--
+ALTER TABLE `invoice_items`
+  ADD CONSTRAINT `invoice_items_ibfk_1` FOREIGN KEY (`invoice_id`) REFERENCES `invoice` (`invoice_id`),
+  ADD CONSTRAINT `invoice_items_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`);
+
+--
 -- Constraints for table `item`
 --
 ALTER TABLE `item`
@@ -688,6 +814,12 @@ ALTER TABLE `subscription_type`
 --
 ALTER TABLE `user`
   ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`branche_id`) REFERENCES `branch` (`branch_id`);
+
+--
+-- Constraints for table `user_signatures`
+--
+ALTER TABLE `user_signatures`
+  ADD CONSTRAINT `user_signatures_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
